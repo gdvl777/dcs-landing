@@ -14,7 +14,12 @@
   "redirects": [
     {
       "source": "/masterclass",
-      "destination": "https://masterclass.dataconsentido.com/",
+      "destination": "https://masterclass.dataconsentido.com/?utm_source=dataconsentido&utm_medium=web&utm_campaign=boton_reserva_masterclass",
+      "permanent": true
+    },
+    {
+      "source": "/registro",
+      "destination": "https://masterclass.dataconsentido.com/#registro?utm_source=dataconsentido&utm_medium=web&utm_campaign=boton_registro_directo",
       "permanent": true
     }
   ]
