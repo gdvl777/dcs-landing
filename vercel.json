@@ -10,5 +10,12 @@
         }
       ]
     }
+  ],
+  "redirects": [
+    {
+      "source": "/masterclass",
+      "destination": "https://masterclass.dataconsentido.com/",
+      "permanent": true
+    }
   ]
 }
