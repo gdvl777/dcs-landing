@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Webinar gratuito | DataConSentido</title>
+  <meta name="robots" content="noindex,nofollow" />
+
+  <style>
+    body{margin:0;background:#0d1b2a;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:18px}
+    .wrap{max-width:920px;width:100%}
+    img.hero{width:100%;height:auto;border-radius:18px;box-shadow:0 18px 60px rgba(0,0,0,.35);cursor:pointer}
+    .hint{margin-top:10px;color:#cbd5e1;font:600 13px/1.4 Arial;text-align:center;opacity:.9}
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);display:none;align-items:center;justify-content:center;z-index:9999;padding:16px}
+    .modal{width:min(720px,100%);background:#fff;border-radius:16px;overflow:hidden;position:relative}
+    .modal-h{padding:14px 16px;border-bottom:1px solid #e5e7eb;font:800 16px Arial;color:#0f172a}
+    .close{position:absolute;top:10px;right:12px;width:34px;height:34px;border-radius:999px;border:1px solid #e5e7eb;background:#fff;cursor:pointer;font:900 18px/34px Arial}
+    form{padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    label{display:flex;flex-direction:column;gap:6px;font:600 12px Arial;color:#334155}
+    input,select{border:1px solid #e2e8f0;border-radius:12px;padding:12px;font:14px Arial}
+    .full{grid-column:1/-1}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{border:0;border-radius:999px;padding:12px 16px;font:800 14px Arial;cursor:pointer}
+    .btn-primary{background:#0a5275;color:#fff}
+    .btn-primary[disabled]{background:#94a3b8;cursor:not-allowed}
+    .msg{grid-column:1/-1;border-radius:12px;padding:10px 12px;font:700 13px Arial}
+    .ok{background:#ecfdf5;color:#065f46;border:1px solid #a7f3d0}
+    .err{background:#fff1f2;color:#9f1239;border:1px solid #fecdd3}
+    .foot{padding:0 16px 16px;font:600 12px Arial;color:#64748b}
+    .foot a{color:#0a5275}
+  </style>
+<script> var huOptions = {"appID":"wwwdataconsentidocom-e6ced6c","currentLanguage":"es","blocking":true,"globalCookie":false} </script>
+<script src="https://cdn.hu-manity.co/hu-banner.min.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+
+  <div class="wrap">
+    <img class="hero" src="webinar\arte-webinar.png" alt="Webinar DataConSentido" onclick="openModal()" />
+    <div class="hint">Haz click en la imagen para registrarte.</div>
+  </div>
+
+  <div class="overlay" id="ov">
+    <div class="modal">
+      <div class="modal-h">Registro al webinar (gratuito)</div>
+      <button class="close" onclick="closeModal()" aria-label="Cerrar">×</button>
+
+      <form id="f" onsubmit="return submitForm(event)">
+        <label>Nombre y apellido
+          <input name="name" required placeholder="María Pérez" />
+        </label>
+
+        <label>Correo
+          <input name="email" type="email" required placeholder="maria@empresa.com" />
+        </label>
+
+        <label class="full">Institución/Empresa
+          <input name="org" required placeholder="Empresa X" />
+        </label>
+
+        <label class="full">Rol
+          <select name="role" required>
+            <option value="">Selecciona…</option>
+            <option>Alta Dirección</option>
+            <option>Legal/Compliance</option>
+            <option>TI/Seguridad</option>
+            <option>DPO/DPD</option>
+            <option>Otro</option>
+          </select>
+        </label>
+
+        <label class="full">
+          <span style="display:flex;gap:10px;align-items:flex-start;font-weight:700">
+            <input type="checkbox" name="consent" value="1" style="margin-top:2px" />
+            Acepto recibir comunicaciones informativas relacionadas con este webinar (opt-out disponible).
+          </span>
+        </label>
+
+        <div class="full row">
+          <button id="btn" class="btn btn-primary" type="submit">Enviar registro</button>
+        </div>
+
+        <div id="status" class="msg" style="display:none"></div>
+
+        <div class="foot full">
+          Al registrarte aceptas nuestra
+          <a href="https://www.dataconsentido.com/politica-de-privacidad" target="_blank" rel="noreferrer">aviso de privacidad</a>.
+        </div>
+      </form>
+    </div>
+  </div>
+
+<script>
+  function openModal(){ document.getElementById('ov').style.display='flex'; }
+  function closeModal(){ document.getElementById('ov').style.display='none'; }
+
+  async function submitForm(e){
+    e.preventDefault();
+
+    const form = document.getElementById('f');
+    const btn  = document.getElementById('btn');
+    const box  = document.getElementById('status');
+
+    const setBtn = (text, disabled) => {
+      if (!btn) return;
+      btn.disabled = !!disabled;
+      btn.textContent = text;
+    };
+
+    const showMsg = (kind, text) => {
+      box.className = "msg " + kind; // ok | err
+      box.textContent = text;
+      box.style.display = "block";
+    };
+
+    const fd = new FormData(form);
+    const data = Object.fromEntries(fd.entries());
+    data.consent = fd.get("consent") ? "1" : "0";
+
+    // UTM/referrer
+    const qs = new URLSearchParams(location.search);
+    data.utm_source   = qs.get('utm_source') || document.referrer || 'direct';
+    data.utm_medium   = qs.get('utm_medium') || '';
+    data.utm_campaign = qs.get('utm_campaign') || 'webinar-dpo-informe-mensual';
+
+    // Identificador del evento
+    data.event = "webinar_dpo_informe_mensual";
+    data.event_date = "2026-01-28";
+    data.event_time = "19h30-21h30";
+
+    setBtn("Enviando…", true);
+    box.style.display = "none";
+
+    try{
+      const r = await fetch("/api/register", {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify(data)
+      });
+
+      // Lee respuesta (idealmente JSON desde /api/register)
+      let out = {};
+      try { out = await r.json(); } catch { out = {}; }
+
+      if(!r.ok || out.ok === false){
+        throw new Error(out.error || ("HTTP " + r.status));
+      }
+
+      form.reset();
+
+      // Mensaje distinto si ya estaba registrado
+      if (out.deduped) {
+        showMsg("ok", "ℹ️ Ya estabas registrado(a). Te enviaremos recordatorios al mismo correo.");
+      } else {
+        showMsg("ok", "✅ Registro recibido. Revisa tu correo para la confirmación.");
+      }
+
+      // ✅ Reset del botón también aquí (no solo en finally)
+      setBtn("Enviar registro", false);
+
+    }catch(err){
+      console.error(err);
+      showMsg("err", "❌ Ocurrió un error al registrar. Intenta nuevamente en unos minutos.");
+
+      // ✅ Reset del botón también aquí
+      setBtn("Enviar registro", false);
+    }
+
+    return false;
+  }
+</script>
+</body>
+</html>
