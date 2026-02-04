@@ -172,3 +172,88 @@ a { color: inherit; text-decoration: none; }
   flex-wrap: wrap;
   gap: 10px;
 }
+
+  infoBtn: {
+    marginLeft: 10,
+    width: 26,
+    height: 26,
+    borderRadius: 999,
+    border: "1px solid rgba(232,238,252,.22)",
+    background: "rgba(255,255,255,.06)",
+    color: "#e8eefc",
+    cursor: "pointer",
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontWeight: 900,
+    lineHeight: 1
+  },
+  modalOverlay: {
+    position: "fixed",
+    inset: 0,
+    background: "rgba(0,0,0,.55)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 18,
+    zIndex: 9999
+  },
+  modalCard: {
+    width: "min(820px, 100%)",
+    background: "rgba(11,18,32,.96)",
+    border: "1px solid rgba(232,238,252,.14)",
+    borderRadius: 18,
+    boxShadow: "0 18px 80px rgba(0,0,0,.55)",
+    padding: 16
+  },
+  modalHeader: {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: 12
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: 900,
+    margin: 0,
+    lineHeight: 1.25
+  },
+  modalClose: {
+    background: "transparent",
+    border: "1px solid rgba(232,238,252,.20)",
+    color: "#e8eefc",
+    borderRadius: 12,
+    cursor: "pointer",
+    padding: "8px 10px",
+    fontWeight: 700
+  },
+  modalBody: {
+    marginTop: 10,
+    color: "rgba(232,238,252,.88)",
+    lineHeight: 1.6,
+    fontSize: 14
+  },
+  modalSectionTitle: {
+    margin: "14px 0 6px",
+    fontSize: 13,
+    fontWeight: 900,
+    letterSpacing: 0.2,
+    opacity: 0.95
+  },
+  modalList: {
+    margin: "6px 0 0 18px"
+  },
+  checkboxRow: {
+    display: "flex",
+    alignItems: "flex-start",
+    justifyContent: "space-between",
+    gap: 12
+  },
+  checkboxText: {
+    display: "flex",
+    alignItems: "flex-start",
+    gap: 10
+  }
+
+
+
