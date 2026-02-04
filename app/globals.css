@@ -641,5 +641,34 @@ a { color: inherit; text-decoration: none; }
     padding: 12px !important;
   }
 }
+/* ====== Calificación directa (responsive) ====== */
+.directGridUI{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
 
+@media (max-width: 860px){
+  .directGridUI{
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 520px){
+  .uiCheckCard{
+    padding: 12px !important;
+  }
+  .uiCheckLabel{
+    gap: 12px !important;
+  }
+  .uiInfoBtn{
+    width: 32px !important;
+    height: 32px !important;
+  }
+  /* Evita que el texto quede muy grande y haga “saltos” raros */
+  .uiCheckCard span{
+    font-size: 15px;
+    line-height: 1.35;
+  }
+}
 
