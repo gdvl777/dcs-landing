@@ -59,6 +59,17 @@ export default function CalcularMTGEPage() {
   const [permanenciaIdx, setPermanenciaIdx] = useState(0);
   const [geografiaIdx, setGeografiaIdx] = useState(0);
 
+  // ✅ Tooltip / Modal (Calificación directa)
+  const [openHelpKey, setOpenHelpKey] = useState(null);
+
+  function openHelp(key) {
+    setOpenHelpKey(key);
+  }
+
+  function closeHelp() {
+    setOpenHelpKey(null);
+  }
+
   // Bloque opcional: calificación directa
   const directCases = [
     { key: "salud_sensible", label: "Tratamientos relativos a la salud / datos sensibles" },
@@ -70,6 +81,97 @@ export default function CalcularMTGEPage() {
     { key: "transferencias", label: "Transferencias sistemáticas dentro o fuera del país" },
     { key: "courier", label: "Mensajería acelerada/expresa/courier" }
   ];
+
+  const directHelp = {
+    salud_sensible: {
+      what: "Tratamientos que involucran datos sensibles o salud, por su naturaleza requieren mayor nivel de control.",
+      examples: [
+        "Historias clínicas, diagnósticos, tratamientos, exámenes, recetas.",
+        "Datos sobre discapacidad, salud mental, biometría usada con fines médicos."
+      ],
+      quickCheck: [
+        "¿Tu organización presta servicios de salud o gestiona expedientes médicos?",
+        "¿Guardas información clínica o de condición médica de personas?"
+      ]
+    },
+    perfilamiento: {
+      what: "Evaluación automatizada para analizar o predecir aspectos de una persona y que produce o puede producir efectos relevantes.",
+      examples: [
+        "Scoring automatizado para aprobar/rechazar servicios (crédito, seguros, becas).",
+        "Segmentación automatizada con decisiones que afectan acceso/precios/beneficios."
+      ],
+      quickCheck: [
+        "¿Un sistema decide o influye fuertemente decisiones sobre personas sin revisión humana suficiente?",
+        "¿El resultado afecta derechos, acceso a servicios o condiciones económicas?"
+      ]
+    },
+    videovigilancia: {
+      what: "Monitoreo sistemático de personas en espacios de acceso público, usualmente con cámaras u otros sensores.",
+      examples: [
+        "CCTV en entradas, pasillos, parqueaderos, salas de atención.",
+        "Monitoreo permanente en zonas públicas de una instalación."
+      ],
+      quickCheck: [
+        "¿Hay cámaras grabando de forma continua o habitual?",
+        "¿Se puede identificar directa o indirectamente a personas?"
+      ]
+    },
+    biometricos_geo: {
+      what: "Uso de biometría o geolocalización para identificar/validar identidad o rastrear ubicación.",
+      examples: [
+        "Huella/rostro para control de acceso o asistencia.",
+        "Tracking por GPS de personal/usuarios/vehículos asociado a personas."
+      ],
+      quickCheck: [
+        "¿Usas huella/rostro/iris/voz para autenticar o registrar?",
+        "¿Capturas ubicación precisa o recorridos vinculados a personas?"
+      ]
+    },
+    crediticia: {
+      what: "Tratamiento para evaluar solvencia, riesgo económico o información crediticia/financiera con impacto en decisiones.",
+      examples: [
+        "Evaluación de riesgo para crédito, seguros, arriendos.",
+        "Consulta/gestión de buró, score, historial de pagos."
+      ],
+      quickCheck: [
+        "¿Tu proceso define aprobación/rechazo basado en capacidad de pago o historial?",
+        "¿El resultado afecta condiciones económicas (tasa, prima, cupo, etc.)?"
+      ]
+    },
+    nna: {
+      what: "Tratamiento sistemático de datos de niñas, niños y adolescentes en contextos institucionales/educativos o plataformas.",
+      examples: [
+        "Plataformas educativas con registros de rendimiento/asistencia.",
+        "Gestión de datos de estudiantes menores y sus representantes."
+      ],
+      quickCheck: [
+        "¿Tus titulares principales son menores de edad?",
+        "¿Recolectas datos de comportamiento/actividad de menores en plataformas?"
+      ]
+    },
+    transferencias: {
+      what: "Transferencias recurrentes/estructurales de datos como parte del flujo del negocio (internas o internacionales).",
+      examples: [
+        "Proveedores cloud fuera del país con intercambio continuo.",
+        "Matriz-sucursal, call centers, procesadores externos que reciben datos periódicamente."
+      ],
+      quickCheck: [
+        "¿Envías datos a terceros (proveedores) de forma frecuente y no solo puntual?",
+        "¿Existen transferencias internacionales como parte normal del servicio?"
+      ]
+    },
+    courier: {
+      what: "Tratamiento sistemático propio de mensajería/courier: guías, entregas, tracking, destinatarios, remitentes.",
+      examples: [
+        "Gestión de envíos con datos de remitente/destinatario y tracking.",
+        "Validaciones de entrega, firmas, georreferenciación de entregas."
+      ],
+      quickCheck: [
+        "¿Tu operación principal es entrega/retención de guías y datos de envío?",
+        "¿Mantienes tracking vinculado a personas?"
+      ]
+    }
+  };
 
   const [directSelected, setDirectSelected] = useState({});
 
@@ -159,8 +261,7 @@ export default function CalcularMTGEPage() {
         geografiaOptions[geografiaIdx].points
       )} pts)`,
       `Puntaje total (P): ${fmt(total)} pts`,
-      `Resultado: ${
-        isGranEscala ? "CALIFICA como Gran Escala" : "NO califica como Gran Escala"
+      `Resultado: ${isGranEscala ? "CALIFICA como Gran Escala" : "NO califica como Gran Escala"
       }`,
       isDirect ? "Nota: Marcaste al menos un caso de calificación directa." : ""
     ].filter(Boolean);
@@ -239,16 +340,31 @@ export default function CalcularMTGEPage() {
 
           <div style={styles.directGrid}>
             {directCases.map((c) => (
-              <label key={c.key} style={styles.checkboxItem}>
-                <input
-                  type="checkbox"
-                  checked={Boolean(directSelected[c.key])}
-                  onChange={() => toggleDirect(c.key)}
-                />
-                <span>{c.label}</span>
-              </label>
+              <div key={c.key} style={styles.checkboxItem}>
+                <div style={styles.checkboxRow}>
+                  <label style={styles.checkboxText}>
+                    <input
+                      type="checkbox"
+                      checked={Boolean(directSelected[c.key])}
+                      onChange={() => toggleDirect(c.key)}
+                    />
+                    <span>{c.label}</span>
+                  </label>
+
+                  <button
+                    type="button"
+                    style={styles.infoBtn}
+                    onClick={() => openHelp(c.key)}
+                    aria-label={`Más información sobre: ${c.label}`}
+                    title="Más información"
+                  >
+                    i
+                  </button>
+                </div>
+              </div>
             ))}
           </div>
+
         </section>
 
         <section style={{ ...styles.card, ...styles.resultCard }}>
@@ -378,7 +494,7 @@ const styles = {
 
   note: { marginTop: 8, fontSize: 12, opacity: 0.9 },
 
-    infoBtn: {
+  infoBtn: {
     marginLeft: 10,
     width: 26,
     height: 26,
