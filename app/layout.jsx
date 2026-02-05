@@ -1,6 +1,7 @@
 // app/layout.jsx
 import "./globals.css";
 import Navbar from "./components/Navbar";
+import Script from "next/script";
 
 export const metadata = {
   title: "DataConSentido",
@@ -8,11 +9,35 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const GA_ID = process.env.NEXT_PUBLIC_GA_ID; // ej: G-XXXXXXXXXX
+
   return (
     <html lang="es">
       <body>
+        {/* ✅ Navbar fijo/global */}
         <Navbar />
         <div className="app-shell">{children}</div>
+
+        {/* ✅ Google Analytics 4 (solo si existe GA_ID) */}
+        {GA_ID ? (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="ga4-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}', {
+                  anonymize_ip: true,
+                  page_path: window.location.pathname,
+                });
+              `}
+            </Script>
+          </>
+        ) : null}
       </body>
     </html>
   );
