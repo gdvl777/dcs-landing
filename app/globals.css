@@ -807,3 +807,9 @@ a {
   }
 }
 
+@media (max-width: 900px){
+  .dpoGrid2Fix{
+    grid-template-columns: 1fr !important;
+  }
+}
+
