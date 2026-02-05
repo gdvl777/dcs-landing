@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const [navOpen, setNavOpen] = useState(false);
   const [open, setOpen] = useState(false);
 
   const links = useMemo(
@@ -65,22 +66,23 @@ export default function Navbar() {
           <span className="dot" />
         </button>
 
+      </nav>
 
-        {open ? (
-          <div className="navMobile" role="dialog" aria-modal="true">
-            {links.map((l) => (
-              <a
-                key={l.href}
-                href={l.href}
-                onClick={close}
-                className={`navMobileLink ${isActive(l.href) ? "isActiveMobile" : ""}`}
-                aria-current={isActive(l.href) ? "page" : undefined}
-              >
-                {l.label}
-              </a>
-            ))}
-          </div>
-        ) : null}
+      {open ? (
+        <div className="navMobile" role="dialog" aria-modal="true">
+          {links.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              onClick={close}
+              className={`navMobileLink ${isActive(l.href) ? "isActiveMobile" : ""}`}
+              aria-current={isActive(l.href) ? "page" : undefined}
+            >
+              {l.label}
+            </a>
+          ))}
+        </div>
+      ) : null}
     </header>
   );
 }
