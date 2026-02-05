@@ -477,7 +477,32 @@ export default function CalcularMTGEPage() {
 
           {/* Resumen operativo */}
           <section style={styles.card}>
-            <div style={styles.cardTitle}>Según la resolución No. <a href="https://spdp.gob.ec/r52026/" target="_blank" rel="noopener noreferrer"><span className="gradText">SPDP-SPD-2026-0005-R </span> </a> (resumen operativo)</div>
+            <div style={styles.cardTitle}>
+              Según la resolución No.{" "}
+              <a
+                href="https://spdp.gob.ec/r52026/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="gradLink"
+              >
+                <span className="gradText">SPDP-SPD-2026-0005-R</span>
+                <svg
+                  className="extIcon"
+                  viewBox="0 0 24 24"
+                  width="16"
+                  height="16"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h7v2H7v10h10v-5h2v7H5V5z"
+                  />
+                </svg>
+              </a>{" "}
+              (resumen operativo)
+            </div>
+
             <ul style={{ margin: "10px 0 0 18px", lineHeight: 1.6, opacity: 0.92 }}>
               <li>
                 La calificación de <b>gran escala</b> puede resultar por <b>calificación directa</b>{" "}
@@ -886,36 +911,36 @@ const styles = {
     flexWrap: "wrap"
   },
   actionDock: {
-  position: "fixed",
-  left: 0,
-  right: 0,
-  bottom: 14,
-  zIndex: 99999,
-  display: "flex",
-  justifyContent: "center",
-  padding: "0 14px",
-  pointerEvents: "none", // ✅ importante: no bloquea scroll en el resto
-},
+    position: "fixed",
+    left: 0,
+    right: 0,
+    bottom: 14,
+    zIndex: 99999,
+    display: "flex",
+    justifyContent: "center",
+    padding: "0 14px",
+    pointerEvents: "none", // ✅ importante: no bloquea scroll en el resto
+  },
 
-actionDockInner: {
-  pointerEvents: "auto",
-  width: "min(980px, 100%)",
-  display: "flex",
-  gap: 10,
-  flexWrap: "wrap",
-  padding: 10,
-  borderRadius: 18,
-  border: "1px solid rgba(232,238,252,.14)",
-  background: "rgba(11,18,32,.72)",
-  boxShadow: "0 18px 60px rgba(0,0,0,.35)",
-  backdropFilter: "blur(12px)",
-  WebkitBackdropFilter: "blur(12px)",
-},
+  actionDockInner: {
+    pointerEvents: "auto",
+    width: "min(980px, 100%)",
+    display: "flex",
+    gap: 10,
+    flexWrap: "wrap",
+    padding: 10,
+    borderRadius: 18,
+    border: "1px solid rgba(232,238,252,.14)",
+    background: "rgba(11,18,32,.72)",
+    boxShadow: "0 18px 60px rgba(0,0,0,.35)",
+    backdropFilter: "blur(12px)",
+    WebkitBackdropFilter: "blur(12px)",
+  },
 
-dockBtn: {
-  flex: "1 1 220px",
-  minHeight: 48,
-},
+  dockBtn: {
+    flex: "1 1 220px",
+    minHeight: 48,
+  },
 
   ctaTitle: { fontWeight: 950, marginBottom: 4 },
   ctaBtns: { display: "flex", gap: 10, flexWrap: "wrap" }
