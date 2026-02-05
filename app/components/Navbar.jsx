@@ -13,7 +13,7 @@ export default function Navbar() {
       { href: "/dpo", label: "Servicios DPO" },
       { href: "/formacion-dpo", label: "Formación DPO" },
       { href: "/calcular-mtge", label: "Calculadora MTGE" },
-      { href: "/politica-de-privacidad", label: "Privacidad" }
+  
     ],
     []
   );
