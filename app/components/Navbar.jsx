@@ -10,7 +10,7 @@ export default function Navbar() {
 
   const links = useMemo(
     () => [
-      { href: "/servicios-dpo", label: "Servicios DPO" },
+      { href: "/dpo", label: "Servicios DPO" },
       { href: "/formacion-dpo", label: "Formación DPO" },
       { href: "/calcular-mtge", label: "Calculadora MTGE" },
       { href: "/politica-de-privacidad", label: "Privacidad" }
