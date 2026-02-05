@@ -54,33 +54,33 @@ export default function Navbar() {
 
         {/* Mobile */}
         <button
-          className="navBurger"
           type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Abrir menú"
-          aria-expanded={open}
+          className="navBurgerDots"
+          aria-label={navOpen ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={navOpen ? "true" : "false"}
+          onClick={() => setNavOpen((v) => !v)}
         >
-          <span className="burgerLine" />
-          <span className="burgerLine" />
-          <span className="burgerLine" />
+          <span className="dot" />
+          <span className="dot" />
+          <span className="dot" />
         </button>
-      </nav>
 
-      {open ? (
-        <div className="navMobile" role="dialog" aria-modal="true">
-          {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              onClick={close}
-              className={`navMobileLink ${isActive(l.href) ? "isActiveMobile" : ""}`}
-              aria-current={isActive(l.href) ? "page" : undefined}
-            >
-              {l.label}
-            </a>
-          ))}
-        </div>
-      ) : null}
+
+        {open ? (
+          <div className="navMobile" role="dialog" aria-modal="true">
+            {links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                onClick={close}
+                className={`navMobileLink ${isActive(l.href) ? "isActiveMobile" : ""}`}
+                aria-current={isActive(l.href) ? "page" : undefined}
+              >
+                {l.label}
+              </a>
+            ))}
+          </div>
+        ) : null}
     </header>
   );
 }

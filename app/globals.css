@@ -368,6 +368,20 @@ a {
   border-radius: 999px;
 }
 
+.navBurgerDots{
+  width: 44px;height: 44px;border-radius: 999px;
+  border: 1px solid rgba(232,238,252,.14);
+  background: rgba(255,255,255,.06);
+  backdrop-filter: blur(10px);
+  display:flex;align-items:center;justify-content:center;gap:5px;
+}
+
+.navBurgerDots .dot{
+  width:4px;height:4px;border-radius:999px;
+  background: rgba(232,238,252,.85);
+}
+
+
 /* dropdown mobile */
 .navMobile {
   pointer-events: auto;
