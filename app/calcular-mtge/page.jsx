@@ -233,7 +233,6 @@ export default function CalcularMTGEPage() {
 
   const totalFinal = isDirect ? 0 : total;
   const isGranEscala = isDirect || (isComplete && totalFinal >= 6);
-
   const variablesDisabled = isDirect;
 
   // =========================
@@ -266,7 +265,6 @@ export default function CalcularMTGEPage() {
                 e.target.blur();
               }}
             >
-
               {options.map((o, i) => (
                 <option key={o.label} value={i}>
                   {o.label}
@@ -352,7 +350,12 @@ export default function CalcularMTGEPage() {
 
     lines.push(
       "",
-      `Resultado: ${isGranEscala ? "CALIFICA como Gran Escala" : isComplete ? "NO califica como Gran Escala" : "INCOMPLETO"
+      `Resultado: ${
+        isGranEscala
+          ? "CALIFICA como Gran Escala"
+          : isComplete
+          ? "NO califica como Gran Escala"
+          : "INCOMPLETO"
       }`
     );
 
@@ -372,7 +375,7 @@ export default function CalcularMTGEPage() {
           para evidenciar cumplimiento cuando una operación califica como gran escala.
         </p>
 
-        <div style={styles.obligGrid}>
+        <div className="granGrid" style={styles.obligGrid}>
           <div style={styles.obligItem}>
             <div style={styles.obligTitle}>Gobernanza y roles</div>
             <ul style={styles.obligList}>
@@ -436,7 +439,7 @@ export default function CalcularMTGEPage() {
               className="uiBtn uiBtnPrimary"
               target="_blank"
               rel="noopener noreferrer"
-              style={styles.ctaBtnPrimary}
+              style={{ textDecoration: "none", whiteSpace: "nowrap" }}
             >
               Agendar diagnóstico
             </a>
@@ -444,9 +447,9 @@ export default function CalcularMTGEPage() {
             <a
               href="https://wa.me/593992801005"
               target="_blank"
-              className="uiBtn uiBtnPrimary"
+              className="uiBtn uiBtnGhost"
               rel="noopener noreferrer"
-              style={styles.ctaBtn}
+              style={{ textDecoration: "none", whiteSpace: "nowrap" }}
             >
               WhatsApp
             </a>
@@ -506,17 +509,14 @@ export default function CalcularMTGEPage() {
     );
   }
 
-
-
-
   // =========================
   // Render
   // =========================
   return (
     <main style={styles.page}>
-      <div style={styles.container}>
+      <div className="container">
         <header style={styles.header}>
-          <div>
+          <div style={{ minWidth: 0 }}>
             <h1 style={styles.h1}>Calculadora MTGE</h1>
             <p style={styles.sub}>
               Primero revisa <b>calificación directa</b>. Si no aplica, calcula el puntaje con las{" "}
@@ -525,26 +525,23 @@ export default function CalcularMTGEPage() {
           </div>
 
           <div style={styles.headerBtns}>
-            <button onClick={copySummary} className="uiBtn uiBtnPrimary">
+            <button onClick={copySummary} className="uiBtn uiBtnPrimary" type="button">
               <IconCopy className="uiIcon" />
               <span>Copiar resumen</span>
             </button>
 
-            <button onClick={resetAll} className="uiBtn uiBtnGhost">
+            <button onClick={resetAll} className="uiBtn uiBtnGhost" type="button">
               <IconReset className="uiIcon" />
               <span>Reset</span>
             </button>
           </div>
-
-
-
         </header>
 
         {/* ✅ Opción 2: Sección basada en resolución con borde naranja/amarillo */}
         <MarcoResolucionBox />
 
         {/* 1) Calificación directa */}
-        <section style={{ ...styles.card, position: "relative", overflow: "hidden" }}>
+        <section style={{ ...styles.card, position: "relative" }}>
           {isDirect ? (
             <div style={styles.directOverlay} aria-hidden="true">
               <div style={styles.directOverlayText}>CALIFICA COMO GRAN ESCALA</div>
@@ -556,7 +553,8 @@ export default function CalcularMTGEPage() {
             Si aplica alguno de estos supuestos, la calificación como gran escala es directa.
           </p>
 
-          <div style={styles.directGrid} className="directGridUI">
+          {/* ✅ USAR SOLO CLASE (evita conflicto inline) */}
+          <div className="directGridUI">
             {directCases.map((c) => (
               <div key={c.key} className="uiCheckCard">
                 <div className="uiCheckRow">
@@ -581,8 +579,6 @@ export default function CalcularMTGEPage() {
                 </div>
               </div>
             ))}
-
-
           </div>
 
           {isDirect ? (
@@ -654,7 +650,7 @@ export default function CalcularMTGEPage() {
         {/* Resultado */}
         <section style={{ ...styles.card, ...styles.resultCard }}>
           <div style={styles.resultTop}>
-            <div>
+            <div style={{ minWidth: 0 }}>
               <div style={styles.resultLabel}>
                 {isDirect ? "Resultado" : "Puntaje total (P)"}
               </div>
@@ -667,8 +663,8 @@ export default function CalcularMTGEPage() {
                 {isDirect
                   ? "Determinación por calificación directa (no aplica cálculo por puntaje)."
                   : isComplete
-                    ? "P = suma de las 6 variables"
-                    : "Selecciona una opción en cada variable para calcular P."}
+                  ? "P = suma de las 6 variables"
+                  : "Selecciona una opción en cada variable para calcular P."}
               </div>
             </div>
 
@@ -738,22 +734,31 @@ export default function CalcularMTGEPage() {
   );
 }
 
+/**
+ * NOTA IMPORTANTE:
+ * - Quité "styles.container" y uso ".container" del CSS global para que el padding responsive funcione.
+ * - Quité inline de grid directa para evitar conflictos (ahora depende de "directGridUI" y clases ui*).
+ * - Si tu CSS global incluye:
+ *   html, body { overflow-x:hidden; max-width:100%; }
+ *   .container { padding responsive... }
+ *   .uiCheckRow/.uiCheckLabel min-width:0 + wrap...
+ *   entonces ya no se corta en celular.
+ */
 const styles = {
   page: { padding: 24 },
-  container: { maxWidth: 980, margin: "0 auto" },
 
   header: {
     display: "flex",
     alignItems: "flex-start",
     justifyContent: "space-between",
     gap: 16,
-    marginBottom: 18
+    marginBottom: 18,
+    flexWrap: "wrap"
   },
   h1: { margin: 0, fontSize: 30, letterSpacing: -0.3 },
   sub: { margin: "8px 0 0 0", opacity: 0.9 },
 
-  headerBtns: { display: "flex", gap: 10 },
-
+  headerBtns: { display: "flex", gap: 10, flexWrap: "wrap" },
 
   card: {
     background: "rgba(255,255,255,.06)",
@@ -785,23 +790,14 @@ const styles = {
     alignItems: "center",
     justifyContent: "space-between",
     padding: "10px 0",
-    borderTop: "1px solid rgba(232,238,252,.10)"
+    borderTop: "1px solid rgba(232,238,252,.10)",
+    flexWrap: "wrap"
   },
   rowDisabled: { opacity: 0.55 },
 
   rowLeft: { flex: 1, minWidth: 240 },
   rowRight: { width: 420, maxWidth: "100%" },
   rowTitle: { fontWeight: 650 },
-
-  select: {
-    width: "100%",
-    padding: "10px 12px",
-    borderRadius: 12,
-    border: "1px solid rgba(232,238,252,.20)",
-    background: "rgba(11,18,32,.85)",
-    color: "#e8eefc",
-    outline: "none"
-  },
 
   noAplicaPill: {
     width: "100%",
@@ -815,35 +811,6 @@ const styles = {
   },
 
   small: { fontSize: 12, opacity: 0.85, margin: "8px 0 0 0" },
-
-  directGrid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 10,
-    marginTop: 10
-  },
-  checkboxItem: {
-    display: "flex",
-    gap: 10,
-    alignItems: "flex-start",
-    padding: 10,
-    borderRadius: 14,
-    border: "1px solid rgba(232,238,252,.12)",
-    background: "rgba(11,18,32,.35)"
-  },
-
-  checkboxRow: {
-    display: "flex",
-    alignItems: "flex-start",
-    justifyContent: "space-between",
-    gap: 12,
-    width: "100%"
-  },
-  checkboxText: {
-    display: "flex",
-    alignItems: "flex-start",
-    gap: 10
-  },
 
   directNotice: {
     marginTop: 12,
@@ -871,12 +838,13 @@ const styles = {
     display: "flex",
     gap: 16,
     justifyContent: "space-between",
-    alignItems: "flex-start"
+    alignItems: "flex-start",
+    flexWrap: "wrap"
   },
   resultLabel: { opacity: 0.9, fontWeight: 650 },
   resultValue: { fontSize: 40, fontWeight: 900, marginTop: 6 },
 
-  badgeWrap: { textAlign: "right", minWidth: 260 },
+  badgeWrap: { textAlign: "right", minWidth: 260, maxWidth: "100%" },
   badge: {
     display: "inline-block",
     padding: "10px 12px",
@@ -890,22 +858,6 @@ const styles = {
   badgeNeutral: { background: "rgba(255, 255, 255, .08)" },
 
   note: { marginTop: 8, fontSize: 12, opacity: 0.9 },
-
-  infoBtn: {
-    marginLeft: 10,
-    width: 26,
-    height: 26,
-    borderRadius: 999,
-    border: "1px solid rgba(232,238,252,.22)",
-    background: "rgba(255,255,255,.06)",
-    color: "#e8eefc",
-    cursor: "pointer",
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    fontWeight: 900,
-    lineHeight: 1
-  },
 
   modalOverlay: {
     position: "fixed",
@@ -1016,67 +968,11 @@ const styles = {
   ctaTitle: { fontWeight: 950, marginBottom: 4 },
   ctaBtns: { display: "flex", gap: 10, flexWrap: "wrap" },
 
-  ctaBtnPrimary: {
-    whiteSpace: "nowrap",
-    textDecoration: "none",
-    background: "rgba(80, 200, 120, .22)",
-    border: "1px solid rgba(80, 200, 120, .34)",
-    color: "#e8eefc",
-    padding: "12px 14px",
-    borderRadius: 14,
-    fontWeight: 950,
-    cursor: "pointer"
-  },
-  ctaBtn: {
-    whiteSpace: "nowrap",
-    textDecoration: "none",
-    background: "transparent",
-    border: "1px solid rgba(232,238,252,.22)",
-    color: "#e8eefc",
-    padding: "12px 14px",
-    borderRadius: 14,
-    fontWeight: 900,
-    cursor: "pointer"
-  },
   glowWarn: {
     border: "1px solid rgba(255, 193, 7, .55)",
     boxShadow:
       "0 0 0 1px rgba(255, 193, 7, .15), 0 0 22px rgba(255, 193, 7, .18), 0 18px 60px rgba(0,0,0,.25)",
     background:
       "linear-gradient(180deg, rgba(255,193,7,.06), rgba(255,255,255,.06))"
-  },
-
-  btnIcon: {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 10,
-    padding: "11px 14px",
-    borderRadius: 14,
-    cursor: "pointer",
-    border: "1px solid rgba(6,182,212,.28)",
-    background:
-      "linear-gradient(90deg, rgba(34,197,94,.22), rgba(6,182,212,.20), rgba(245,158,11,.18))",
-    color: "#e8eefc",
-    fontWeight: 950,
-    boxShadow:
-      "0 14px 40px rgba(0,0,0,.25), 0 0 0 3px rgba(6,182,212,.08)",
-    transition: "transform .12s ease, filter .12s ease, box-shadow .12s ease"
-  },
-
-  btnIconGhost: {
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 10,
-    padding: "11px 14px",
-    borderRadius: 14,
-    cursor: "pointer",
-    border: "1px solid rgba(232,238,252,.20)",
-    background: "rgba(255,255,255,.06)",
-    color: "#e8eefc",
-    fontWeight: 900,
-    boxShadow: "0 14px 40px rgba(0,0,0,.18)",
-    transition: "transform .12s ease, filter .12s ease, box-shadow .12s ease"
-  },
-
-
+  }
 };
