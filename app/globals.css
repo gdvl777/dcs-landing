@@ -798,4 +798,14 @@ a {
   hyphens: auto;
 }
 
+@media (max-width: 980px){
+  /* Home hero layout */
+  .heroGridFix{ grid-template-columns: 1fr !important; }
+}
+@media (max-width: 980px){
+  /* Cards 3 -> 1 */
+  .cards3Fix{ grid-template-columns: 1fr !important; }
+}
+
+
 }
