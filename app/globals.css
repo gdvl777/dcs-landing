@@ -1,27 +1,39 @@
+/* app/globals.css */
+
+/* =========================
+   THEME / VARIABLES
+========================= */
 :root {
   color-scheme: dark;
 
   --bg: #0b1220;
-  --card: rgba(255, 255, 255, .06);
-  --border: rgba(232, 238, 252, .12);
+  --card: rgba(255, 255, 255, 0.06);
+  --border: rgba(232, 238, 252, 0.12);
   --text: #e8eefc;
-  --muted: rgba(232, 238, 252, .78);
+  --muted: rgba(232, 238, 252, 0.78);
 
-  --accentA: #22c55e;
-  --accentB: #06b6d4;
-  --accentC: #f59e0b;
+  /* acentos */
+  --accentA: #22c55e; /* verde */
+  --accentB: #06b6d4; /* cyan */
+  --accentC: #f59e0b; /* ámbar */
   --accentText: #081018;
 
-  --btn: rgba(255, 255, 255, .10);
-  --btnBorder: rgba(232, 238, 252, .18);
-  --shadow: 0 18px 60px rgba(0, 0, 0, .25);
+  --btn: rgba(255, 255, 255, 0.1);
+  --btnBorder: rgba(232, 238, 252, 0.18);
+  --shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
 }
 
-* { box-sizing: border-box; }
+/* =========================
+   RESET / BASE
+========================= */
+* {
+  box-sizing: border-box;
+}
 
-html, body {
+html,
+body {
   max-width: 100%;
-  overflow-x: hidden;
+  overflow-x: hidden; /* ✅ evita corte/scroll lateral */
 }
 
 body {
@@ -36,6 +48,9 @@ a {
   text-decoration: none;
 }
 
+/* =========================
+   LAYOUT CONTAINER
+========================= */
 .container {
   width: 100%;
   max-width: 1080px;
@@ -44,194 +59,35 @@ a {
 }
 
 @media (max-width: 520px) {
-  .container { padding: 14px; }
+  .container {
+    padding: 14px;
+  }
 }
 
-/* ===== NAV premium fixed (global) ===== */
-
-.app-shell {
-  padding-top: 92px; /* deja espacio para el nav fijo */
+/* ✅ IMPORTANTE: evita “corte” por grids/textos en mobile */
+.hero,
+.card,
+.section,
+.grid3,
+.steps {
+  min-width: 0;
+}
+.hero *,
+.card *,
+.section * {
+  min-width: 0;
 }
 
-/* wrapper fijo centrado */
-.nav-wrap {
-  position: fixed;
-  top: 14px;
-  left: 0;
-  right: 0;
-  z-index: 9999;
-  display: flex;
-  justify-content: center;
-  padding: 0 14px;
-  pointer-events: none;
-}
-
-/* nav premium */
-.nav {
-  pointer-events: auto;
-  width: min(1180px, 100%);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
-
-  background:
-    radial-gradient(900px 120px at 15% 0%, rgba(6, 182, 212, .22), transparent 55%),
-    radial-gradient(900px 120px at 85% 0%, rgba(245, 158, 11, .20), transparent 55%),
-    rgba(255, 255, 255, .07);
-
-  border: 1px solid rgba(232, 238, 252, .16);
-  border-radius: 18px;
-  padding: 12px 14px;
-
-  box-shadow:
-    0 18px 60px rgba(0, 0, 0, .35),
-    0 0 0 1px rgba(34, 197, 94, .10),
-    0 0 22px rgba(6, 182, 212, .12),
-    0 0 26px rgba(245, 158, 11, .10);
-
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-}
-
-.nav, .nav * {
-  color: var(--text);
-}
-
-/* marca + logo */
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  min-width: 210px;
-}
-
-.brandLogo {
-  width: 64px;
-  height: 64px;
-  border-radius: 12px;
-  object-fit: cover;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
-}
-
-.brandText {
-  font-weight: 900;
-  letter-spacing: .2px;
-}
-
-/* ===== Desktop links (DEFAULT) ===== */
-.navLinks {
-  display: flex;
-  gap: 10px;
-  align-items: center;
-}
-
-.navPill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 14px;
+/* =========================
+   HOME UI
+========================= */
+.pill {
+  padding: 10px 12px;
   border-radius: 999px;
-
-  background: rgba(255, 255, 255, .06);
-  border: 1px solid rgba(232, 238, 252, .18);
-  color: var(--text);
-  font-weight: 850;
-
-  transition: transform .12s ease, background .12s ease, border-color .12s ease, box-shadow .12s ease;
+  border: 1px solid var(--btnBorder);
+  background: transparent;
+  opacity: 0.95;
 }
-
-.navPill:hover {
-  background: rgba(6, 182, 212, .16);
-  border-color: rgba(6, 182, 212, .40);
-  box-shadow: 0 0 0 3px rgba(6, 182, 212, .12);
-  transform: translateY(-1px);
-}
-
-/* Estado activo */
-.navPill.isActive {
-  background: linear-gradient(90deg, rgba(34, 197, 94, .28), rgba(6, 182, 212, .24), rgba(245, 158, 11, .22));
-  border-color: rgba(6, 182, 212, .45);
-  box-shadow:
-    0 0 0 3px rgba(6, 182, 212, .12),
-    0 0 22px rgba(6, 182, 212, .10);
-}
-
-/* ===== 3 puntos (DEFAULT DESKTOP: oculto) ===== */
-.navBurgerDots {
-  display: none !important;
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
-  border: 1px solid rgba(232,238,252,.14);
-  background: rgba(255,255,255,.06);
-  backdrop-filter: blur(10px);
-  align-items: center;
-  justify-content: center;
-  gap: 5px;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-
-.navBurgerDots .dot{
-  width:4px;
-  height:4px;
-  border-radius:999px;
-  background: rgba(232,238,252,.85);
-}
-
-/* Asegura “mano” al hover */
-.navBurgerDots:hover { cursor: pointer; }
-
-/* ===== Mobile dropdown ===== */
-.navMobile {
-  pointer-events: auto;
-  width: min(1180px, 100%);
-  margin-top: 10px;
-
-  background: rgba(11, 18, 32, .92);
-  border: 1px solid rgba(232, 238, 252, .14);
-  border-radius: 18px;
-  box-shadow: 0 18px 80px rgba(0, 0, 0, .55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-
-  padding: 10px;
-}
-
-.navMobileLink {
-  display: block;
-  padding: 12px 12px;
-  border-radius: 14px;
-  border: 1px solid rgba(232, 238, 252, .10);
-  background: rgba(255, 255, 255, .05);
-  margin: 8px 0;
-  font-weight: 850;
-}
-
-.navMobileLink:hover {
-  background: rgba(255, 255, 255, .09);
-  border-color: rgba(232, 238, 252, .18);
-}
-
-.navMobileLink.isActiveMobile {
-  background: rgba(6, 182, 212, .14);
-  border-color: rgba(6, 182, 212, .35);
-  box-shadow: 0 0 0 3px rgba(6, 182, 212, .08);
-}
-
-/* ===== ÚNICO breakpoint MOBILE (900px) ===== */
-@media (max-width: 900px) {
-  .navLinks { display: none !important; }
-  .navBurgerDots { display: inline-flex !important; }
-
-  .brand { min-width: unset; }
-  .brandText { display: none; }
-  .app-shell { padding-top: 84px; }
-}
-
-/* ===== Home styles (lo demás queda igual) ===== */
 
 .hero {
   margin-top: 16px;
@@ -269,7 +125,9 @@ a {
 }
 
 @media (max-width: 980px) {
-  .grid3 { grid-template-columns: 1fr; }
+  .grid3 {
+    grid-template-columns: 1fr;
+  }
 }
 
 .card {
@@ -295,7 +153,7 @@ a {
   margin-top: 14px;
   padding: 16px;
   border: 1px solid var(--border);
-  background: rgba(255, 255, 255, .04);
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 18px;
 }
 
@@ -312,17 +170,21 @@ a {
 }
 
 @media (max-width: 980px) {
-  .steps { grid-template-columns: 1fr; }
+  .steps {
+    grid-template-columns: 1fr;
+  }
 }
 
 .step {
   padding: 14px;
   border-radius: 16px;
   border: 1px solid var(--border);
-  background: rgba(11, 18, 32, .35);
+  background: rgba(11, 18, 32, 0.35);
 }
 
-.stepName { font-weight: 900; }
+.stepName {
+  font-weight: 900;
+}
 
 .stepDesc {
   margin-top: 6px;
@@ -333,7 +195,7 @@ a {
 
 .footer {
   margin-top: 18px;
-  opacity: .85;
+  opacity: 0.85;
   font-size: 12px;
   color: var(--muted);
   display: flex;
@@ -342,8 +204,239 @@ a {
   gap: 10px;
 }
 
-/* ====== UI Buttons (premium) ====== */
+/* =========================
+   NAV PREMIUM FIXED (GLOBAL)
+   ✅ FIX mobile “corte” + safe area
+========================= */
 
+.app-shell {
+  padding-top: calc(92px + env(safe-area-inset-top));
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    padding-top: calc(108px + env(safe-area-inset-top));
+  }
+}
+
+/* wrapper fijo centrado */
+.nav-wrap {
+  position: fixed;
+  top: calc(14px + env(safe-area-inset-top));
+  left: 0;
+  right: 0;
+  z-index: 9999;
+
+  display: flex;
+  justify-content: center;
+
+  /* ✅ respeta notch + evita recorte lateral */
+  padding-left: max(14px, env(safe-area-inset-left));
+  padding-right: max(14px, env(safe-area-inset-right));
+
+  pointer-events: none;
+}
+
+/* nav premium */
+.nav {
+  pointer-events: auto;
+
+  /* ✅ NO uses 100vw (traiciona en mobile). Esto evita corte */
+  width: 100%;
+  max-width: calc(
+    100vw - max(28px, env(safe-area-inset-left) + env(safe-area-inset-right))
+  );
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  background: radial-gradient(900px 120px at 15% 0%, rgba(6, 182, 212, 0.22), transparent 55%),
+    radial-gradient(900px 120px at 85% 0%, rgba(245, 158, 11, 0.2), transparent 55%),
+    rgba(255, 255, 255, 0.07);
+
+  border: 1px solid rgba(232, 238, 252, 0.16);
+  border-radius: 18px;
+  padding: 12px 14px;
+
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(34, 197, 94, 0.1),
+    0 0 22px rgba(6, 182, 212, 0.12),
+    0 0 26px rgba(245, 158, 11, 0.1);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.nav,
+.nav * {
+  color: var(--text);
+}
+
+/* marca + logo */
+.brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  min-width: 0; /* ✅ permite encoger */
+}
+
+/* ✅ logo responsivo (antes tenías 111x111; en móvil empuja) */
+.brandLogo {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  object-fit: cover;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* texto marca */
+.brandText {
+  font-weight: 900;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+/* links desktop */
+.navLinks {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.navPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 14px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(232, 238, 252, 0.18);
+  color: var(--text);
+  font-weight: 850;
+
+  transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease,
+    box-shadow 0.12s ease;
+}
+
+.navPill:hover {
+  background: rgba(6, 182, 212, 0.16);
+  border-color: rgba(6, 182, 212, 0.4);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12);
+  transform: translateY(-1px);
+}
+
+/* estado activo */
+.navPill.isActive {
+  background: linear-gradient(
+    90deg,
+    rgba(34, 197, 94, 0.28),
+    rgba(6, 182, 212, 0.24),
+    rgba(245, 158, 11, 0.22)
+  );
+  border-color: rgba(6, 182, 212, 0.45);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12), 0 0 22px rgba(6, 182, 212, 0.1);
+}
+
+/* =========================
+   MOBILE MENU (3 dots)
+   ✅ solo debe verse en mobile
+========================= */
+.navBurgerDots {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+
+  border: 1px solid rgba(232, 238, 252, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(10px);
+
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+
+.navBurgerDots .dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(232, 238, 252, 0.85);
+}
+
+.navBurgerDots:hover {
+  border-color: rgba(6, 182, 212, 0.35);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+}
+
+@media (max-width: 900px) {
+  .navLinks {
+    display: none;
+  }
+  .navBurgerDots {
+    display: inline-flex; /* ✅ aparece solo en mobile */
+  }
+  .brandText {
+    display: none;
+  }
+  .brandLogo {
+    width: 56px;
+    height: 56px;
+  }
+}
+
+/* dropdown mobile */
+.navMobile {
+  pointer-events: auto;
+  width: 100%;
+  max-width: calc(
+    100vw - max(28px, env(safe-area-inset-left) + env(safe-area-inset-right))
+  );
+
+  margin-top: 10px;
+
+  background: rgba(11, 18, 32, 0.92);
+  border: 1px solid rgba(232, 238, 252, 0.14);
+  border-radius: 18px;
+  box-shadow: 0 18px 80px rgba(0, 0, 0, 0.55);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  padding: 10px;
+}
+
+.navMobileLink {
+  display: block;
+  padding: 12px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(232, 238, 252, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  margin: 8px 0;
+  font-weight: 850;
+}
+
+.navMobileLink:hover {
+  background: rgba(255, 255, 255, 0.09);
+  border-color: rgba(232, 238, 252, 0.18);
+}
+
+.navMobileLink.isActiveMobile {
+  background: rgba(6, 182, 212, 0.14);
+  border-color: rgba(6, 182, 212, 0.35);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.08);
+}
+
+/* =========================
+   UI BUTTONS (premium)
+========================= */
 .uiBtn {
   display: inline-flex;
   align-items: center;
@@ -357,18 +450,19 @@ a {
   color: var(--text);
   font-weight: 900;
 
-  border: 1px solid rgba(232, 238, 252, .20);
-  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(232, 238, 252, 0.2);
+  background: rgba(255, 255, 255, 0.06);
 
-  box-shadow: 0 14px 40px rgba(0, 0, 0, .18);
-  transition: transform .14s ease, filter .14s ease, box-shadow .14s ease, background .14s ease, border-color .14s ease;
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
+  transition: transform 0.14s ease, filter 0.14s ease, box-shadow 0.14s ease,
+    background 0.14s ease, border-color 0.14s ease;
 }
 
 .uiBtn:hover {
   transform: translateY(-1px);
   filter: brightness(1.05);
-  border-color: rgba(232, 238, 252, .30);
-  box-shadow: 0 18px 60px rgba(0, 0, 0, .25);
+  border-color: rgba(232, 238, 252, 0.3);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
 }
 
 .uiBtn:active {
@@ -378,12 +472,12 @@ a {
 
 .uiBtn:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 4px rgba(6, 182, 212, .18), 0 18px 60px rgba(0, 0, 0, .25);
-  border-color: rgba(6, 182, 212, .45);
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.18), 0 18px 60px rgba(0, 0, 0, 0.25);
+  border-color: rgba(6, 182, 212, 0.45);
 }
 
 .uiBtn[disabled] {
-  opacity: .55;
+  opacity: 0.55;
   cursor: not-allowed;
   transform: none;
   filter: none;
@@ -391,67 +485,88 @@ a {
 }
 
 .uiBtnPrimary {
-  border: 1px solid rgba(6, 182, 212, .28);
-  background:
-    radial-gradient(900px 120px at 15% 0%, rgba(6, 182, 212, .22), transparent 55%),
-    radial-gradient(900px 120px at 85% 0%, rgba(245, 158, 11, .18), transparent 55%),
-    linear-gradient(90deg, rgba(34, 197, 94, .26), rgba(6, 182, 212, .22), rgba(245, 158, 11, .18));
-  box-shadow:
-    0 14px 50px rgba(0, 0, 0, .25),
-    0 0 0 3px rgba(6, 182, 212, .08);
+  border: 1px solid rgba(6, 182, 212, 0.28);
+  background: radial-gradient(900px 120px at 15% 0%, rgba(6, 182, 212, 0.22), transparent 55%),
+    radial-gradient(900px 120px at 85% 0%, rgba(245, 158, 11, 0.18), transparent 55%),
+    linear-gradient(90deg, rgba(34, 197, 94, 0.26), rgba(6, 182, 212, 0.22), rgba(245, 158, 11, 0.18));
+  box-shadow: 0 14px 50px rgba(0, 0, 0, 0.25), 0 0 0 3px rgba(6, 182, 212, 0.08);
 }
 
 .uiBtnPrimary:hover {
-  border-color: rgba(6, 182, 212, .42);
-  box-shadow:
-    0 18px 70px rgba(0, 0, 0, .32),
-    0 0 0 4px rgba(6, 182, 212, .10),
-    0 0 22px rgba(6, 182, 212, .10);
+  border-color: rgba(6, 182, 212, 0.42);
+  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.32), 0 0 0 4px rgba(6, 182, 212, 0.1),
+    0 0 22px rgba(6, 182, 212, 0.1);
 }
 
-.uiBtnGhost { background: rgba(255, 255, 255, .04); }
+.uiBtnGhost {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.uiPill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(232, 238, 252, 0.18);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  font-weight: 850;
+  transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease;
+}
+
+.uiPill:hover {
+  transform: translateY(-1px);
+  border-color: rgba(6, 182, 212, 0.4);
+  background: rgba(6, 182, 212, 0.12);
+}
 
 .uiIcon {
   width: 18px;
   height: 18px;
   display: inline-block;
   flex: 0 0 auto;
-  opacity: .95;
+  opacity: 0.95;
 }
 
-/* ====== UI Field / Select ====== */
+/* =========================
+   UI FIELD / SELECT
+========================= */
 .uiField {
   width: 100%;
   padding: 11px 12px;
   border-radius: 14px;
 
-  border: 1px solid rgba(232, 238, 252, .18);
-  background: rgba(11, 18, 32, .78);
+  border: 1px solid rgba(232, 238, 252, 0.18);
+  background: rgba(11, 18, 32, 0.78);
   color: var(--text);
 
-  box-shadow: 0 14px 40px rgba(0, 0, 0, .16);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.16);
   outline: none;
-  transition: border-color .14s ease, box-shadow .14s ease, filter .14s ease;
+  transition: border-color 0.14s ease, box-shadow 0.14s ease, filter 0.14s ease;
 }
 
 .uiField:hover {
   filter: brightness(1.04);
-  border-color: rgba(232, 238, 252, .28);
+  border-color: rgba(232, 238, 252, 0.28);
 }
 
 .uiField:focus {
-  border-color: rgba(6, 182, 212, .55);
-  box-shadow: 0 0 0 4px rgba(6, 182, 212, .14), 0 18px 60px rgba(0, 0, 0, .22);
+  border-color: rgba(6, 182, 212, 0.55);
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.14), 0 18px 60px rgba(0, 0, 0, 0.22);
 }
 
 .uiField[disabled] {
-  opacity: .55;
+  opacity: 0.55;
   cursor: not-allowed;
   filter: none;
   box-shadow: none;
 }
 
-/* ====== Checkbox cards ====== */
+/* =========================
+   CHECKBOX CARDS
+========================= */
 .uiCheckCard {
   display: flex;
   gap: 10px;
@@ -459,16 +574,17 @@ a {
   padding: 12px;
 
   border-radius: 16px;
-  border: 1px solid rgba(232, 238, 252, .12);
-  background: rgba(11, 18, 32, .35);
+  border: 1px solid rgba(232, 238, 252, 0.12);
+  background: rgba(11, 18, 32, 0.35);
 
-  transition: transform .14s ease, border-color .14s ease, background .14s ease, box-shadow .14s ease;
+  transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease,
+    box-shadow 0.14s ease;
 }
 
 .uiCheckCard:hover {
   transform: translateY(-1px);
-  border-color: rgba(6, 182, 212, .22);
-  box-shadow: 0 18px 60px rgba(0, 0, 0, .18);
+  border-color: rgba(6, 182, 212, 0.22);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.18);
 }
 
 .uiCheckRow {
@@ -488,13 +604,16 @@ a {
   flex: 1;
 }
 
+/* =========================
+   INFO BUTTON
+========================= */
 .uiInfoBtn {
   width: 30px;
   height: 30px;
   border-radius: 999px;
 
-  border: 1px solid rgba(232, 238, 252, .22);
-  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(232, 238, 252, 0.22);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text);
 
   cursor: pointer;
@@ -503,17 +622,20 @@ a {
   justify-content: center;
 
   font-weight: 950;
-  transition: transform .14s ease, border-color .14s ease, background .14s ease, box-shadow .14s ease;
+  transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease,
+    box-shadow 0.14s ease;
 }
 
 .uiInfoBtn:hover {
   transform: translateY(-1px);
-  border-color: rgba(6, 182, 212, .40);
-  background: rgba(6, 182, 212, .12);
-  box-shadow: 0 0 0 3px rgba(6, 182, 212, .10);
+  border-color: rgba(6, 182, 212, 0.4);
+  background: rgba(6, 182, 212, 0.12);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
 }
 
-/* ====== Badge resultado ====== */
+/* =========================
+   BADGE RESULT
+========================= */
 .uiBadge {
   display: inline-flex;
   align-items: center;
@@ -521,49 +643,86 @@ a {
   padding: 10px 12px;
   border-radius: 999px;
   font-weight: 950;
-  letter-spacing: .3px;
-  border: 1px solid rgba(232, 238, 252, .22);
+  letter-spacing: 0.3px;
+  border: 1px solid rgba(232, 238, 252, 0.22);
   text-transform: uppercase;
 }
 
 .uiBadgeOk {
-  background: rgba(34, 197, 94, .18);
-  border-color: rgba(34, 197, 94, .32);
-  box-shadow: 0 0 0 4px rgba(34, 197, 94, .08);
+  background: rgba(34, 197, 94, 0.18);
+  border-color: rgba(34, 197, 94, 0.32);
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.08);
 }
 
 .uiBadgeNo {
-  background: rgba(255, 120, 120, .16);
-  border-color: rgba(255, 120, 120, .30);
-  box-shadow: 0 0 0 4px rgba(255, 120, 120, .07);
+  background: rgba(255, 120, 120, 0.16);
+  border-color: rgba(255, 120, 120, 0.3);
+  box-shadow: 0 0 0 4px rgba(255, 120, 120, 0.07);
 }
 
-/* ====== Gran Escala (responsive) ====== */
+/* =========================
+   GRAN ESCALA (RESPONSIVE)
+========================= */
 .granBox {
-  border: 1px solid rgba(245, 158, 11, .38);
-  box-shadow:
-    0 0 0 4px rgba(245, 158, 11, .08),
-    0 22px 80px rgba(0, 0, 0, .28);
+  border: 1px solid rgba(245, 158, 11, 0.38);
+  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.08), 0 22px 80px rgba(0, 0, 0, 0.28);
+  width: 100%;
+  max-width: 100%;
 }
 
 .granGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
-@media (max-width: 860px) {
-  .granGrid { grid-template-columns: 1fr; }
+@media (max-width: 900px) {
+  .granGrid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.granCard,
+.granBox,
+.granGrid * {
+  min-width: 0;
+}
+
+.granCard {
+  width: 100%;
+  max-width: 100%;
+}
+
+.granCard p,
+.granCard li {
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
 }
 
 @media (max-width: 520px) {
-  .granBox { padding: 14px !important; }
-  .granBox h2 { font-size: 18px !important; line-height: 1.25; }
-  .granBox p { font-size: 13px !important; line-height: 1.45; }
-  .granCard { padding: 12px !important; }
+  .granBox {
+    padding: 14px !important;
+  }
+
+  .granBox h2 {
+    font-size: 18px !important;
+    line-height: 1.25;
+  }
+
+  .granBox p {
+    font-size: 13px !important;
+    line-height: 1.45;
+  }
+
+  .granCard {
+    padding: 12px !important;
+  }
 }
 
-/* ====== Calificación directa (responsive) ====== */
+/* =========================
+   CALIFICACIÓN DIRECTA (RESPONSIVE)
+========================= */
 .directGridUI {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -571,13 +730,24 @@ a {
 }
 
 @media (max-width: 860px) {
-  .directGridUI { grid-template-columns: 1fr; }
+  .directGridUI {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 520px) {
-  .uiCheckCard { padding: 12px !important; }
-  .uiCheckLabel { gap: 12px !important; }
-  .uiInfoBtn { width: 32px !important; height: 32px !important; }
+  .uiCheckCard {
+    padding: 12px !important;
+  }
+
+  .uiCheckLabel {
+    gap: 12px !important;
+  }
+
+  .uiInfoBtn {
+    width: 32px !important;
+    height: 32px !important;
+  }
 
   .uiCheckCard span {
     font-size: 15px;
@@ -586,5 +756,17 @@ a {
     min-width: 0;
     overflow-wrap: anywhere;
     word-break: break-word;
+  }
+}
+
+/* =========================
+   OPTIONAL HELPERS (if you used them)
+========================= */
+@media (max-width: 980px) {
+  .heroGridFix {
+    grid-template-columns: 1fr !important;
+  }
+  .cards3Fix {
+    grid-template-columns: 1fr !important;
   }
 }
