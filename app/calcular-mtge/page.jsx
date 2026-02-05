@@ -460,65 +460,7 @@ export default function CalcularMTGEPage() {
 
   return (
     <div className="app-shell">
-      {/* NAV fijo */}
-      <div className="nav-wrap">
-        <div>
-          <nav className="nav" aria-label="Navegación principal">
-            <Link href="/" className="brand" onClick={() => setNavOpen(false)}>
-              <Image
-                src="/logo_DataConSentido.jpeg"
-                alt="DataConSentido"
-                width={34}
-                height={34}
-                className="brandLogo"
-                priority
-              />
-              <span className="brandText">DataConSentido</span>
-            </Link>
-
-            <div className="navLinks">
-              {navItems.map((it) => (
-                <Link
-                  key={it.href}
-                  href={it.href}
-                  className={`navPill ${isActive(it.href) ? "isActive" : ""}`}
-                >
-                  {it.label}
-                </Link>
-              ))}
-            </div>
-
-            <button
-              type="button"
-              className="navBurger"
-              aria-label="Abrir menú"
-              aria-expanded={navOpen ? "true" : "false"}
-              onClick={() => setNavOpen((v) => !v)}
-            >
-              <span className="burgerLine" />
-              <span className="burgerLine" />
-              <span className="burgerLine" />
-            </button>
-          </nav>
-
-          {navOpen ? (
-            <div className="navMobile" role="menu">
-              {navItems.map((it) => (
-                <Link
-                  key={it.href}
-                  href={it.href}
-                  className={`navMobileLink ${
-                    isActive(it.href) ? "isActiveMobile" : ""
-                  }`}
-                  onClick={() => setNavOpen(false)}
-                >
-                  {it.label}
-                </Link>
-              ))}
-            </div>
-          ) : null}
-        </div>
-      </div>
+  
 
       {/* CONTENIDO */}
       <main style={styles.page}>
