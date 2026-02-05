@@ -347,44 +347,26 @@ a {
 
 
 /* burger (mobile) */
-.navBurger{
-  width: 44px;
-  height: 44px;
-  border-radius: 999px;
-  border: 1px solid rgba(232,238,252,.14);
-  background: rgba(255,255,255,.06);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
+.navBurger {
+  display: none;
+  border-radius: 14px;
+  padding: 10px 12px;
   cursor: pointer;
-  box-shadow: 0 10px 30px rgba(0,0,0,.25);
-}
 
-.navBurger:hover{
-  border-color: rgba(232,238,252,.22);
-  background: rgba(255,255,255,.08);
-}
-
-.navBurger:active{
-  transform: translateY(1px);
+  border: 1px solid rgba(6, 182, 212, .35);
+  background: rgba(6, 182, 212, .10);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, .08);
 }
 
 
 .burgerLine {
-   width: 18px;
+  display: block;
+  width: 20px;
   height: 2px;
-  border-radius: 2px;
-  background: rgba(232,238,252,.85);
-  transition: transform .18s ease, opacity .18s ease;
+  background: rgba(232, 238, 252, .82);
+  margin: 4px 0;
+  border-radius: 999px;
 }
-
-/* Animación a X */
-.burgerLine.x1{ transform: translateY(8px) rotate(45deg); }
-.burgerLine.x2{ opacity: 0; }
-.burgerLine.x3{ transform: translateY(-8px) rotate(-45deg); }
 
 /* dropdown mobile */
 .navMobile {
