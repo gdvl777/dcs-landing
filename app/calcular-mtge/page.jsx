@@ -477,7 +477,7 @@ export default function CalcularMTGEPage() {
 
           {/* Resumen operativo */}
           <section style={styles.card}>
-            <div style={styles.cardTitle}>Según la resolución No. <a href="https://spdp.gob.ec/r52026/" target="_blank" rel="noopener noreferrer"><span style="background:linear-gradient(90deg, rgba(34,197,94,1), rgba(6,182,212,1), rgba(245,158,11,1));-webkit-background-clip:text;background-clip:text;color:transparent">SPDP-SPD-2026-0005-R </span> </a> (resumen operativo)</div>
+            <div style={styles.cardTitle}>Según la resolución No. <a href="https://spdp.gob.ec/r52026/" target="_blank" rel="noopener noreferrer"><span className="gradText">SPDP-SPD-2026-0005-R </span> </a> (resumen operativo)</div>
             <ul style={{ margin: "10px 0 0 18px", lineHeight: 1.6, opacity: 0.92 }}>
               <li>
                 La calificación de <b>gran escala</b> puede resultar por <b>calificación directa</b>{" "}
