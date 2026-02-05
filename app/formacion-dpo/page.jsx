@@ -70,94 +70,9 @@ export default function FormacionDPOPage() {
         </div>
       </section>
 
-      {/* RUTA / BLOQUES */}
-      <section className="section" style={styles.section}>
-        <div style={styles.sectionHead}>
-          <h2 className="sectionTitle" style={styles.h2}>
-            Qué aprenderás
-          </h2>
-          <p style={styles.p}>
-            Estructurado para que puedas aplicar en tu organización o en clientes desde el día 1.
-          </p>
-        </div>
 
-        <div className="dpoGrid" style={styles.grid2}>
-          <div className="card" style={styles.card}>
-            <div style={styles.cardTop}>
-              <span style={styles.cardTag}>Módulo 1</span>
-              <span style={styles.cardTagAlt}>Fundamentos</span>
-            </div>
-            <div style={styles.cardTitle}>Criterios, alcance y rol DPO/DPD</div>
-            <ul className="bullets" style={styles.list}>
-              <li>Marco LOPDP + obligaciones clave</li>
-              <li>Responsable vs Encargado + contratos</li>
-              <li>Gobernanza, roles, evidencias y auditorabilidad</li>
-            </ul>
-          </div>
 
-          <div className="card" style={styles.card}>
-            <div style={styles.cardTop}>
-              <span style={styles.cardTag}>Módulo 2</span>
-              <span style={styles.cardTagAlt}>Documentación</span>
-            </div>
-            <div style={styles.cardTitle}>Levantamiento + RAT/RID + flujos</div>
-            <ul className="bullets" style={styles.list}>
-              <li>Inventario de datos y activos</li>
-              <li>Mapa de tratamientos: finalidades, bases, transferencias</li>
-              <li>Cómo dejar evidencia lista (no “papel bonito”)</li>
-            </ul>
-          </div>
 
-          <div className="card" style={styles.card}>
-            <div style={styles.cardTop}>
-              <span style={styles.cardTag}>Módulo 3</span>
-              <span style={styles.cardTagAlt}>Riesgos</span>
-            </div>
-            <div style={styles.cardTitle}>DPIA + matriz de riesgos</div>
-            <ul className="bullets" style={styles.list}>
-              <li>Metodología práctica para valorar impacto y probabilidad</li>
-              <li>Medidas técnicas/organizativas y plan de tratamiento</li>
-              <li>Seguimiento, KPIs y evidencia de mejora</li>
-            </ul>
-          </div>
-
-          <div className="card" style={styles.card}>
-            <div style={styles.cardTop}>
-              <span style={styles.cardTag}>Módulo 4</span>
-              <span style={styles.cardTagAlt}>Operación</span>
-            </div>
-            <div style={styles.cardTitle}>Derechos, incidentes y mejora continua</div>
-            <ul className="bullets" style={styles.list}>
-              <li>ARCO+ (procedimiento, SLAs, trazabilidad)</li>
-              <li>Brechas: respuesta, registro y notificación cuando aplique</li>
-              <li>Capacitación, revisiones y auditorías internas</li>
-            </ul>
-          </div>
-        </div>
-      </section>
-
-      {/* CTA fuerte */}
-      <section className="card" style={styles.ctaBand}>
-        <div style={styles.ctaLeft}>
-          <div style={styles.ctaTitle}>¿Quieres asegurar tu cupo?</div>
-          <div style={styles.ctaText}>
-            Reserva ahora y te compartimos la ruta, requisitos y la lista de materiales (plantillas/checklist).
-          </div>
-        </div>
-        <div style={styles.ctaBtns}>
-          <Link className="uiBtn uiBtnPrimary" href="/masterclass">
-            Reservar cupo <span className="uiIcon">→</span>
-          </Link>
-          <a
-            className="uiBtn uiBtnGhost"
-            href="https://wa.me/593992801005"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Hablar por WhatsApp
-          </a>
-        </div>
-      </section>
 
       {/* Footer mini */}
       <div className="footer" style={{ marginTop: 18 }}>
