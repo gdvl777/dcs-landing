@@ -469,7 +469,7 @@ export default function CalcularMTGEPage() {
           <nav className="nav" aria-label="Navegación principal">
             <Link href="/" className="brand" onClick={() => setNavOpen(false)}>
               <Image
-                src="/logo.png"
+                src="/logo_DataConSentido.jpeg"
                 alt="DataConSentido"
                 width={34}
                 height={34}
