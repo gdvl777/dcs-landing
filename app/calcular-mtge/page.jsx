@@ -374,7 +374,7 @@ export default function CalcularMTGEPage() {
           <div className="card granCard">
             <div style={styles.obligTitle}>Gobernanza y roles</div>
             <ul style={styles.obligList}>
-              <li>Designar/fortalecer el rol responsable de privacidad (DPD/DPO o equivalente).</li>
+              <li>Designar/fortalecer un Delegado de Protección de Datos Personales.</li>
               <li>Definir responsables internos, dueños de procesos y un plan de cumplimiento.</li>
             </ul>
           </div>
