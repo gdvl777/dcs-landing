@@ -477,7 +477,7 @@ export default function CalcularMTGEPage() {
 
           {/* Resumen operativo */}
           <section style={styles.card}>
-            <div style={styles.cardTitle}>Según la resolución (resumen operativo)</div>
+            <div style={styles.cardTitle}>Según la resolución No. <a href="SPDP-SPD-2026-0005-R" target="_blank" rel="noopener noreferrer">SPDP-SPD-2026-0005-R </a> (resumen operativo)</a></div>
             <ul style={{ margin: "10px 0 0 18px", lineHeight: 1.6, opacity: 0.92 }}>
               <li>
                 La calificación de <b>gran escala</b> puede resultar por <b>calificación directa</b>{" "}
