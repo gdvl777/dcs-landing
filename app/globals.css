@@ -208,15 +208,24 @@ a {
    NAV PREMIUM FIXED (GLOBAL)
    ✅ FIX mobile “corte” + safe area
 ========================= */
+:root{
+  --navH: 92px; /* desktop */
+}
 
 .app-shell {
-  padding-top: calc(92px + env(safe-area-inset-top));
+  padding-top: calc(var(--navH) + 10px);
 }
 
 @media (max-width: 900px) {
   .app-shell {
     padding-top: calc(108px + env(safe-area-inset-top));
   }
+}
+
+/* Mobile: nav es más bajo, baja el padding */
+@media (max-width: 520px){
+  :root{ --navH: 72px; }
+  .app-shell{ padding-top: calc(var(--navH) + 8px); }
 }
 
 /* wrapper fijo centrado */
