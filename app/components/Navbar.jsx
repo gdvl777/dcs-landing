@@ -54,16 +54,17 @@ export default function Navbar() {
 
         {/* Mobile */}
         <button
-          className="navBurger"
           type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-label="Abrir menú"
-          aria-expanded={open}
+          className="navBurger"
+          aria-label={navOpen ? "Cerrar menú" : "Abrir menú"}
+          aria-expanded={navOpen ? "true" : "false"}
+          onClick={() => setNavOpen((v) => !v)}
         >
-          <span className="burgerLine" />
-          <span className="burgerLine" />
-          <span className="burgerLine" />
+          <span className={`burgerLine ${navOpen ? "x1" : ""}`} />
+          <span className={`burgerLine ${navOpen ? "x2" : ""}`} />
+          <span className={`burgerLine ${navOpen ? "x3" : ""}`} />
         </button>
+
       </nav>
 
       {open ? (
