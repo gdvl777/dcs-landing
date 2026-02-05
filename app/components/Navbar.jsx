@@ -37,7 +37,7 @@ export default function Navbar() {
             src="/logo_DataConSentido.png"
             alt="DataConSentido"
           />
-          <span className="brandText">DataConSentido</span>
+          <span className="brandText"></span>
         </a>
 
         {/* Desktop */}
