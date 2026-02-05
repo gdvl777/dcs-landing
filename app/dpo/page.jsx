@@ -1,191 +1,205 @@
-// app/dpo/page.jsx
+// app/formacion-dpo/page.jsx
 "use client";
 
 import Link from "next/link";
 
-export default function DPOPage() {
+export default function FormacionDPOPage() {
+  const year = new Date().getFullYear();
+
   return (
-    <main style={styles.page}>
+    <div className="container">
       {/* HERO */}
-      <section style={styles.heroWrap}>
-        <div style={styles.heroGlowA} />
-        <div style={styles.heroGlowB} />
+      <section className="hero" style={styles.hero}>
+        <div style={styles.heroGlowA} aria-hidden="true" />
+        <div style={styles.heroGlowB} aria-hidden="true" />
 
-        <div style={styles.container}>
-          <div style={styles.kicker}>
-            <span style={styles.kickerDot} />
-            Servicios • DPD/DPO externo • Evidencia verificable
+        <div style={styles.kicker}>
+          <span style={styles.kickerDot} />
+          Formación • DPO/DPD • Enfoque ejecutable
+        </div>
+
+        <h1 className="h1" style={styles.h1}>
+          Formación avanzada DPO para{" "}
+          <span style={styles.h1Accent}>ejecutar cumplimiento</span>, no solo entenderlo.
+        </h1>
+
+        <p className="sub" style={styles.sub}>
+          Programa práctico para dominar criterios, documentación, riesgos y la operación real del rol
+          DPO/DPD. Saldrás con un método, plantillas y checklist para implementar evidencia verificable.
+        </p>
+
+        <div style={styles.chips}>
+          <span style={styles.chip}>✅ RAT/RID + flujos</span>
+          <span style={styles.chip}>✅ DPIA + riesgos</span>
+          <span style={styles.chip}>✅ Políticas + contratos</span>
+          <span style={styles.chip}>✅ Operación ARCO+</span>
+        </div>
+
+        <div className="ctaRow" style={{ marginTop: 14 }}>
+          <Link className="uiBtn uiBtnPrimary" href="/masterclass">
+            Reservar cupo <span className="uiIcon">→</span>
+          </Link>
+
+          <a
+            className="uiBtn uiBtnGhost"
+            href="https://wa.me/593992801005"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Consultar por WhatsApp
+          </a>
+
+          <Link className="uiBtn uiBtnGhost" href="/dpo">
+            Ver servicios DPO/DPD
+          </Link>
+        </div>
+
+        <div style={styles.heroMiniGrid}>
+          <div style={styles.heroStat}>
+            <div style={styles.heroStatNum}>100%</div>
+            <div style={styles.heroStatTxt}>orientado a ejecución</div>
           </div>
+          <div style={styles.heroStat}>
+            <div style={styles.heroStatNum}>Plantillas</div>
+            <div style={styles.heroStatTxt}>checklists + evidencias</div>
+          </div>
+          <div style={styles.heroStat}>
+            <div style={styles.heroStatNum}>LOPDP</div>
+            <div style={styles.heroStatTxt}>criterio operativo</div>
+          </div>
+        </div>
+      </section>
 
-          <h1 style={styles.h1}>
-            Servicios DPO (DPD externo /{" "}
-            <span style={styles.h1Accent}>DPOaaS</span>)
-          </h1>
-
-          <p style={styles.sub}>
-            Acompañamiento para cumplir LOPDP con evidencia real: levantamiento, documentación clave,
-            gestión de riesgos, y seguimiento continuo. Menos “papel bonito” y más ejecución que
-            puedas sostener.
+      {/* RUTA / BLOQUES */}
+      <section className="section" style={styles.section}>
+        <div style={styles.sectionHead}>
+          <h2 className="sectionTitle" style={styles.h2}>
+            Qué aprenderás
+          </h2>
+          <p style={styles.p}>
+            Estructurado para que puedas aplicar en tu organización o en clientes desde el día 1.
           </p>
+        </div>
 
-          <div style={styles.chips}>
-            <span style={styles.chip}>✅ Diagnóstico + roadmap</span>
-            <span style={styles.chip}>✅ RAT/RID + evidencias</span>
-            <span style={styles.chip}>✅ DPIA + riesgos</span>
-            <span style={styles.chip}>✅ Contratos con encargados</span>
+        <div className="dpoGrid" style={styles.grid2}>
+          <div className="card" style={styles.card}>
+            <div style={styles.cardTop}>
+              <span style={styles.cardTag}>Módulo 1</span>
+              <span style={styles.cardTagAlt}>Fundamentos</span>
+            </div>
+            <div style={styles.cardTitle}>Criterios, alcance y rol DPO/DPD</div>
+            <ul className="bullets" style={styles.list}>
+              <li>Marco LOPDP + obligaciones clave</li>
+              <li>Responsable vs Encargado + contratos</li>
+              <li>Gobernanza, roles, evidencias y auditorabilidad</li>
+            </ul>
           </div>
 
-          <div style={styles.ctaRow}>
-            <a
-              className="uiBtn uiBtnPrimary"
-              href="https://wa.me/593992801005?text=Hola%20DataConSentido%2C%20quiero%20agendar%20un%20diagn%C3%B3stico%20LOPDP%20(Servicios%20DPD%2FDPO).%20%C2%BFCu%C3%A1les%20son%20los%20horarios%20disponibles%3F"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <span className="uiIcon">📅</span>
-              Agendar diagnóstico por WhatsApp
-              <span className="uiIcon">→</span>
-            </a>
-
-            <Link className="uiBtn uiBtnGhost" href="/calcular-mtge">
-              <span className="uiIcon">🧮</span>
-              Calcular MTGE
-            </Link>
-
-            <Link className="uiBtn uiBtnGhost" href="/formacion-dpo">
-              <span className="uiIcon">🎓</span>
-              Ver formación DPO
-            </Link>
+          <div className="card" style={styles.card}>
+            <div style={styles.cardTop}>
+              <span style={styles.cardTag}>Módulo 2</span>
+              <span style={styles.cardTagAlt}>Documentación</span>
+            </div>
+            <div style={styles.cardTitle}>Levantamiento + RAT/RID + flujos</div>
+            <ul className="bullets" style={styles.list}>
+              <li>Inventario de datos y activos</li>
+              <li>Mapa de tratamientos: finalidades, bases, transferencias</li>
+              <li>Cómo dejar evidencia lista (no “papel bonito”)</li>
+            </ul>
           </div>
 
-          <div style={styles.heroStats}>
-            <div style={styles.stat}>
-              <div style={styles.statNum}>RAT/RID</div>
-              <div style={styles.statTxt}>levantamiento + coherencia legal/técnica</div>
+          <div className="card" style={styles.card}>
+            <div style={styles.cardTop}>
+              <span style={styles.cardTag}>Módulo 3</span>
+              <span style={styles.cardTagAlt}>Riesgos</span>
             </div>
-            <div style={styles.stat}>
-              <div style={styles.statNum}>DPIA</div>
-              <div style={styles.statTxt}>impacto + riesgo + medidas</div>
+            <div style={styles.cardTitle}>DPIA + matriz de riesgos</div>
+            <ul className="bullets" style={styles.list}>
+              <li>Metodología práctica para valorar impacto y probabilidad</li>
+              <li>Medidas técnicas/organizativas y plan de tratamiento</li>
+              <li>Seguimiento, KPIs y evidencia de mejora</li>
+            </ul>
+          </div>
+
+          <div className="card" style={styles.card}>
+            <div style={styles.cardTop}>
+              <span style={styles.cardTag}>Módulo 4</span>
+              <span style={styles.cardTagAlt}>Operación</span>
             </div>
-            <div style={styles.stat}>
-              <div style={styles.statNum}>Evidencia</div>
-              <div style={styles.statTxt}>controles implementados y auditables</div>
-            </div>
+            <div style={styles.cardTitle}>Derechos, incidentes y mejora continua</div>
+            <ul className="bullets" style={styles.list}>
+              <li>ARCO+ (procedimiento, SLAs, trazabilidad)</li>
+              <li>Brechas: respuesta, registro y notificación cuando aplique</li>
+              <li>Capacitación, revisiones y auditorías internas</li>
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* SECCIÓN: alcance base */}
-      <section style={styles.section}>
-        <div style={styles.container}>
-          <div style={styles.sectionHead}>
-            <h2 style={styles.h2}>Acompañamiento y reportabilidad (base)</h2>
-            <p style={styles.p}>
-              Lo esencial para operar cumplimiento y sostener evidencia ante auditorías, inspecciones o
-              consultas internas.
-            </p>
+      {/* CTA fuerte */}
+      <section className="card" style={styles.ctaBand}>
+        <div style={styles.ctaLeft}>
+          <div style={styles.ctaTitle}>¿Quieres asegurar tu cupo?</div>
+          <div style={styles.ctaText}>
+            Reserva ahora y te compartimos la ruta, requisitos y la lista de materiales (plantillas/checklist).
           </div>
-
-          <div className="dpoGrid" style={styles.grid2}>
-            <div className="card" style={styles.card}>
-              <div style={styles.cardTitle}>Entregables / Evidencias</div>
-              <ul style={styles.list}>
-                <li>Levantamiento de tratamientos e inventarios</li>
-                <li>RAT / RID (según aplique) + recomendaciones</li>
-                <li>Matriz de riesgos + plan de tratamiento</li>
-                <li>Políticas / avisos / cláusulas</li>
-                <li>Contratos y cláusulas con encargados</li>
-              </ul>
-            </div>
-
-            <div className="card" style={styles.card}>
-              <div style={styles.cardTitle}>Operación y acompañamiento</div>
-              <ul style={styles.list}>
-                <li>Gestión de derechos ARCO+ (procedimiento y SLAs)</li>
-                <li>Capacitación y sensibilización</li>
-                <li>Soporte en inspecciones, auditorías y requerimientos</li>
-                <li>Seguimiento continuo + mejora</li>
-                <li>Gestión de incidentes/brechas (cuando aplique)</li>
-              </ul>
-            </div>
-          </div>
+        </div>
+        <div style={styles.ctaBtns}>
+          <Link className="uiBtn uiBtnPrimary" href="/masterclass">
+            Reservar cupo <span className="uiIcon">→</span>
+          </Link>
+          <a
+            className="uiBtn uiBtnGhost"
+            href="https://wa.me/593992801005"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Hablar por WhatsApp
+          </a>
         </div>
       </section>
 
-      {/* CTA band */}
-      <section style={styles.ctaBand}>
-        <div style={styles.container}>
-          <div style={styles.ctaBandInner}>
-            <div style={{ minWidth: 0 }}>
-              <div style={styles.ctaBandTitle}>¿Necesitas arrancar ya (sin perderte en teoría)?</div>
-              <div style={styles.ctaBandText}>
-                En 30–45 minutos levantamos contexto, priorizamos por riesgo y definimos un roadmap.
-                Si tu operación es “gran escala”, armamos evidencias desde el día 1.
-              </div>
-            </div>
-
-            <div style={styles.ctaBandBtns}>
-              <a
-                className="uiBtn uiBtnPrimary"
-                href="https://wa.me/593992801005?text=Hola%20DataConSentido%2C%20quiero%20agendar%20un%20diagn%C3%B3stico%20LOPDP%20(Servicios%20DPD%2FDPO)."
-                target="_blank"
-                rel="noreferrer"
-              >
-                <span className="uiIcon">💬</span>
-                Escribir por WhatsApp
-                <span className="uiIcon">→</span>
-              </a>
-
-              <Link className="uiBtn uiBtnGhost" href="/">
-                <span className="uiIcon">🏠</span>
-                Volver a inicio
-              </Link>
-            </div>
-          </div>
-
-          <div style={styles.footerLinks}>
-            <Link href="/politica-de-privacidad" className="uiPill">
-              Política de Privacidad
-            </Link>
-            <Link href="/calcular-mtge" className="uiPill">
-              Calculadora MTGE
-            </Link>
-          </div>
+      {/* Footer mini */}
+      <div className="footer" style={{ marginTop: 18 }}>
+        <div style={{ opacity: 0.85 }}>© {year} DataConSentido</div>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <Link href="/">Inicio</Link>
+          <Link href="/politica-de-privacidad">Política de Privacidad</Link>
+          <Link href="/dpo">Servicios DPO</Link>
         </div>
-      </section>
-    </main>
+      </div>
+    </div>
   );
 }
 
 const styles = {
-  page: {
-    minHeight: "100vh",
-    background:
-      "radial-gradient(900px 500px at 15% 10%, rgba(6,182,212,.10), transparent 60%), radial-gradient(900px 500px at 85% 0%, rgba(245,158,11,.10), transparent 60%), #0b1220",
-    color: "#e8eefc",
+  hero: {
+    position: "relative",
+    overflow: "hidden",
+    padding: 18,
+    borderRadius: 18,
   },
-  container: { maxWidth: 1080, margin: "0 auto", padding: 22 },
-
-  heroWrap: { position: "relative", overflow: "hidden", paddingBottom: 10 },
   heroGlowA: {
     position: "absolute",
-    inset: "-40% -20% auto -20%",
+    inset: "-45% -25% auto -25%",
     height: 520,
-    background: "radial-gradient(closest-side, rgba(6,182,212,.22), transparent 70%)",
+    background: "radial-gradient(closest-side, rgba(6,182,212,.18), transparent 70%)",
     filter: "blur(22px)",
     pointerEvents: "none",
   },
   heroGlowB: {
     position: "absolute",
-    inset: "-40% -20% auto auto",
+    inset: "-45% -25% auto auto",
     height: 520,
     width: 520,
-    background: "radial-gradient(closest-side, rgba(245,158,11,.18), transparent 70%)",
+    background: "radial-gradient(closest-side, rgba(245,158,11,.14), transparent 70%)",
     filter: "blur(22px)",
     pointerEvents: "none",
   },
 
   kicker: {
+    position: "relative",
+    zIndex: 1,
     display: "inline-flex",
     alignItems: "center",
     gap: 10,
@@ -195,7 +209,6 @@ const styles = {
     background: "rgba(255,255,255,.05)",
     fontWeight: 850,
     opacity: 0.95,
-    maxWidth: "100%",
   },
   kickerDot: {
     width: 10,
@@ -203,63 +216,87 @@ const styles = {
     borderRadius: 999,
     background: "rgba(34,197,94,.85)",
     boxShadow: "0 0 0 4px rgba(34,197,94,.15)",
-    flex: "0 0 auto",
   },
 
-  h1: { margin: "14px 0 0 0", fontSize: 44, lineHeight: 1.07, letterSpacing: -0.6, fontWeight: 950 },
+  h1: { position: "relative", zIndex: 1 },
   h1Accent: {
     background: "linear-gradient(90deg, rgba(34,197,94,1), rgba(6,182,212,1), rgba(245,158,11,1))",
     WebkitBackgroundClip: "text",
     backgroundClip: "text",
     color: "transparent",
   },
-  sub: { margin: "12px 0 0 0", fontSize: 16, lineHeight: 1.6, opacity: 0.88 },
+  sub: { position: "relative", zIndex: 1, marginTop: 12, opacity: 0.9, lineHeight: 1.6 },
 
-  chips: { marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap" },
+  chips: { position: "relative", zIndex: 1, marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap" },
   chip: {
     padding: "8px 10px",
     borderRadius: 999,
     border: "1px solid rgba(232,238,252,.12)",
     background: "rgba(11,18,32,.35)",
-    opacity: 0.95,
-    fontWeight: 800,
+    fontWeight: 850,
     fontSize: 13,
-    maxWidth: "100%",
+    opacity: 0.95,
   },
 
-  ctaRow: { marginTop: 14, display: "flex", gap: 10, flexWrap: "wrap" },
-
-  heroStats: { marginTop: 14, display: "flex", gap: 12, flexWrap: "wrap", opacity: 0.92 },
-  stat: {
+  heroMiniGrid: {
+    position: "relative",
+    zIndex: 1,
+    marginTop: 14,
+    display: "flex",
+    gap: 12,
+    flexWrap: "wrap",
+  },
+  heroStat: {
     padding: "10px 12px",
     borderRadius: 16,
     border: "1px solid rgba(232,238,252,.12)",
     background: "rgba(11,18,32,.35)",
-    minWidth: 190,
-    maxWidth: "100%",
+    minWidth: 170,
   },
-  statNum: { fontWeight: 950, fontSize: 16 },
-  statTxt: { fontSize: 12, opacity: 0.84, marginTop: 4 },
+  heroStatNum: { fontWeight: 950, fontSize: 16 },
+  heroStatTxt: { fontSize: 12, opacity: 0.84, marginTop: 4 },
 
-  section: { padding: "16px 0 6px" },
+  section: { padding: "18px 0" },
   sectionHead: { marginBottom: 12 },
   h2: { margin: 0, fontSize: 26, fontWeight: 950, letterSpacing: -0.3 },
   p: { margin: "8px 0 0 0", opacity: 0.85, lineHeight: 1.6 },
 
-  grid2: { display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 },
+  grid2: {
+    display: "grid",
+    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+    gap: 12,
+  },
+
   card: {
     padding: 16,
     borderRadius: 20,
     border: "1px solid rgba(232,238,252,.12)",
     background: "rgba(255,255,255,.06)",
     boxShadow: "0 18px 60px rgba(0,0,0,.25)",
-    minWidth: 0,
   },
-  cardTitle: { fontWeight: 950, fontSize: 16, marginBottom: 8 },
-  list: { margin: "10px 0 0 18px", lineHeight: 1.65, opacity: 0.92 },
+  cardTop: { display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap" },
+  cardTag: {
+    padding: "8px 10px",
+    borderRadius: 999,
+    border: "1px solid rgba(232,238,252,.12)",
+    background: "rgba(11,18,32,.35)",
+    fontWeight: 900,
+    fontSize: 12,
+    opacity: 0.9,
+  },
+  cardTagAlt: {
+    padding: "8px 10px",
+    borderRadius: 999,
+    border: "1px solid rgba(6,182,212,.22)",
+    background: "rgba(6,182,212,.10)",
+    fontWeight: 900,
+    fontSize: 12,
+  },
+  cardTitle: { marginTop: 8, fontWeight: 950, fontSize: 16 },
+  list: { marginTop: 10, lineHeight: 1.6 },
 
-  ctaBand: { padding: "10px 0 28px" },
-  ctaBandInner: {
+  ctaBand: {
+    marginTop: 10,
     borderRadius: 22,
     border: "1px solid rgba(232,238,252,.14)",
     background:
@@ -272,9 +309,8 @@ const styles = {
     gap: 12,
     flexWrap: "wrap",
   },
-  ctaBandTitle: { fontWeight: 950, fontSize: 18 },
-  ctaBandText: { marginTop: 6, opacity: 0.86, lineHeight: 1.55, maxWidth: 680 },
-  ctaBandBtns: { display: "flex", gap: 10, flexWrap: "wrap" },
-
-  footerLinks: { marginTop: 12, display: "flex", gap: 10, flexWrap: "wrap" },
+  ctaLeft: { minWidth: 240, maxWidth: 680 },
+  ctaTitle: { fontWeight: 950, fontSize: 18 },
+  ctaText: { marginTop: 6, opacity: 0.86, lineHeight: 1.55 },
+  ctaBtns: { display: "flex", gap: 10, flexWrap: "wrap" },
 };
