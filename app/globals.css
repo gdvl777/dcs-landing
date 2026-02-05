@@ -1,31 +1,38 @@
-/* app/globals.css */
-
 /* =========================
-   THEME / VARIABLES
-========================= */
+   GLOBALS (DataConSentido)
+   ========================= */
+
 :root {
   color-scheme: dark;
 
   --bg: #0b1220;
-  --card: rgba(255, 255, 255, 0.06);
-  --border: rgba(232, 238, 252, 0.12);
   --text: #e8eefc;
   --muted: rgba(232, 238, 252, 0.78);
 
-  /* acentos */
+  --card: rgba(255, 255, 255, 0.06);
+  --border: rgba(232, 238, 252, 0.12);
+
   --accentA: #22c55e; /* verde */
   --accentB: #06b6d4; /* cyan */
   --accentC: #f59e0b; /* ámbar */
-  --accentText: #081018;
 
-  --btn: rgba(255, 255, 255, 0.1);
+  --btn: rgba(255, 255, 255, 0.10);
   --btnBorder: rgba(232, 238, 252, 0.18);
   --shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
+
+  /* Alturas reservadas (nav fijo + dock fijo) */
+  --navH: 86px;  /* desktop */
+  --dockH: 74px; /* desktop */
 }
 
-/* =========================
-   RESET / BASE
-========================= */
+/* Móvil */
+@media (max-width: 520px) {
+  :root {
+    --navH: 66px;
+    --dockH: 86px; /* suele crecer por 2 filas */
+  }
+}
+
 * {
   box-sizing: border-box;
 }
@@ -33,7 +40,7 @@
 html,
 body {
   max-width: 100%;
-  overflow-x: hidden; /* ✅ evita corte/scroll lateral */
+  overflow-x: hidden;
 }
 
 body {
@@ -43,14 +50,13 @@ body {
   color: var(--text);
 }
 
+/* Links */
 a {
   color: inherit;
   text-decoration: none;
 }
 
-/* =========================
-   LAYOUT CONTAINER
-========================= */
+/* Contenedor general */
 .container {
   width: 100%;
   max-width: 1080px;
@@ -64,257 +70,94 @@ a {
   }
 }
 
-/* ✅ IMPORTANTE: evita “corte” por grids/textos en mobile */
-.hero,
-.card,
-.section,
-.grid3,
-.steps {
-  min-width: 0;
-}
-.hero *,
-.card *,
-.section * {
-  min-width: 0;
-}
-
-/* =========================
-   HOME UI
-========================= */
-.pill {
-  padding: 10px 12px;
-  border-radius: 999px;
-  border: 1px solid var(--btnBorder);
-  background: transparent;
-  opacity: 0.95;
-}
-
-.hero {
-  margin-top: 16px;
-  padding: 22px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  border-radius: 18px;
-  box-shadow: var(--shadow);
-}
-
-.h1 {
-  margin: 0;
-  font-size: 34px;
-  letter-spacing: -0.4px;
-}
-
-.sub {
-  margin: 10px 0 0 0;
-  color: var(--muted);
-  line-height: 1.5;
-}
-
-.ctaRow {
-  margin-top: 16px;
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-
-.grid3 {
-  margin-top: 14px;
-  display: grid;
-  gap: 12px;
-  grid-template-columns: repeat(3, 1fr);
-}
-
-@media (max-width: 980px) {
-  .grid3 {
-    grid-template-columns: 1fr;
-  }
-}
-
-.card {
-  padding: 16px;
-  border: 1px solid var(--border);
-  background: var(--card);
-  border-radius: 18px;
-  box-shadow: var(--shadow);
-}
-
-.cardTitle {
-  font-weight: 800;
-  font-size: 16px;
-}
-
-.bullets {
-  margin: 10px 0 0 18px;
-  color: var(--muted);
-  line-height: 1.55;
-}
-
-.section {
-  margin-top: 14px;
-  padding: 16px;
-  border: 1px solid var(--border);
-  background: rgba(255, 255, 255, 0.04);
-  border-radius: 18px;
-}
-
-.sectionTitle {
-  font-weight: 900;
-  margin: 0 0 8px 0;
-}
-
-.steps {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  margin-top: 10px;
-}
-
-@media (max-width: 980px) {
-  .steps {
-    grid-template-columns: 1fr;
-  }
-}
-
-.step {
-  padding: 14px;
-  border-radius: 16px;
-  border: 1px solid var(--border);
-  background: rgba(11, 18, 32, 0.35);
-}
-
-.stepName {
-  font-weight: 900;
-}
-
-.stepDesc {
-  margin-top: 6px;
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 1.45;
-}
-
-.footer {
-  margin-top: 18px;
-  opacity: 0.85;
-  font-size: 12px;
-  color: var(--muted);
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 10px;
-}
-
-/* =========================
-   NAV PREMIUM FIXED (GLOBAL)
-   ✅ FIX mobile “corte” + safe area
-========================= */
-:root{
-  --navH: 92px; /* desktop */
-}
-
+/* Shell: reserva espacio para NAV fixed + DOCK fixed */
 .app-shell {
   padding-top: calc(var(--navH) + 10px);
+  padding-bottom: calc(var(--dockH) + 16px);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 520px) {
   .app-shell {
-    padding-top: calc(108px + env(safe-area-inset-top));
+    padding-top: calc(var(--navH) + 6px);
+    padding-bottom: calc(var(--dockH) + 16px);
   }
 }
 
-/* Mobile: nav es más bajo, baja el padding */
-@media (max-width: 520px){
-  :root{ --navH: 72px; }
-  .app-shell{ padding-top: calc(var(--navH) + 8px); }
-}
+/* =========================================
+   NAV FIXED (Navbar.jsx)
+   ========================================= */
 
-/* wrapper fijo centrado */
 .nav-wrap {
   position: fixed;
-  top: calc(14px + env(safe-area-inset-top));
+  top: 14px;
   left: 0;
   right: 0;
   z-index: 9999;
-
   display: flex;
   justify-content: center;
-
-  /* ✅ respeta notch + evita recorte lateral */
-  padding-left: max(14px, env(safe-area-inset-left));
-  padding-right: max(14px, env(safe-area-inset-right));
-
-  pointer-events: none;
+  padding: 0 14px;
+  pointer-events: none; /* deja interactivo solo el nav real */
 }
 
-/* nav premium */
+/* Barra principal */
 .nav {
   pointer-events: auto;
-
-  /* ✅ NO uses 100vw (traiciona en mobile). Esto evita corte */
-  width: 100%;
-  max-width: calc(
-    100vw - max(28px, env(safe-area-inset-left) + env(safe-area-inset-right))
-  );
-
+  width: min(1180px, 100%);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 14px;
 
-  background: radial-gradient(900px 120px at 15% 0%, rgba(6, 182, 212, 0.22), transparent 55%),
-    radial-gradient(900px 120px at 85% 0%, rgba(245, 158, 11, 0.2), transparent 55%),
+  background:
+    radial-gradient(900px 120px at 15% 0%, rgba(6, 182, 212, 0.22), transparent 55%),
+    radial-gradient(900px 120px at 85% 0%, rgba(245, 158, 11, 0.20), transparent 55%),
     rgba(255, 255, 255, 0.07);
 
   border: 1px solid rgba(232, 238, 252, 0.16);
   border-radius: 18px;
   padding: 12px 14px;
 
-  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35),
-    0 0 0 1px rgba(34, 197, 94, 0.1),
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.35),
+    0 0 0 1px rgba(34, 197, 94, 0.10),
     0 0 22px rgba(6, 182, 212, 0.12),
-    0 0 26px rgba(245, 158, 11, 0.1);
+    0 0 26px rgba(245, 158, 11, 0.10);
 
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
 
-.nav,
-.nav * {
-  color: var(--text);
-}
-
-/* marca + logo */
+/* Marca */
 .brand {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-
-  min-width: 0; /* ✅ permite encoger */
+  min-width: 210px;
 }
 
-/* ✅ logo responsivo (antes tenías 111x111; en móvil empuja) */
+/* ✅ logo */
 .brandLogo {
-  width: 64px;
-  height: 64px;
+  width: 46px;
+  height: 46px;
   border-radius: 12px;
-  object-fit: cover;
+  object-fit: contain;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
 }
 
-/* texto marca */
+/* Texto marca */
 .brandText {
   font-weight: 900;
   letter-spacing: 0.2px;
-  white-space: nowrap;
 }
 
-/* links desktop */
+/* Links desktop */
 .navLinks {
   display: flex;
   gap: 10px;
   align-items: center;
 }
 
+/* Pills nav */
 .navPill {
   display: inline-flex;
   align-items: center;
@@ -327,18 +170,16 @@ a {
   color: var(--text);
   font-weight: 850;
 
-  transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease,
-    box-shadow 0.12s ease;
+  transition: transform 0.12s ease, background 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
 }
 
 .navPill:hover {
   background: rgba(6, 182, 212, 0.16);
-  border-color: rgba(6, 182, 212, 0.4);
+  border-color: rgba(6, 182, 212, 0.40);
   box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12);
   transform: translateY(-1px);
 }
 
-/* estado activo */
 .navPill.isActive {
   background: linear-gradient(
     90deg,
@@ -347,30 +188,35 @@ a {
     rgba(245, 158, 11, 0.22)
   );
   border-color: rgba(6, 182, 212, 0.45);
-  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.12), 0 0 22px rgba(6, 182, 212, 0.1);
+  box-shadow:
+    0 0 0 3px rgba(6, 182, 212, 0.12),
+    0 0 22px rgba(6, 182, 212, 0.10);
 }
 
-/* =========================
-   MOBILE MENU (3 dots)
-   ✅ solo debe verse en mobile
-========================= */
+/* Botón 3 puntos (mobile) */
 .navBurgerDots {
-  display: none;
+  display: none; /* desktop OFF */
   width: 44px;
   height: 44px;
   border-radius: 999px;
-
   border: 1px solid rgba(232, 238, 252, 0.14);
   background: rgba(255, 255, 255, 0.06);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 
   align-items: center;
   justify-content: center;
   gap: 5px;
 
-  cursor: pointer;
+  cursor: pointer;              /* ✅ mano */
   -webkit-tap-highlight-color: transparent;
   touch-action: manipulation;
+  user-select: none;
+}
+
+.navBurgerDots:hover {
+  border-color: rgba(6, 182, 212, 0.40);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.10);
 }
 
 .navBurgerDots .dot {
@@ -380,42 +226,16 @@ a {
   background: rgba(232, 238, 252, 0.85);
 }
 
-.navBurgerDots:hover {
-  border-color: rgba(6, 182, 212, 0.35);
-  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
-}
-
-@media (max-width: 900px) {
-  .navLinks {
-    display: none;
-  }
-  .navBurgerDots {
-    display: inline-flex; /* ✅ aparece solo en mobile */
-  }
-  .brandText {
-    display: none;
-  }
-  .brandLogo {
-    width: 56px;
-    height: 56px;
-  }
-}
-
-/* dropdown mobile */
+/* Dropdown mobile */
 .navMobile {
   pointer-events: auto;
-  width: 100%;
-  max-width: calc(
-    100vw - max(28px, env(safe-area-inset-left) + env(safe-area-inset-right))
-  );
-
+  width: min(1180px, 100%);
   margin-top: 10px;
 
   background: rgba(11, 18, 32, 0.92);
   border: 1px solid rgba(232, 238, 252, 0.14);
   border-radius: 18px;
   box-shadow: 0 18px 80px rgba(0, 0, 0, 0.55);
-
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 
@@ -426,7 +246,7 @@ a {
   display: block;
   padding: 12px 12px;
   border-radius: 14px;
-  border: 1px solid rgba(232, 238, 252, 0.1);
+  border: 1px solid rgba(232, 238, 252, 0.10);
   background: rgba(255, 255, 255, 0.05);
   margin: 8px 0;
   font-weight: 850;
@@ -443,9 +263,30 @@ a {
   box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.08);
 }
 
-/* =========================
-   UI BUTTONS (premium)
-========================= */
+/* Responsive NAV */
+@media (max-width: 900px) {
+  .navLinks {
+    display: none;
+  }
+  .navBurgerDots {
+    display: inline-flex; /* ✅ SOLO en móvil */
+  }
+}
+
+/* Compacta marca en móvil */
+@media (max-width: 860px) {
+  .brand {
+    min-width: unset;
+  }
+  .brandText {
+    display: none;
+  }
+}
+
+/* =========================================
+   UI Buttons / Fields (reusables)
+   ========================================= */
+
 .uiBtn {
   display: inline-flex;
   align-items: center;
@@ -459,18 +300,17 @@ a {
   color: var(--text);
   font-weight: 900;
 
-  border: 1px solid rgba(232, 238, 252, 0.2);
+  border: 1px solid rgba(232, 238, 252, 0.20);
   background: rgba(255, 255, 255, 0.06);
 
   box-shadow: 0 14px 40px rgba(0, 0, 0, 0.18);
-  transition: transform 0.14s ease, filter 0.14s ease, box-shadow 0.14s ease,
-    background 0.14s ease, border-color 0.14s ease;
+  transition: transform 0.14s ease, filter 0.14s ease, box-shadow 0.14s ease, background 0.14s ease, border-color 0.14s ease;
 }
 
 .uiBtn:hover {
   transform: translateY(-1px);
   filter: brightness(1.05);
-  border-color: rgba(232, 238, 252, 0.3);
+  border-color: rgba(232, 238, 252, 0.30);
   box-shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
 }
 
@@ -495,40 +335,17 @@ a {
 
 .uiBtnPrimary {
   border: 1px solid rgba(6, 182, 212, 0.28);
-  background: radial-gradient(900px 120px at 15% 0%, rgba(6, 182, 212, 0.22), transparent 55%),
+  background:
+    radial-gradient(900px 120px at 15% 0%, rgba(6, 182, 212, 0.22), transparent 55%),
     radial-gradient(900px 120px at 85% 0%, rgba(245, 158, 11, 0.18), transparent 55%),
     linear-gradient(90deg, rgba(34, 197, 94, 0.26), rgba(6, 182, 212, 0.22), rgba(245, 158, 11, 0.18));
-  box-shadow: 0 14px 50px rgba(0, 0, 0, 0.25), 0 0 0 3px rgba(6, 182, 212, 0.08);
-}
-
-.uiBtnPrimary:hover {
-  border-color: rgba(6, 182, 212, 0.42);
-  box-shadow: 0 18px 70px rgba(0, 0, 0, 0.32), 0 0 0 4px rgba(6, 182, 212, 0.1),
-    0 0 22px rgba(6, 182, 212, 0.1);
+  box-shadow:
+    0 14px 50px rgba(0, 0, 0, 0.25),
+    0 0 0 3px rgba(6, 182, 212, 0.08);
 }
 
 .uiBtnGhost {
   background: rgba(255, 255, 255, 0.04);
-}
-
-.uiPill {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 12px;
-  border-radius: 999px;
-  border: 1px solid rgba(232, 238, 252, 0.18);
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text);
-  font-weight: 850;
-  transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease;
-}
-
-.uiPill:hover {
-  transform: translateY(-1px);
-  border-color: rgba(6, 182, 212, 0.4);
-  background: rgba(6, 182, 212, 0.12);
 }
 
 .uiIcon {
@@ -539,9 +356,7 @@ a {
   opacity: 0.95;
 }
 
-/* =========================
-   UI FIELD / SELECT
-========================= */
+/* Fields */
 .uiField {
   width: 100%;
   padding: 11px 12px;
@@ -573,9 +388,10 @@ a {
   box-shadow: none;
 }
 
-/* =========================
-   CHECKBOX CARDS
-========================= */
+/* =========================================
+   Checkbox cards (MTGE)
+   ========================================= */
+
 .uiCheckCard {
   display: flex;
   gap: 10px;
@@ -586,8 +402,7 @@ a {
   border: 1px solid rgba(232, 238, 252, 0.12);
   background: rgba(11, 18, 32, 0.35);
 
-  transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease,
-    box-shadow 0.14s ease;
+  transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease, box-shadow 0.14s ease;
 }
 
 .uiCheckCard:hover {
@@ -613,9 +428,6 @@ a {
   flex: 1;
 }
 
-/* =========================
-   INFO BUTTON
-========================= */
 .uiInfoBtn {
   width: 30px;
   height: 30px;
@@ -631,20 +443,20 @@ a {
   justify-content: center;
 
   font-weight: 950;
-  transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease,
-    box-shadow 0.14s ease;
+  transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease, box-shadow 0.14s ease;
 }
 
 .uiInfoBtn:hover {
   transform: translateY(-1px);
-  border-color: rgba(6, 182, 212, 0.4);
+  border-color: rgba(6, 182, 212, 0.40);
   background: rgba(6, 182, 212, 0.12);
-  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
+  box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.10);
 }
 
-/* =========================
-   BADGE RESULT
-========================= */
+/* =========================================
+   Badge resultado (MTGE)
+   ========================================= */
+
 .uiBadge {
   display: inline-flex;
   align-items: center;
@@ -665,16 +477,19 @@ a {
 
 .uiBadgeNo {
   background: rgba(255, 120, 120, 0.16);
-  border-color: rgba(255, 120, 120, 0.3);
+  border-color: rgba(255, 120, 120, 0.30);
   box-shadow: 0 0 0 4px rgba(255, 120, 120, 0.07);
 }
 
-/* =========================
-   GRAN ESCALA (RESPONSIVE)
-========================= */
+/* =========================================
+   Gran Escala (responsive)
+   ========================================= */
+
 .granBox {
   border: 1px solid rgba(245, 158, 11, 0.38);
-  box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.08), 0 22px 80px rgba(0, 0, 0, 0.28);
+  box-shadow:
+    0 0 0 4px rgba(245, 158, 11, 0.08),
+    0 22px 80px rgba(0, 0, 0, 0.28);
   width: 100%;
   max-width: 100%;
 }
@@ -709,29 +524,10 @@ a {
   hyphens: auto;
 }
 
-@media (max-width: 520px) {
-  .granBox {
-    padding: 14px !important;
-  }
+/* =========================================
+   Calificación directa grid (responsive)
+   ========================================= */
 
-  .granBox h2 {
-    font-size: 18px !important;
-    line-height: 1.25;
-  }
-
-  .granBox p {
-    font-size: 13px !important;
-    line-height: 1.45;
-  }
-
-  .granCard {
-    padding: 12px !important;
-  }
-}
-
-/* =========================
-   CALIFICACIÓN DIRECTA (RESPONSIVE)
-========================= */
 .directGridUI {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -768,57 +564,16 @@ a {
   }
 }
 
-/* =========================
-   OPTIONAL HELPERS (if you used them)
-========================= */
-@media (max-width: 980px) {
-  .heroGridFix {
-    grid-template-columns: 1fr !important;
-  }
-  .cards3Fix {
-    grid-template-columns: 1fr !important;
-  }
+/* =========================================
+   Helpers: evita cortes/overflow raros
+   ========================================= */
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
 }
 
-/* ===== HOME responsive fixes (porque inline styles no soportan media queries) ===== */
-
-.heroGrid{
-  display: grid;
-  grid-template-columns: 1.2fr .8fr;
-  gap: 14px;
-  margin-top: 18px;
-  min-width: 0;
+button {
+  font-family: inherit;
 }
-
-@media (max-width: 980px){
-  .heroGrid{
-    grid-template-columns: 1fr;
-  }
-}
-
-/* h1 grande: baja tamaño en mobile */
-.homeH1{
-  font-size: 44px;
-  line-height: 1.07;
-}
-
-@media (max-width: 520px){
-  .homeH1{
-    font-size: 34px;
-    line-height: 1.12;
-  }
-}
-
-/* Cards 3 -> 1 ya lo tienes, pero por si acaso */
-@media (max-width: 980px){
-  .cards3Fix{
-    grid-template-columns: 1fr !important;
-  }
-}
-
-@media (max-width: 900px){
-  .dpoGrid2Fix{
-    grid-template-columns: 1fr !important;
-  }
-}
-
