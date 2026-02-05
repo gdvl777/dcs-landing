@@ -283,7 +283,6 @@ export default function CalcularMTGEPage() {
       const nextIsDirect = Object.values(next).some(Boolean);
 
       if (nextIsDirect) {
-        // Encera variables si hay calificación directa
         setTitularesIdx(0);
         setVolumenIdx(0);
         setCategoriasIdx(0);
@@ -456,8 +455,6 @@ export default function CalcularMTGEPage() {
     );
   }
 
-  // ✅ Clave: NO metas ObligacionesYCTA dentro del mismo <section> de "Calificación directa"
-  // porque la estampa (overlay absolute) termina cubriendo todo el alto del section.
   const showGranEscalaBlockAfterDirect = isDirect;
   const showGranEscalaBlockAfterResult = !isDirect && isGranEscala;
 
@@ -469,7 +466,7 @@ export default function CalcularMTGEPage() {
           <nav className="nav" aria-label="Navegación principal">
             <Link href="/" className="brand" onClick={() => setNavOpen(false)}>
               <Image
-                src="./../../ogo_DataConSentido.jpeg"
+                src="/logo.png"
                 alt="DataConSentido"
                 width={34}
                 height={34}
