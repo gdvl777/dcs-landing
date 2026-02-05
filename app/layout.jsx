@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./components/Navbar";
 import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
+import GaPageView from "./components/GaPageView";
 
 export const metadata = {
   title: "DataConSentido",
@@ -20,6 +21,8 @@ export default function RootLayout({ children }) {
 
         {/* Vercel Analytics */}
         <Analytics />
+        {GA_ID ? <GaPageView gaId={GA_ID} /> : null}
+
 
         {/* Google Analytics 4 */}
         {GA_ID ? (
