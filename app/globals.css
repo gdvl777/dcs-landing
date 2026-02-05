@@ -578,46 +578,4 @@ button {
   font-family: inherit;
 }
 
-/* =========================================
-   FIX MOBILE: grids en 1 columna + texto normal
-   ========================================= */
-
-/* Cualquier grid 2/3 columnas que tengas en páginas (DPO, home, etc.) */
-.grid2, .grid3, .cards3, .steps, .dpoGrid {
-  min-width: 0;
-}
-
-/* Si tu DPO usa 2 tarjetas lado a lado, ponle className="dpoGrid" al contenedor */
-.dpoGrid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-}
-
-/* 🔥 En móvil: 1 sola columna */
-@media (max-width: 900px) {
-  .dpoGrid { grid-template-columns: 1fr !important; }
-  .grid3, .cards3, .steps { grid-template-columns: 1fr !important; }
-}
-
-/* Evita “una palabra por línea” dentro de cards/listas */
-.card, .section, .hero, .dpoGrid > * {
-  min-width: 0;
-  max-width: 100%;
-}
-
-.card p, .card li,
-.section p, .section li,
-.hero p, .hero li {
-  overflow-wrap: break-word;   /* rompe solo si hace falta */
-  word-break: normal;         /* ✅ NO cortar palabra a lo loco */
-  hyphens: auto;
-  line-height: 1.5;
-}
-
-/* Si por accidente tienes esto en algún lado, lo neutralizamos en listas */
-.card ul, .section ul {
-  overflow-wrap: normal;
-  word-break: normal;
-}
 
