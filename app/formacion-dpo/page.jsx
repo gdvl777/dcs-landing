@@ -3,15 +3,6 @@ import Link from "next/link";
 export default function FormacionDPOPage() {
   return (
     <div className="container">
-      <div className="nav">
-        <div style={{ fontWeight: 900 }}>DataConSentido</div>
-        <div className="navLinks">
-          <Link className="pill" href="/">Inicio</Link>
-          <Link className="pill" href="/dpo">Servicios DPO</Link>
-          <Link className="pill" href="/calcular-mtge">MTGE</Link>
-        </div>
-      </div>
-
       <section className="hero">
         <h1 className="h1">Formación avanzada DPO</h1>
         <p className="sub">
