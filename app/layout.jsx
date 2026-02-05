@@ -2,11 +2,11 @@
 import "./globals.css";
 import Navbar from "./components/Navbar";
 import Script from "next/script";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   title: "DataConSentido",
-  description: "Privacidad, Cumplimiento y Tecnología con Sentido"
+  description: "Privacidad, Cumplimiento y Tecnología con Sentido",
 };
 
 export default function RootLayout({ children }) {
@@ -15,11 +15,13 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <body>
-        {/* ✅ Navbar fijo/global */}
         <Navbar />
         <div className="app-shell">{children}</div>
 
-        {/* ✅ Google Analytics 4 (solo si existe GA_ID) */}
+        {/* Vercel Analytics */}
+        <Analytics />
+
+        {/* Google Analytics 4 */}
         {GA_ID ? (
           <>
             <Script
@@ -31,10 +33,7 @@ export default function RootLayout({ children }) {
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${GA_ID}', {
-                  anonymize_ip: true,
-                  page_path: window.location.pathname,
-                });
+                gtag('config', '${GA_ID}', { anonymize_ip: true });
               `}
             </Script>
           </>
