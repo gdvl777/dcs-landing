@@ -1,19 +1,41 @@
 // app/components/Navbar.jsx
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
   const [navOpen, setNavOpen] = useState(false);
+  const navRef = useRef(null);
+
+  useEffect(() => {
+    const el = navRef.current;
+    if (!el) return;
+
+    const apply = () => {
+      const h = el.getBoundingClientRect().height;
+      document.documentElement.style.setProperty("--navH", `${Math.ceil(h)}px`);
+    };
+
+    apply();
+
+    const ro = new ResizeObserver(apply);
+    ro.observe(el);
+
+    window.addEventListener("resize", apply);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", apply);
+    };
+  }, []);
 
   const links = useMemo(
     () => [
-      { href: "/dpo", label: "Servicios DPO" },
+      { href: "/servicios-dpo", label: "Servicios DPO" },
       { href: "/formacion-dpo", label: "Formación DPO" },
       { href: "/calcular-mtge", label: "Calculadora MTGE" },
-  
+      { href: "/politica-de-privacidad", label: "Privacidad" },
     ],
     []
   );
@@ -23,13 +45,9 @@ export default function Navbar() {
     return pathname === href || pathname.startsWith(href + "/");
   }
 
-  function close() {
-    setNavOpen(false);
-  }
-
   return (
     <header className="nav-wrap">
-      <nav className="nav" aria-label="Navegación principal">
+      <nav ref={navRef} className="nav" aria-label="Navegación principal">
         <a className="brand" href="/" onClick={close} aria-label="Ir al inicio">
           {/* Debe existir en /public/logo_DataConSentido.png */}
           <img
@@ -69,16 +87,15 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Menú mobile */}
       {navOpen ? (
-        <div className="navMobile" role="menu">
+        <div className="navMobile" role="dialog" aria-modal="true">
           {links.map((l) => (
             <a
               key={l.href}
               href={l.href}
-              onClick={close}
               className={`navMobileLink ${isActive(l.href) ? "isActiveMobile" : ""}`}
               aria-current={isActive(l.href) ? "page" : undefined}
+              onClick={() => setNavOpen(false)}
             >
               {l.label}
             </a>

@@ -673,7 +673,7 @@ export default function CalcularMTGEPage() {
                 </div>
 
                 <div style={styles.modalBody}>
-                  <div style={styles.modalSectionTitle}>Qué contempla</div>
+                  <div style={styles.modalSectionTitle}>¿Qué contempla?</div>
                   <div>{directHelp[openHelpKey]?.what}</div>
 
                   <div style={styles.modalSectionTitle}>Ejemplos</div>
