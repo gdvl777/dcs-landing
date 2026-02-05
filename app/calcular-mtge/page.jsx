@@ -472,22 +472,8 @@ export default function CalcularMTGEPage() {
                 <b>6 variables</b> (umbral <b>6 puntos</b>).
               </p>
             </div>
-
-            {/* Barra fija (sticky) para acciones */}
-            <div style={styles.actionBar}>
-              <div style={styles.actionBarInner}>
-                <button onClick={copySummary} className="uiBtn uiBtnGhost" style={styles.actionBtn}>
-                  <span className="uiIcon">📋</span>
-                  Copiar resumen
-                </button>
-                <button onClick={resetAll} className="uiBtn uiBtnGhost" style={styles.actionBtn}>
-                  <span className="uiIcon">🔄</span>
-                  Reset
-                </button>
-              </div>
-            </div>
-
           </header>
+
 
           {/* Resumen operativo */}
           <section style={styles.card}>
@@ -683,6 +669,21 @@ export default function CalcularMTGEPage() {
             </div>
           ) : null}
         </div>
+        {/* ACTION DOCK fixed (siempre visible) */}
+        <div style={styles.actionDock} role="region" aria-label="Acciones rápidas">
+          <div style={styles.actionDockInner}>
+            <button onClick={copySummary} className="uiBtn uiBtnGhost" style={styles.dockBtn}>
+              <span className="uiIcon">📋</span>
+              Copiar resumen
+            </button>
+
+            <button onClick={resetAll} className="uiBtn uiBtnGhost" style={styles.dockBtn}>
+              <span className="uiIcon">🔄</span>
+              Reset
+            </button>
+          </div>
+        </div>
+
       </main>
     </div>
   );
@@ -845,29 +846,29 @@ const styles = {
   },
 
   actionBar: {
-  position: "sticky",
-  top: "calc(var(--navH) + 10px)",   // queda debajo del nav fijo
-  zIndex: 50,
-  marginTop: 10,
-  marginBottom: 14,
-},
+    position: "sticky",
+    top: "calc(var(--navH) + 10px)",   // queda debajo del nav fijo
+    zIndex: 50,
+    marginTop: 10,
+    marginBottom: 14,
+  },
 
-actionBarInner: {
-  display: "flex",
-  gap: 10,
-  flexWrap: "wrap",
-  padding: 10,
-  borderRadius: 16,
-  border: "1px solid rgba(232,238,252,.14)",
-  background: "rgba(11,18,32,.70)",
-  boxShadow: "0 18px 60px rgba(0,0,0,.25)",
-  backdropFilter: "blur(12px)",
-  WebkitBackdropFilter: "blur(12px)",
-},
+  actionBarInner: {
+    display: "flex",
+    gap: 10,
+    flexWrap: "wrap",
+    padding: 10,
+    borderRadius: 16,
+    border: "1px solid rgba(232,238,252,.14)",
+    background: "rgba(11,18,32,.70)",
+    boxShadow: "0 18px 60px rgba(0,0,0,.25)",
+    backdropFilter: "blur(12px)",
+    WebkitBackdropFilter: "blur(12px)",
+  },
 
-actionBtn: {
-  flex: "1 1 160px",   // en móvil se acomodan 2 por fila si hay espacio
-},
+  actionBtn: {
+    flex: "1 1 160px",   // en móvil se acomodan 2 por fila si hay espacio
+  },
 
   obligTitle: { fontWeight: 900, marginBottom: 8 },
   obligList: { margin: "0 0 0 18px", lineHeight: 1.6, opacity: 0.92 },
