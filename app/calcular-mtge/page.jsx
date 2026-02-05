@@ -556,7 +556,7 @@ export default function CalcularMTGEPage() {
             Si aplica alguno de estos supuestos, la calificación como gran escala es directa.
           </p>
 
-          <div style={styles.directGrid}>
+          <div style={styles.directGrid} className="directGridUI">
             {directCases.map((c) => (
               <div key={c.key} className="uiCheckCard">
                 <div className="uiCheckRow">
