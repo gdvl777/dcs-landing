@@ -456,6 +456,8 @@ export default function CalcularMTGEPage() {
     );
   }
 
+  // ✅ Clave: NO metas ObligacionesYCTA dentro del mismo <section> de "Calificación directa"
+  // porque la estampa (overlay absolute) termina cubriendo todo el alto del section.
   const showGranEscalaBlockAfterDirect = isDirect;
   const showGranEscalaBlockAfterResult = !isDirect && isGranEscala;
 
@@ -466,7 +468,6 @@ export default function CalcularMTGEPage() {
         <div>
           <nav className="nav" aria-label="Navegación principal">
             <Link href="/" className="brand" onClick={() => setNavOpen(false)}>
-              {/* Pon tu logo en /public/logo.png (recomendado) */}
               <Image
                 src="/logo.png"
                 alt="DataConSentido"
@@ -566,9 +567,8 @@ export default function CalcularMTGEPage() {
             </ul>
           </section>
 
-          {/* 1) Calificación directa */}
+          {/* 1) Calificación directa (SOLO esta card tiene estampa) */}
           <section style={{ ...styles.card, position: "relative", overflow: "hidden" }}>
-            {/* Overlay “stamp” solo cuando hay calificación directa */}
             {isDirect ? (
               <div style={styles.directOverlay} aria-hidden="true">
                 <div style={styles.directOverlayText}>CALIFICA COMO GRAN ESCALA</div>
@@ -580,19 +580,18 @@ export default function CalcularMTGEPage() {
               Si aplica alguno de estos supuestos, la calificación como gran escala es directa.
             </p>
 
-            {/* ✅ Grid responsive por CSS (no inline) */}
             <div className="directGridUI" style={{ marginTop: 10 }}>
               {directCases.map((c) => (
                 <div key={c.key} className="uiCheckCard">
                   <div className="uiCheckRow">
-                    <label className="uiCheckLabel">
+                    <label className="uiCheckLabel" style={styles.noWeirdBreaks}>
                       <input
                         type="checkbox"
                         checked={Boolean(directSelected[c.key])}
                         onChange={() => toggleDirect(c.key)}
                         style={{ marginTop: 2 }}
                       />
-                      <span>{c.label}</span>
+                      <span style={styles.noWeirdBreaks}>{c.label}</span>
                     </label>
 
                     <button
@@ -615,10 +614,10 @@ export default function CalcularMTGEPage() {
                 <b>6 variables</b> quedan bloqueadas.
               </div>
             ) : null}
-
-            {/* ✅ Si es calificación directa, esta sección va JUSTO debajo */}
-            {showGranEscalaBlockAfterDirect ? <ObligacionesYCTA /> : null}
           </section>
+
+          {/* ✅ Ahora SÍ: Gran escala va como sección SEPARADA (no dentro de la card de calificación directa) */}
+          {showGranEscalaBlockAfterDirect ? <ObligacionesYCTA /> : null}
 
           {/* 2) Variables */}
           <section style={styles.card}>
@@ -696,10 +695,10 @@ export default function CalcularMTGEPage() {
                 {isDirect ? <div style={styles.note}>Marcaste calificación directa.</div> : null}
               </div>
             </div>
-
-            {/* ✅ Si NO es calificación directa y sí califica por puntaje, va debajo del RESULTADO */}
-            {showGranEscalaBlockAfterResult ? <ObligacionesYCTA /> : null}
           </section>
+
+          {/* ✅ Si califica por puntaje, va DESPUÉS del resultado como sección separada */}
+          {showGranEscalaBlockAfterResult ? <ObligacionesYCTA /> : null}
 
           {/* MODAL AYUDA */}
           {openHelpKey ? (
@@ -872,7 +871,7 @@ const styles = {
   },
   modalList: { margin: "6px 0 0 18px" },
 
-  // Overlay “stamp”
+  // Overlay “stamp” (solo dentro del section de calificación directa)
   directOverlay: {
     position: "absolute",
     inset: 0,
@@ -894,6 +893,13 @@ const styles = {
     borderRadius: 18,
     background: "rgba(80, 200, 120, 0.06)",
     boxShadow: "0 18px 80px rgba(0,0,0,.25)"
+  },
+
+  // Evita que el texto se “corte” feo en móvil (letras sueltas)
+  noWeirdBreaks: {
+    wordBreak: "normal",
+    overflowWrap: "break-word",
+    hyphens: "auto"
   },
 
   obligTitle: { fontWeight: 900, marginBottom: 8 },
