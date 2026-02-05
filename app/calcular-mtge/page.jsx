@@ -476,7 +476,7 @@ export default function CalcularMTGEPage() {
 
 
           {/* Resumen operativo */}
-          <section style={styles.card}>
+          <section className="card cardGlow">
             <div style={styles.cardTitle}>
               Según la resolución No.{" "}
               <a
