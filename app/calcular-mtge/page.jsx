@@ -885,6 +885,38 @@ const styles = {
     gap: 12,
     flexWrap: "wrap"
   },
+  actionDock: {
+  position: "fixed",
+  left: 0,
+  right: 0,
+  bottom: 14,
+  zIndex: 99999,
+  display: "flex",
+  justifyContent: "center",
+  padding: "0 14px",
+  pointerEvents: "none", // ✅ importante: no bloquea scroll en el resto
+},
+
+actionDockInner: {
+  pointerEvents: "auto",
+  width: "min(980px, 100%)",
+  display: "flex",
+  gap: 10,
+  flexWrap: "wrap",
+  padding: 10,
+  borderRadius: 18,
+  border: "1px solid rgba(232,238,252,.14)",
+  background: "rgba(11,18,32,.72)",
+  boxShadow: "0 18px 60px rgba(0,0,0,.35)",
+  backdropFilter: "blur(12px)",
+  WebkitBackdropFilter: "blur(12px)",
+},
+
+dockBtn: {
+  flex: "1 1 220px",
+  minHeight: 48,
+},
+
   ctaTitle: { fontWeight: 950, marginBottom: 4 },
   ctaBtns: { display: "flex", gap: 10, flexWrap: "wrap" }
 };
