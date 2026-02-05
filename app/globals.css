@@ -304,8 +304,8 @@ a {
 }
 
 .brandLogo {
-  width: 34px;
-  height: 34px;
+  width: 111px;
+  height: 111px;
   border-radius: 10px;
   object-fit: cover;
   box-shadow: 0 10px 30px rgba(0, 0, 0, .25);

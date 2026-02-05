@@ -34,7 +34,7 @@ export default function Navbar() {
         <a className="brand" href="/" onClick={close} aria-label="Ir al inicio">
           {/* Cambia /logo.png por el nombre real en /public */}
           <img className="brandLogo" src="/logo_DataConSentido.png" alt="DataConSentido" />
-          <span className="brandText">DataConSentido</span>
+          <span className="brandText"></span>
         </a>
 
         {/* Desktop */}
