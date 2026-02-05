@@ -1,7 +1,7 @@
 // app/calcular-mtge/page.jsx
 "use client";
 
-import React, { useMemo, useState, useCallback, useEffect } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,11 +26,6 @@ export default function CalcularMTGEPage() {
   ];
 
   const isActive = (href) => pathname === href;
-
-  // cierra el menú mobile al cambiar de ruta
-  useEffect(() => {
-    setNavOpen(false);
-  }, [pathname]);
 
   // =========================
   // Opciones (rangos/puntajes)
@@ -100,18 +95,9 @@ export default function CalcularMTGEPage() {
   const [directSelected, setDirectSelected] = useState({});
 
   const directCases = [
-    {
-      key: "salud_sensible",
-      label: "Tratamientos relativos a la salud / datos sensibles"
-    },
-    {
-      key: "perfilamiento",
-      label: "Evaluación automatizada (perfilamiento/predicción) con efectos"
-    },
-    {
-      key: "videovigilancia",
-      label: "Vigilancia sistemática en zonas de acceso público"
-    },
+    { key: "salud_sensible", label: "Tratamientos relativos a la salud / datos sensibles" },
+    { key: "perfilamiento", label: "Evaluación automatizada (perfilamiento/predicción) con efectos" },
+    { key: "videovigilancia", label: "Vigilancia sistemática en zonas de acceso público" },
     { key: "biometricos_geo", label: "Datos biométricos o geolocalización" },
     { key: "crediticia", label: "Información crediticia/financiera o riesgo económico" },
     { key: "nna", label: "Tratamiento sistemático de datos de NNA" },
@@ -470,6 +456,8 @@ export default function CalcularMTGEPage() {
     );
   }
 
+  // ✅ Clave: NO metas ObligacionesYCTA dentro del mismo <section> de "Calificación directa"
+  // porque la estampa (overlay absolute) termina cubriendo todo el alto del section.
   const showGranEscalaBlockAfterDirect = isDirect;
   const showGranEscalaBlockAfterResult = !isDirect && isGranEscala;
 
@@ -522,7 +510,9 @@ export default function CalcularMTGEPage() {
                 <Link
                   key={it.href}
                   href={it.href}
-                  className={`navMobileLink ${isActive(it.href) ? "isActiveMobile" : ""}`}
+                  className={`navMobileLink ${
+                    isActive(it.href) ? "isActiveMobile" : ""
+                  }`}
                   onClick={() => setNavOpen(false)}
                 >
                   {it.label}
@@ -536,7 +526,6 @@ export default function CalcularMTGEPage() {
       {/* CONTENIDO */}
       <main style={styles.page}>
         <div style={styles.container}>
-          {/* Título */}
           <header style={styles.header}>
             <div>
               <h1 style={styles.h1}>Calculadora MTGE</h1>
@@ -545,19 +534,18 @@ export default function CalcularMTGEPage() {
                 <b>6 variables</b> (umbral <b>6 puntos</b>).
               </p>
             </div>
-          </header>
 
-          {/* ✅ Acciones sticky (Copiar/Reset) */}
-          <div style={styles.stickyActions} aria-label="Acciones rápidas">
-            <button onClick={copySummary} className="uiBtn uiBtnGhost">
-              <span className="uiIcon">📋</span>
-              Copiar resumen
-            </button>
-            <button onClick={resetAll} className="uiBtn uiBtnGhost">
-              <span className="uiIcon">🔄</span>
-              Reset
-            </button>
-          </div>
+            <div style={styles.headerBtns}>
+              <button onClick={copySummary} className="uiBtn uiBtnGhost">
+                <span className="uiIcon">📋</span>
+                Copiar resumen
+              </button>
+              <button onClick={resetAll} className="uiBtn uiBtnGhost">
+                <span className="uiIcon">🔄</span>
+                Reset
+              </button>
+            </div>
+          </header>
 
           {/* Resumen operativo */}
           <section style={styles.card}>
@@ -579,9 +567,8 @@ export default function CalcularMTGEPage() {
             </ul>
           </section>
 
-          {/* 1) Calificación directa */}
+          {/* 1) Calificación directa (SOLO esta card tiene estampa) */}
           <section style={{ ...styles.card, position: "relative", overflow: "hidden" }}>
-            {/* Overlay “stamp” solo cuando hay calificación directa */}
             {isDirect ? (
               <div style={styles.directOverlay} aria-hidden="true">
                 <div style={styles.directOverlayText}>CALIFICA COMO GRAN ESCALA</div>
@@ -597,14 +584,14 @@ export default function CalcularMTGEPage() {
               {directCases.map((c) => (
                 <div key={c.key} className="uiCheckCard">
                   <div className="uiCheckRow">
-                    <label className="uiCheckLabel">
+                    <label className="uiCheckLabel" style={styles.noWeirdBreaks}>
                       <input
                         type="checkbox"
                         checked={Boolean(directSelected[c.key])}
                         onChange={() => toggleDirect(c.key)}
                         style={{ marginTop: 2 }}
                       />
-                      <span>{c.label}</span>
+                      <span style={styles.noWeirdBreaks}>{c.label}</span>
                     </label>
 
                     <button
@@ -627,9 +614,10 @@ export default function CalcularMTGEPage() {
                 <b>6 variables</b> quedan bloqueadas.
               </div>
             ) : null}
-
-            {showGranEscalaBlockAfterDirect ? <ObligacionesYCTA /> : null}
           </section>
+
+          {/* ✅ Ahora SÍ: Gran escala va como sección SEPARADA (no dentro de la card de calificación directa) */}
+          {showGranEscalaBlockAfterDirect ? <ObligacionesYCTA /> : null}
 
           {/* 2) Variables */}
           <section style={styles.card}>
@@ -707,9 +695,10 @@ export default function CalcularMTGEPage() {
                 {isDirect ? <div style={styles.note}>Marcaste calificación directa.</div> : null}
               </div>
             </div>
-
-            {showGranEscalaBlockAfterResult ? <ObligacionesYCTA /> : null}
           </section>
+
+          {/* ✅ Si califica por puntaje, va DESPUÉS del resultado como sección separada */}
+          {showGranEscalaBlockAfterResult ? <ObligacionesYCTA /> : null}
 
           {/* MODAL AYUDA */}
           {openHelpKey ? (
@@ -766,31 +755,13 @@ const styles = {
     alignItems: "flex-start",
     justifyContent: "space-between",
     gap: 16,
-    marginBottom: 8,
+    marginBottom: 18,
     flexWrap: "wrap"
   },
   h1: { margin: 0, fontSize: 30, letterSpacing: -0.3 },
   sub: { margin: "8px 0 0 0", opacity: 0.9, lineHeight: 1.5 },
 
-  // ✅ Sticky actions (Copiar / Reset)
-  stickyActions: {
-    position: "sticky",
-    top: 92, // ajusta si tu nav fijo es más alto: 84-110
-    zIndex: 80,
-    display: "flex",
-    gap: 10,
-    flexWrap: "wrap",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    margin: "10px 0 14px",
-    padding: 10,
-    borderRadius: 16,
-    background: "rgba(11,18,32,.72)",
-    border: "1px solid rgba(232,238,252,.12)",
-    backdropFilter: "blur(10px)",
-    WebkitBackdropFilter: "blur(10px)",
-    boxShadow: "0 14px 50px rgba(0,0,0,.25)"
-  },
+  headerBtns: { display: "flex", gap: 10, flexWrap: "wrap" },
 
   card: {
     background: "rgba(255,255,255,.06)",
@@ -900,7 +871,7 @@ const styles = {
   },
   modalList: { margin: "6px 0 0 18px" },
 
-  // Overlay “stamp”
+  // Overlay “stamp” (solo dentro del section de calificación directa)
   directOverlay: {
     position: "absolute",
     inset: 0,
@@ -922,6 +893,13 @@ const styles = {
     borderRadius: 18,
     background: "rgba(80, 200, 120, 0.06)",
     boxShadow: "0 18px 80px rgba(0,0,0,.25)"
+  },
+
+  // Evita que el texto se “corte” feo en móvil (letras sueltas)
+  noWeirdBreaks: {
+    wordBreak: "normal",
+    overflowWrap: "break-word",
+    hyphens: "auto"
   },
 
   obligTitle: { fontWeight: 900, marginBottom: 8 },
