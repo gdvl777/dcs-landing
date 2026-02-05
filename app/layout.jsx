@@ -38,6 +38,9 @@ export default function RootLayout({ children }) {
             </Script>
           </>
         ) : null}
+
+        {/* ✅ Vercel Web Analytics */}
+        <Analytics />
       </body>
     </html>
   );
