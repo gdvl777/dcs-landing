@@ -7,7 +7,6 @@ import { usePathname } from "next/navigation";
 export default function Navbar() {
   const pathname = usePathname();
   const [navOpen, setNavOpen] = useState(false);
-  const [open, setOpen] = useState(false);
 
   const links = useMemo(
     () => [
@@ -20,22 +19,25 @@ export default function Navbar() {
   );
 
   function isActive(href) {
-    // Activo exacto o sub-rutas (ej: /calcular-mtge/xyz)
     if (href === "/") return pathname === "/";
     return pathname === href || pathname.startsWith(href + "/");
   }
 
   function close() {
-    setOpen(false);
+    setNavOpen(false);
   }
 
   return (
     <header className="nav-wrap">
-      <nav className="nav">
+      <nav className="nav" aria-label="Navegación principal">
         <a className="brand" href="/" onClick={close} aria-label="Ir al inicio">
-          {/* Cambia /logo.png por el nombre real en /public */}
-          <img className="brandLogo" src="/logo_DataConSentido.png" alt="DataConSentido" />
-          <span className="brandText"></span>
+          {/* Debe existir en /public/logo_DataConSentido.png */}
+          <img
+            className="brandLogo"
+            src="/logo_DataConSentido.png"
+            alt="DataConSentido"
+          />
+          <span className="brandText">DataConSentido</span>
         </a>
 
         {/* Desktop */}
@@ -65,11 +67,11 @@ export default function Navbar() {
           <span className="dot" />
           <span className="dot" />
         </button>
-
       </nav>
 
-      {open ? (
-        <div className="navMobile" role="dialog" aria-modal="true">
+      {/* Menú mobile */}
+      {navOpen ? (
+        <div className="navMobile" role="menu">
           {links.map((l) => (
             <a
               key={l.href}
