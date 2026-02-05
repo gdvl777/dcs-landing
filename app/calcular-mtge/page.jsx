@@ -1,13 +1,32 @@
 // app/calcular-mtge/page.jsx
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useCallback } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 function fmt(n) {
   return n.toLocaleString("es-EC", { maximumFractionDigits: 2 });
 }
 
 export default function CalcularMTGEPage() {
+  const pathname = usePathname();
+
+  // =========================
+  // NAV (fixed / responsive)
+  // =========================
+  const [navOpen, setNavOpen] = useState(false);
+
+  const navItems = [
+    { href: "/dpo", label: "Servicios DPO" },
+    { href: "/formacion-dpo", label: "Formación DPO" },
+    { href: "/calcular-mtge", label: "Calculadora MTGE" },
+    { href: "/politica-de-privacidad", label: "Privacidad" }
+  ];
+
+  const isActive = (href) => pathname === href;
+
   // =========================
   // Opciones (rangos/puntajes)
   // =========================
@@ -69,18 +88,12 @@ export default function CalcularMTGEPage() {
   const [permanenciaIdx, setPermanenciaIdx] = useState(0);
   const [geografiaIdx, setGeografiaIdx] = useState(0);
 
+  // =========================
   // Tooltip / Modal (Calificación directa)
+  // =========================
   const [openHelpKey, setOpenHelpKey] = useState(null);
-  function openHelp(key) {
-    setOpenHelpKey(key);
-  }
-  function closeHelp() {
-    setOpenHelpKey(null);
-  }
+  const [directSelected, setDirectSelected] = useState({});
 
-  // =========================
-  // Calificación directa
-  // =========================
   const directCases = [
     { key: "salud_sensible", label: "Tratamientos relativos a la salud / datos sensibles" },
     { key: "perfilamiento", label: "Evaluación automatizada (perfilamiento/predicción) con efectos" },
@@ -94,18 +107,20 @@ export default function CalcularMTGEPage() {
 
   const directHelp = {
     salud_sensible: {
-      what: "Tratamientos que involucran datos sensibles o salud; por su naturaleza requieren mayor nivel de control.",
+      what:
+        "Tratamientos que involucran datos sensibles o salud; por su naturaleza requieren mayor nivel de control y evidencia.",
       examples: [
         "Historias clínicas, diagnósticos, tratamientos, exámenes, recetas.",
-        "Datos sobre discapacidad, salud mental, biometría usada con fines médicos."
+        "Datos sobre discapacidad, salud mental, biometría con fines médicos."
       ],
       quickCheck: [
-        "¿Tu organización presta servicios de salud o gestiona expedientes médicos?",
+        "¿Prestas servicios de salud o gestionas expedientes médicos?",
         "¿Guardas información clínica o de condición médica de personas?"
       ]
     },
     perfilamiento: {
-      what: "Evaluación automatizada para analizar o predecir aspectos de una persona con efectos relevantes.",
+      what:
+        "Evaluación automatizada para analizar o predecir aspectos de una persona y que produce o puede producir efectos relevantes.",
       examples: [
         "Scoring automatizado para aprobar/rechazar servicios (crédito, seguros, becas).",
         "Segmentación automatizada con decisiones que afectan acceso/precios/beneficios."
@@ -116,7 +131,8 @@ export default function CalcularMTGEPage() {
       ]
     },
     videovigilancia: {
-      what: "Monitoreo sistemático de personas en espacios de acceso público (cámaras u otros sensores).",
+      what:
+        "Monitoreo sistemático de personas en espacios de acceso público, usualmente con cámaras u otros sensores.",
       examples: [
         "CCTV en entradas, pasillos, parqueaderos, salas de atención.",
         "Monitoreo permanente en zonas públicas de una instalación."
@@ -127,10 +143,11 @@ export default function CalcularMTGEPage() {
       ]
     },
     biometricos_geo: {
-      what: "Uso de biometría o geolocalización para identificar/validar identidad o rastrear ubicación.",
+      what:
+        "Uso de biometría o geolocalización para identificar/validar identidad o rastrear ubicación.",
       examples: [
         "Huella/rostro para control de acceso o asistencia.",
-        "Tracking por GPS vinculado a personas (personal/usuarios/vehículos)."
+        "Tracking por GPS de personal/usuarios/vehículos vinculado a personas."
       ],
       quickCheck: [
         "¿Usas huella/rostro/iris/voz para autenticar o registrar?",
@@ -138,29 +155,32 @@ export default function CalcularMTGEPage() {
       ]
     },
     crediticia: {
-      what: "Tratamiento para evaluar solvencia/riesgo económico o información crediticia con impacto en decisiones.",
+      what:
+        "Tratamiento para evaluar solvencia, riesgo económico o información crediticia/financiera con impacto en decisiones.",
       examples: [
         "Evaluación de riesgo para crédito, seguros, arriendos.",
         "Consulta/gestión de buró, score, historial de pagos."
       ],
       quickCheck: [
-        "¿Tu proceso define aprobación/rechazo basado en capacidad de pago o historial?",
+        "¿Defines aprobación/rechazo basado en capacidad de pago o historial?",
         "¿El resultado afecta condiciones económicas (tasa, prima, cupo, etc.)?"
       ]
     },
     nna: {
-      what: "Tratamiento sistemático de datos de niñas, niños y adolescentes en contextos institucionales/educativos o plataformas.",
+      what:
+        "Tratamiento sistemático de datos de niñas, niños y adolescentes en contextos institucionales/educativos o plataformas.",
       examples: [
         "Plataformas educativas con registros de rendimiento/asistencia.",
         "Gestión de datos de estudiantes menores y sus representantes."
       ],
       quickCheck: [
         "¿Tus titulares principales son menores de edad?",
-        "¿Recolectas datos de actividad/comportamiento de menores en plataformas?"
+        "¿Recolectas datos de actividad de menores en plataformas?"
       ]
     },
     transferencias: {
-      what: "Transferencias recurrentes/estructurales de datos como parte del flujo del negocio (internas o internacionales).",
+      what:
+        "Transferencias recurrentes/estructurales de datos como parte del flujo del negocio (internas o internacionales).",
       examples: [
         "Proveedores cloud fuera del país con intercambio continuo.",
         "Procesadores externos que reciben datos periódicamente."
@@ -171,22 +191,24 @@ export default function CalcularMTGEPage() {
       ]
     },
     courier: {
-      what: "Tratamiento sistemático propio de mensajería/courier: guías, entregas, tracking, remitentes y destinatarios.",
+      what:
+        "Tratamiento sistemático propio de mensajería/courier: guías, entregas, tracking, destinatarios, remitentes.",
       examples: [
-        "Gestión de envíos con tracking.",
+        "Gestión de envíos con datos de remitente/destinatario y tracking.",
         "Validaciones de entrega, firmas, georreferenciación de entregas."
       ],
       quickCheck: [
-        "¿Tu operación principal es entrega/gestión de envíos y guías?",
+        "¿Tu operación principal es entrega/retención de guías y datos de envío?",
         "¿Mantienes tracking vinculado a personas?"
       ]
     }
   };
 
-  const [directSelected, setDirectSelected] = useState({});
+  const openHelp = (key) => setOpenHelpKey(key);
+  const closeHelp = () => setOpenHelpKey(null);
 
   // =========================
-  // Cálculo de P
+  // Cálculo total
   // =========================
   const total = useMemo(() => {
     const t =
@@ -212,37 +234,18 @@ export default function CalcularMTGEPage() {
     [directSelected]
   );
 
-  const isComplete = useMemo(() => {
-    const selected = [
-      titularesOptions[titularesIdx],
-      volumenOptions[volumenIdx],
-      categoriasOptions[categoriasIdx],
-      frecuenciaOptions[frecuenciaIdx],
-      permanenciaOptions[permanenciaIdx],
-      geografiaOptions[geografiaIdx]
-    ];
-    return selected.every((o) => !o?.placeholder);
-  }, [
-    titularesIdx,
-    volumenIdx,
-    categoriasIdx,
-    frecuenciaIdx,
-    permanenciaIdx,
-    geografiaIdx
-  ]);
-
   const totalFinal = isDirect ? 0 : total;
-  const isGranEscala = isDirect || (isComplete && totalFinal >= 6);
+  const isGranEscala = isDirect || totalFinal >= 6;
   const variablesDisabled = isDirect;
 
   // =========================
-  // Mantener scroll al cambiar selects
+  // Evita “jump” en mobile al cambiar select
   // =========================
-  function keepScrollWhile(fn) {
+  const keepScrollWhile = useCallback((fn) => {
     const y = window.scrollY;
     fn();
     requestAnimationFrame(() => window.scrollTo(0, y));
-  }
+  }, []);
 
   function SelectRow({ label, options, valueIdx, onChange, disabled }) {
     return (
@@ -252,27 +255,23 @@ export default function CalcularMTGEPage() {
         </div>
 
         <div style={styles.rowRight}>
-          {disabled ? (
-            <div style={styles.noAplicaPill}>No aplica</div>
-          ) : (
-            <select
-              value={valueIdx}
-              disabled={disabled}
-              className="uiField"
-              onChange={(e) => {
-                const next = Number(e.target.value);
-                keepScrollWhile(() => onChange(next));
-                e.target.blur();
-              }}
-            >
-              {options.map((o, i) => (
-                <option key={o.label} value={i}>
-                  {o.label}
-                  {!o.placeholder ? ` — ${fmt(o.points)} pts` : ""}
-                </option>
-              ))}
-            </select>
-          )}
+          <select
+            value={valueIdx}
+            disabled={disabled}
+            onChange={(e) => {
+              const next = Number(e.target.value);
+              keepScrollWhile(() => onChange(next));
+              e.target.blur();
+            }}
+            className="uiField"
+            style={disabled ? { cursor: "not-allowed" } : null}
+          >
+            {options.map((o, i) => (
+              <option key={o.label} value={i}>
+                {o.label} — {fmt(o.points)} pts
+              </option>
+            ))}
+          </select>
         </div>
       </div>
     );
@@ -284,7 +283,7 @@ export default function CalcularMTGEPage() {
       const nextIsDirect = Object.values(next).some(Boolean);
 
       if (nextIsDirect) {
-        // Encera variables al activar directa
+        // Encera variables si hay calificación directa
         setTitularesIdx(0);
         setVolumenIdx(0);
         setCategoriasIdx(0);
@@ -305,6 +304,7 @@ export default function CalcularMTGEPage() {
     setGeografiaIdx(0);
     setDirectSelected({});
     setOpenHelpKey(null);
+    setNavOpen(false);
   }
 
   async function copySummary() {
@@ -344,18 +344,14 @@ export default function CalcularMTGEPage() {
         `6) Geografía: ${geografiaOptions[geografiaIdx].label} (${fmt(
           geografiaOptions[geografiaIdx].points
         )} pts)`,
-        `Puntaje total (P): ${fmt(totalFinal)} pts`
+        `Puntaje total (P): ${fmt(total)} pts`
       );
     }
 
     lines.push(
       "",
       `Resultado: ${
-        isGranEscala
-          ? "CALIFICA como Gran Escala"
-          : isComplete
-          ? "NO califica como Gran Escala"
-          : "INCOMPLETO"
+        isGranEscala ? "CALIFICA como Gran Escala" : "NO califica como Gran Escala"
       }`
     );
 
@@ -363,20 +359,20 @@ export default function CalcularMTGEPage() {
     alert("Copiado al portapapeles.");
   }
 
-  // =========================
-  // Bloques informativos
-  // =========================
   function ObligacionesYCTA() {
     return (
-      <section style={{ ...styles.card, ...styles.obligCard, ...styles.glowWarn }}>
-        <div style={styles.cardTitle}>¿Qué implica calificar como Gran Escala?</div>
-        <p style={styles.small}>
+      <section className="card granBox" style={{ marginTop: 14 }}>
+        <h2 style={{ margin: 0, fontSize: 22, fontWeight: 950 }}>
+          ¿Qué implica calificar como Gran Escala?
+        </h2>
+
+        <p style={{ marginTop: 10, opacity: 0.85, lineHeight: 1.5 }}>
           <b>Recomendación operativa (no literal de la resolución):</b> checklist de buenas prácticas
           para evidenciar cumplimiento cuando una operación califica como gran escala.
         </p>
 
-        <div className="granGrid" style={styles.obligGrid}>
-          <div style={styles.obligItem}>
+        <div className="granGrid" style={{ marginTop: 12 }}>
+          <div className="card granCard">
             <div style={styles.obligTitle}>Gobernanza y roles</div>
             <ul style={styles.obligList}>
               <li>Designar/fortalecer el rol responsable de privacidad (DPD/DPO o equivalente).</li>
@@ -384,7 +380,7 @@ export default function CalcularMTGEPage() {
             </ul>
           </div>
 
-          <div style={styles.obligItem}>
+          <div className="card granCard">
             <div style={styles.obligTitle}>Registro y documentación</div>
             <ul style={styles.obligList}>
               <li>Actualizar el Registro de Actividades de Tratamiento (RAT) y el Inventario de datos.</li>
@@ -392,7 +388,7 @@ export default function CalcularMTGEPage() {
             </ul>
           </div>
 
-          <div style={styles.obligItem}>
+          <div className="card granCard">
             <div style={styles.obligTitle}>Análisis de riesgos y DPIA</div>
             <ul style={styles.obligList}>
               <li>Realizar evaluación de riesgos y, cuando corresponda, Evaluación de Impacto (DPIA).</li>
@@ -400,7 +396,7 @@ export default function CalcularMTGEPage() {
             </ul>
           </div>
 
-          <div style={styles.obligItem}>
+          <div className="card granCard">
             <div style={styles.obligTitle}>Transparencia y derechos</div>
             <ul style={styles.obligList}>
               <li>Revisar avisos de privacidad, consentimientos y canal de derechos (ARCO+).</li>
@@ -408,7 +404,7 @@ export default function CalcularMTGEPage() {
             </ul>
           </div>
 
-          <div style={styles.obligItem}>
+          <div className="card granCard">
             <div style={styles.obligTitle}>Seguridad y brechas</div>
             <ul style={styles.obligList}>
               <li>Controles de seguridad (accesos, cifrado, respaldos, registro, segregación).</li>
@@ -416,7 +412,7 @@ export default function CalcularMTGEPage() {
             </ul>
           </div>
 
-          <div style={styles.obligItem}>
+          <div className="card granCard">
             <div style={styles.obligTitle}>Proveedores y transferencias</div>
             <ul style={styles.obligList}>
               <li>Contratos con encargados (proveedores) con cláusulas de protección de datos.</li>
@@ -426,31 +422,32 @@ export default function CalcularMTGEPage() {
         </div>
 
         <div style={styles.ctaBar}>
-          <div>
+          <div style={{ minWidth: 220 }}>
             <div style={styles.ctaTitle}>Agendemos un diagnóstico</div>
-            <div style={styles.small}>
-              Te guiamos con diagnóstico, RAT/RID, DPIA, políticas, contratos, evidencias y acompañamiento DPD/DPO.
+            <div style={{ fontSize: 13, opacity: 0.88, lineHeight: 1.45 }}>
+              Te guiamos con diagnóstico, RAT/RID, DPIA, políticas, contratos, evidencias y
+              acompañamiento DPD/DPO.
             </div>
           </div>
 
           <div style={styles.ctaBtns}>
             <a
               href="https://wa.me/593992801005?text=Hola%20DataConSentido%2C%20quiero%20agendar%20un%20diagn%C3%B3stico%20porque%20mi%20operaci%C3%B3n%20califica%20como%20Gran%20Escala.%20%C2%BFCu%C3%A1les%20son%20los%20horarios%20disponibles%3F"
-              className="uiBtn uiBtnPrimary"
               target="_blank"
               rel="noopener noreferrer"
-              style={{ textDecoration: "none", whiteSpace: "nowrap" }}
+              className="uiBtn uiBtnPrimary"
             >
+              <span className="uiIcon">📅</span>
               Agendar diagnóstico
             </a>
 
             <a
               href="https://wa.me/593992801005"
               target="_blank"
-              className="uiBtn uiBtnGhost"
               rel="noopener noreferrer"
-              style={{ textDecoration: "none", whiteSpace: "nowrap" }}
+              className="uiBtn uiBtnGhost"
             >
+              <span className="uiIcon">💬</span>
               WhatsApp
             </a>
           </div>
@@ -459,293 +456,300 @@ export default function CalcularMTGEPage() {
     );
   }
 
-  function MarcoResolucionBox() {
-    return (
-      <section style={{ ...styles.card, ...styles.resolCard }}>
-        <div style={styles.cardTitle}>Marco de la resolución (lo esencial)</div>
-        <p style={styles.small}>
-          <b>Resumen basado en la resolución:</b> la determinación de “gran escala” puede darse por{" "}
-          <b>supuestos de calificación directa</b> o por <b>evaluación por variables (puntaje)</b>.
-          Esta herramienta te ayuda a ordenar la decisión y documentar evidencia.
-        </p>
+  const showGranEscalaBlockAfterDirect = isDirect;
+  const showGranEscalaBlockAfterResult = !isDirect && isGranEscala;
 
-        <ul style={styles.resolList}>
-          <li>
-            <b>Ruta A — Calificación directa:</b> si se configura alguno de los supuestos, la
-            calificación es directa (no necesitas puntuar variables).
-          </li>
-          <li>
-            <b>Ruta B — Evaluación por variables:</b> si no aplica directa, se suman las variables
-            para obtener <b>P</b> y comparar con el umbral operativo configurado en la calculadora.
-          </li>
-          <li style={{ opacity: 0.92 }}>
-            <b>Importante:</b> este sitio no sustituye asesoría legal; siempre valida con tu contexto,
-            evidencias y decisiones internas.
-          </li>
-        </ul>
-      </section>
-    );
-  }
-
-  function IconCopy({ className }) {
-    return (
-      <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path
-          fill="currentColor"
-          d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 18H8V7h11v16z"
-        />
-      </svg>
-    );
-  }
-
-  function IconReset({ className }) {
-    return (
-      <svg className={className} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
-        <path
-          fill="currentColor"
-          d="M12 6V3L8 7l4 4V8c2.76 0 5 2.24 5 5a5 5 0 0 1-9.9 1H5.02A7 7 0 0 0 19 13c0-3.87-3.13-7-7-7z"
-        />
-      </svg>
-    );
-  }
-
-  // =========================
-  // Render
-  // =========================
   return (
-    <main style={styles.page}>
-      <div className="container">
-        <header style={styles.header}>
-          <div style={{ minWidth: 0 }}>
-            <h1 style={styles.h1}>Calculadora MTGE</h1>
-            <p style={styles.sub}>
-              Primero revisa <b>calificación directa</b>. Si no aplica, calcula el puntaje con las{" "}
-              <b>6 variables</b> (umbral <b>6 puntos</b>).
-            </p>
-          </div>
+    <div className="app-shell">
+      {/* NAV fijo */}
+      <div className="nav-wrap">
+        <div>
+          <nav className="nav" aria-label="Navegación principal">
+            <Link href="/" className="brand" onClick={() => setNavOpen(false)}>
+              {/* Pon tu logo en /public/logo.png (recomendado) */}
+              <Image
+                src="/logo.png"
+                alt="DataConSentido"
+                width={34}
+                height={34}
+                className="brandLogo"
+                priority
+              />
+              <span className="brandText">DataConSentido</span>
+            </Link>
 
-          <div style={styles.headerBtns}>
-            <button onClick={copySummary} className="uiBtn uiBtnPrimary" type="button">
-              <IconCopy className="uiIcon" />
-              <span>Copiar resumen</span>
+            <div className="navLinks">
+              {navItems.map((it) => (
+                <Link
+                  key={it.href}
+                  href={it.href}
+                  className={`navPill ${isActive(it.href) ? "isActive" : ""}`}
+                >
+                  {it.label}
+                </Link>
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="navBurger"
+              aria-label="Abrir menú"
+              aria-expanded={navOpen ? "true" : "false"}
+              onClick={() => setNavOpen((v) => !v)}
+            >
+              <span className="burgerLine" />
+              <span className="burgerLine" />
+              <span className="burgerLine" />
             </button>
+          </nav>
 
-            <button onClick={resetAll} className="uiBtn uiBtnGhost" type="button">
-              <IconReset className="uiIcon" />
-              <span>Reset</span>
-            </button>
-          </div>
-        </header>
-
-        {/* ✅ Opción 2: Sección basada en resolución con borde naranja/amarillo */}
-        <MarcoResolucionBox />
-
-        {/* 1) Calificación directa */}
-        <section style={{ ...styles.card, position: "relative" }}>
-          {isDirect ? (
-            <div style={styles.directOverlay} aria-hidden="true">
-              <div style={styles.directOverlayText}>CALIFICA COMO GRAN ESCALA</div>
+          {navOpen ? (
+            <div className="navMobile" role="menu">
+              {navItems.map((it) => (
+                <Link
+                  key={it.href}
+                  href={it.href}
+                  className={`navMobileLink ${
+                    isActive(it.href) ? "isActiveMobile" : ""
+                  }`}
+                  onClick={() => setNavOpen(false)}
+                >
+                  {it.label}
+                </Link>
+              ))}
             </div>
           ) : null}
+        </div>
+      </div>
 
-          <div style={styles.cardTitle}>Calificación directa — opcional</div>
-          <p style={styles.small}>
-            Si aplica alguno de estos supuestos, la calificación como gran escala es directa.
-          </p>
+      {/* CONTENIDO */}
+      <main style={styles.page}>
+        <div style={styles.container}>
+          <header style={styles.header}>
+            <div>
+              <h1 style={styles.h1}>Calculadora MTGE</h1>
+              <p style={styles.sub}>
+                Primero revisa <b>calificación directa</b>. Si no aplica, calcula el puntaje con las{" "}
+                <b>6 variables</b> (umbral <b>6 puntos</b>).
+              </p>
+            </div>
 
-          {/* ✅ USAR SOLO CLASE (evita conflicto inline) */}
-          <div className="directGridUI">
-            {directCases.map((c) => (
-              <div key={c.key} className="uiCheckCard">
-                <div className="uiCheckRow">
-                  <label className="uiCheckLabel">
-                    <input
-                      type="checkbox"
-                      checked={Boolean(directSelected[c.key])}
-                      onChange={() => toggleDirect(c.key)}
-                    />
-                    <span>{c.label}</span>
-                  </label>
+            <div style={styles.headerBtns}>
+              <button onClick={copySummary} className="uiBtn uiBtnGhost">
+                <span className="uiIcon">📋</span>
+                Copiar resumen
+              </button>
+              <button onClick={resetAll} className="uiBtn uiBtnGhost">
+                <span className="uiIcon">🔄</span>
+                Reset
+              </button>
+            </div>
+          </header>
 
-                  <button
-                    type="button"
-                    className="uiInfoBtn"
-                    onClick={() => openHelp(c.key)}
-                    aria-label={`Más información sobre: ${c.label}`}
-                    title="Más información"
-                  >
-                    i
+          {/* Resumen operativo */}
+          <section style={styles.card}>
+            <div style={styles.cardTitle}>Según la resolución (resumen operativo)</div>
+            <ul style={{ margin: "10px 0 0 18px", lineHeight: 1.6, opacity: 0.92 }}>
+              <li>
+                La calificación de <b>gran escala</b> puede resultar por <b>calificación directa</b>{" "}
+                (si se cumple alguno de los supuestos) o por <b>puntaje</b> (P).
+              </li>
+              <li>
+                Si no hay calificación directa, se calcula <b>P</b> como la <b>suma de 6 variables</b>.
+              </li>
+              <li>
+                Regla práctica en esta calculadora: si <b>P ≥ 6</b> ⇒ <b>califica como gran escala</b>.
+              </li>
+              <li style={{ opacity: 0.9 }}>
+                Nota: Esta calculadora es un apoyo operativo; siempre valida con tu contexto y evidencia.
+              </li>
+            </ul>
+          </section>
+
+          {/* 1) Calificación directa */}
+          <section style={{ ...styles.card, position: "relative", overflow: "hidden" }}>
+            {/* Overlay “stamp” solo cuando hay calificación directa */}
+            {isDirect ? (
+              <div style={styles.directOverlay} aria-hidden="true">
+                <div style={styles.directOverlayText}>CALIFICA COMO GRAN ESCALA</div>
+              </div>
+            ) : null}
+
+            <div style={styles.cardTitle}>Calificación directa — opcional</div>
+            <p style={styles.small}>
+              Si aplica alguno de estos supuestos, la calificación como gran escala es directa.
+            </p>
+
+            {/* ✅ Grid responsive por CSS (no inline) */}
+            <div className="directGridUI" style={{ marginTop: 10 }}>
+              {directCases.map((c) => (
+                <div key={c.key} className="uiCheckCard">
+                  <div className="uiCheckRow">
+                    <label className="uiCheckLabel">
+                      <input
+                        type="checkbox"
+                        checked={Boolean(directSelected[c.key])}
+                        onChange={() => toggleDirect(c.key)}
+                        style={{ marginTop: 2 }}
+                      />
+                      <span>{c.label}</span>
+                    </label>
+
+                    <button
+                      type="button"
+                      className="uiInfoBtn"
+                      onClick={() => openHelp(c.key)}
+                      aria-label={`Más información sobre: ${c.label}`}
+                      title="Más información"
+                    >
+                      i
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {isDirect ? (
+              <div style={styles.directNotice}>
+                Marcaste al menos un caso de <b>calificación directa</b>. Por claridad, las{" "}
+                <b>6 variables</b> quedan bloqueadas.
+              </div>
+            ) : null}
+
+            {/* ✅ Si es calificación directa, esta sección va JUSTO debajo */}
+            {showGranEscalaBlockAfterDirect ? <ObligacionesYCTA /> : null}
+          </section>
+
+          {/* 2) Variables */}
+          <section style={styles.card}>
+            <div style={styles.cardTitle}>Variables del MTGE</div>
+
+            <SelectRow
+              label="1) Número de titulares (12 meses)"
+              options={titularesOptions}
+              valueIdx={titularesIdx}
+              onChange={setTitularesIdx}
+              disabled={variablesDisabled}
+            />
+            <SelectRow
+              label="2) Volumen de datos (tipos por titular)"
+              options={volumenOptions}
+              valueIdx={volumenIdx}
+              onChange={setVolumenIdx}
+              disabled={variablesDisabled}
+            />
+            <SelectRow
+              label="3) Categorías de datos"
+              options={categoriasOptions}
+              valueIdx={categoriasIdx}
+              onChange={setCategoriasIdx}
+              disabled={variablesDisabled}
+            />
+            <SelectRow
+              label="4) Frecuencia del tratamiento"
+              options={frecuenciaOptions}
+              valueIdx={frecuenciaIdx}
+              onChange={setFrecuenciaIdx}
+              disabled={variablesDisabled}
+            />
+            <SelectRow
+              label="5) Permanencia del tratamiento"
+              options={permanenciaOptions}
+              valueIdx={permanenciaIdx}
+              onChange={setPermanenciaIdx}
+              disabled={variablesDisabled}
+            />
+            <SelectRow
+              label="6) Alcance geográfico"
+              options={geografiaOptions}
+              valueIdx={geografiaIdx}
+              onChange={setGeografiaIdx}
+              disabled={variablesDisabled}
+            />
+
+            {variablesDisabled ? (
+              <div style={styles.variablesLockedHint}>
+                Variables bloqueadas por calificación directa. Si deseas calcular P, desmarca todas las
+                opciones directas.
+              </div>
+            ) : null}
+          </section>
+
+          {/* RESULTADO */}
+          <section style={{ ...styles.card, ...styles.resultCard }}>
+            <div style={styles.resultTop}>
+              <div>
+                <div style={styles.resultLabel}>Puntaje total (P)</div>
+                <div style={styles.resultValue}>{fmt(total)} pts</div>
+                <div style={styles.small}>
+                  {isDirect ? "P es referencial (hay calificación directa)." : "P = suma de las 6 variables"}
+                </div>
+              </div>
+
+              <div style={styles.badgeWrap}>
+                {isGranEscala ? (
+                  <div className="uiBadge uiBadgeOk">CALIFICA COMO GRAN ESCALA</div>
+                ) : (
+                  <div className="uiBadge uiBadgeNo">NO CALIFICA COMO GRAN ESCALA</div>
+                )}
+
+                {isDirect ? <div style={styles.note}>Marcaste calificación directa.</div> : null}
+              </div>
+            </div>
+
+            {/* ✅ Si NO es calificación directa y sí califica por puntaje, va debajo del RESULTADO */}
+            {showGranEscalaBlockAfterResult ? <ObligacionesYCTA /> : null}
+          </section>
+
+          {/* MODAL AYUDA */}
+          {openHelpKey ? (
+            <div
+              style={styles.modalOverlay}
+              onClick={closeHelp}
+              role="dialog"
+              aria-modal="true"
+            >
+              <div style={styles.modalCard} onClick={(e) => e.stopPropagation()}>
+                <div style={styles.modalHeader}>
+                  <h3 style={styles.modalTitle}>
+                    {directCases.find((x) => x.key === openHelpKey)?.label}
+                  </h3>
+                  <button type="button" className="uiBtn uiBtnGhost" onClick={closeHelp}>
+                    <span className="uiIcon">✖️</span>
+                    Cerrar
                   </button>
                 </div>
-              </div>
-            ))}
-          </div>
 
-          {isDirect ? (
-            <div style={styles.directNotice}>
-              Marcaste al menos un caso de <b>calificación directa</b>. Por claridad, las{" "}
-              <b>6 variables</b> quedan bloqueadas.
+                <div style={styles.modalBody}>
+                  <div style={styles.modalSectionTitle}>Qué contempla</div>
+                  <div>{directHelp[openHelpKey]?.what}</div>
+
+                  <div style={styles.modalSectionTitle}>Ejemplos</div>
+                  <ul style={styles.modalList}>
+                    {(directHelp[openHelpKey]?.examples || []).map((ex) => (
+                      <li key={ex}>{ex}</li>
+                    ))}
+                  </ul>
+
+                  <div style={styles.modalSectionTitle}>Checklist rápido</div>
+                  <ul style={styles.modalList}>
+                    {(directHelp[openHelpKey]?.quickCheck || []).map((q) => (
+                      <li key={q}>{q}</li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
             </div>
           ) : null}
-        </section>
-
-        {/* ✅ Si es directa, obligaciones aquí */}
-        {isDirect ? <ObligacionesYCTA /> : null}
-
-        {/* 2) Variables */}
-        <section style={styles.card}>
-          <div style={styles.cardTitle}>Variables del MTGE</div>
-
-          <SelectRow
-            label="1) Número de titulares (12 meses)"
-            options={titularesOptions}
-            valueIdx={titularesIdx}
-            onChange={setTitularesIdx}
-            disabled={variablesDisabled}
-          />
-          <SelectRow
-            label="2) Volumen de datos (tipos por titular)"
-            options={volumenOptions}
-            valueIdx={volumenIdx}
-            onChange={setVolumenIdx}
-            disabled={variablesDisabled}
-          />
-          <SelectRow
-            label="3) Categorías de datos"
-            options={categoriasOptions}
-            valueIdx={categoriasIdx}
-            onChange={setCategoriasIdx}
-            disabled={variablesDisabled}
-          />
-          <SelectRow
-            label="4) Frecuencia del tratamiento"
-            options={frecuenciaOptions}
-            valueIdx={frecuenciaIdx}
-            onChange={setFrecuenciaIdx}
-            disabled={variablesDisabled}
-          />
-          <SelectRow
-            label="5) Permanencia del tratamiento"
-            options={permanenciaOptions}
-            valueIdx={permanenciaIdx}
-            onChange={setPermanenciaIdx}
-            disabled={variablesDisabled}
-          />
-          <SelectRow
-            label="6) Alcance geográfico"
-            options={geografiaOptions}
-            valueIdx={geografiaIdx}
-            onChange={setGeografiaIdx}
-            disabled={variablesDisabled}
-          />
-
-          {variablesDisabled ? (
-            <div style={styles.variablesLockedHint}>
-              Variables bloqueadas por calificación directa. Si deseas calcular P, desmarca todas las
-              opciones directas.
-            </div>
-          ) : null}
-        </section>
-
-        {/* Resultado */}
-        <section style={{ ...styles.card, ...styles.resultCard }}>
-          <div style={styles.resultTop}>
-            <div style={{ minWidth: 0 }}>
-              <div style={styles.resultLabel}>
-                {isDirect ? "Resultado" : "Puntaje total (P)"}
-              </div>
-
-              <div style={styles.resultValue}>
-                {isDirect ? "—" : isComplete ? `${fmt(totalFinal)} pts` : "0 pts"}
-              </div>
-
-              <div style={styles.small}>
-                {isDirect
-                  ? "Determinación por calificación directa (no aplica cálculo por puntaje)."
-                  : isComplete
-                  ? "P = suma de las 6 variables"
-                  : "Selecciona una opción en cada variable para calcular P."}
-              </div>
-            </div>
-
-            <div style={styles.badgeWrap}>
-              {isDirect ? (
-                <div className={`uiBadge ${isGranEscala ? "uiBadgeOk" : "uiBadgeNo"}`}>
-                  {isGranEscala ? "CALIFICA COMO GRAN ESCALA" : "NO CALIFICA COMO GRAN ESCALA"}
-                </div>
-              ) : !isComplete ? (
-                <div style={{ ...styles.badge, ...styles.badgeNeutral }}>
-                  COMPLETA LAS VARIABLES
-                </div>
-              ) : isGranEscala ? (
-                <div style={{ ...styles.badge, ...styles.badgeOk }}>
-                  CALIFICA COMO GRAN ESCALA
-                </div>
-              ) : (
-                <div style={{ ...styles.badge, ...styles.badgeNo }}>
-                  NO CALIFICA COMO GRAN ESCALA
-                </div>
-              )}
-
-              {isDirect ? <div style={styles.note}>Marcaste calificación directa.</div> : null}
-            </div>
-          </div>
-        </section>
-
-        {/* ✅ Si califica por puntaje (y NO es directa), obligaciones aquí */}
-        {!isDirect && isGranEscala ? <ObligacionesYCTA /> : null}
-
-        {/* Modal ayuda */}
-        {openHelpKey ? (
-          <div style={styles.modalOverlay} onClick={closeHelp} role="dialog" aria-modal="true">
-            <div style={styles.modalCard} onClick={(e) => e.stopPropagation()}>
-              <div style={styles.modalHeader}>
-                <h3 style={styles.modalTitle}>
-                  {directCases.find((x) => x.key === openHelpKey)?.label}
-                </h3>
-                <button type="button" style={styles.modalClose} onClick={closeHelp}>
-                  Cerrar
-                </button>
-              </div>
-
-              <div style={styles.modalBody}>
-                <div style={styles.modalSectionTitle}>Qué contempla</div>
-                <div>{directHelp[openHelpKey]?.what}</div>
-
-                <div style={styles.modalSectionTitle}>Ejemplos</div>
-                <ul style={styles.modalList}>
-                  {(directHelp[openHelpKey]?.examples || []).map((ex) => (
-                    <li key={ex}>{ex}</li>
-                  ))}
-                </ul>
-
-                <div style={styles.modalSectionTitle}>Checklist rápido</div>
-                <ul style={styles.modalList}>
-                  {(directHelp[openHelpKey]?.quickCheck || []).map((q) => (
-                    <li key={q}>{q}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </div>
-        ) : null}
-      </div>
-    </main>
+        </div>
+      </main>
+    </div>
   );
 }
 
-/**
- * NOTA IMPORTANTE:
- * - Quité "styles.container" y uso ".container" del CSS global para que el padding responsive funcione.
- * - Quité inline de grid directa para evitar conflictos (ahora depende de "directGridUI" y clases ui*).
- * - Si tu CSS global incluye:
- *   html, body { overflow-x:hidden; max-width:100%; }
- *   .container { padding responsive... }
- *   .uiCheckRow/.uiCheckLabel min-width:0 + wrap...
- *   entonces ya no se corta en celular.
- */
 const styles = {
   page: { padding: 24 },
+  container: { maxWidth: 980, margin: "0 auto" },
 
   header: {
     display: "flex",
@@ -756,7 +760,7 @@ const styles = {
     flexWrap: "wrap"
   },
   h1: { margin: 0, fontSize: 30, letterSpacing: -0.3 },
-  sub: { margin: "8px 0 0 0", opacity: 0.9 },
+  sub: { margin: "8px 0 0 0", opacity: 0.9, lineHeight: 1.5 },
 
   headerBtns: { display: "flex", gap: 10, flexWrap: "wrap" },
 
@@ -768,21 +772,7 @@ const styles = {
     marginBottom: 14,
     boxShadow: "0 18px 60px rgba(0,0,0,.25)"
   },
-  cardTitle: { fontWeight: 800, marginBottom: 10 },
-
-  // ✅ Borde naranja/amarillo con glow (la sección “Marco de la resolución”)
-  resolCard: {
-    border: "1px solid rgba(255, 193, 7, .55)",
-    boxShadow:
-      "0 0 0 1px rgba(255, 193, 7, .15), 0 0 22px rgba(255, 193, 7, .18), 0 18px 60px rgba(0,0,0,.25)",
-    background:
-      "linear-gradient(180deg, rgba(255,193,7,.06), rgba(255,255,255,.06))"
-  },
-  resolList: {
-    margin: "10px 0 0 18px",
-    lineHeight: 1.6,
-    opacity: 0.92
-  },
+  cardTitle: { fontWeight: 800, marginBottom: 10, fontSize: 16 },
 
   row: {
     display: "flex",
@@ -798,17 +788,6 @@ const styles = {
   rowLeft: { flex: 1, minWidth: 240 },
   rowRight: { width: 420, maxWidth: "100%" },
   rowTitle: { fontWeight: 650 },
-
-  noAplicaPill: {
-    width: "100%",
-    padding: "10px 12px",
-    borderRadius: 12,
-    border: "1px solid rgba(232,238,252,.16)",
-    background: "rgba(255,255,255,.06)",
-    color: "rgba(232,238,252,.85)",
-    fontWeight: 900,
-    textAlign: "center"
-  },
 
   small: { fontSize: 12, opacity: 0.85, margin: "8px 0 0 0" },
 
@@ -844,19 +823,7 @@ const styles = {
   resultLabel: { opacity: 0.9, fontWeight: 650 },
   resultValue: { fontSize: 40, fontWeight: 900, marginTop: 6 },
 
-  badgeWrap: { textAlign: "right", minWidth: 260, maxWidth: "100%" },
-  badge: {
-    display: "inline-block",
-    padding: "10px 12px",
-    borderRadius: 999,
-    fontWeight: 900,
-    letterSpacing: 0.3,
-    border: "1px solid rgba(232,238,252,.22)"
-  },
-  badgeOk: { background: "rgba(80, 200, 120, .18)" },
-  badgeNo: { background: "rgba(255, 120, 120, .16)" },
-  badgeNeutral: { background: "rgba(255, 255, 255, .08)" },
-
+  badgeWrap: { textAlign: "right", minWidth: 260 },
   note: { marginTop: 8, fontSize: 12, opacity: 0.9 },
 
   modalOverlay: {
@@ -867,7 +834,7 @@ const styles = {
     alignItems: "center",
     justifyContent: "center",
     padding: 18,
-    zIndex: 9999
+    zIndex: 99999
   },
   modalCard: {
     width: "min(820px, 100%)",
@@ -881,22 +848,14 @@ const styles = {
     display: "flex",
     alignItems: "flex-start",
     justifyContent: "space-between",
-    gap: 12
+    gap: 12,
+    flexWrap: "wrap"
   },
   modalTitle: {
     fontSize: 18,
     fontWeight: 900,
     margin: 0,
     lineHeight: 1.25
-  },
-  modalClose: {
-    background: "transparent",
-    border: "1px solid rgba(232,238,252,.20)",
-    color: "#e8eefc",
-    borderRadius: 12,
-    cursor: "pointer",
-    padding: "8px 10px",
-    fontWeight: 800
   },
   modalBody: {
     marginTop: 10,
@@ -913,6 +872,7 @@ const styles = {
   },
   modalList: { margin: "6px 0 0 18px" },
 
+  // Overlay “stamp”
   directOverlay: {
     position: "absolute",
     inset: 0,
@@ -933,23 +893,9 @@ const styles = {
     padding: "18px 22px",
     borderRadius: 18,
     background: "rgba(80, 200, 120, 0.06)",
-    transition: "transform .18s ease, opacity .18s ease",
     boxShadow: "0 18px 80px rgba(0,0,0,.25)"
   },
 
-  obligCard: { border: "1px solid rgba(232,238,252,.18)" },
-  obligGrid: {
-    display: "grid",
-    gridTemplateColumns: "1fr 1fr",
-    gap: 12,
-    marginTop: 12
-  },
-  obligItem: {
-    border: "1px solid rgba(232,238,252,.12)",
-    background: "rgba(11,18,32,.35)",
-    borderRadius: 16,
-    padding: 12
-  },
   obligTitle: { fontWeight: 900, marginBottom: 8 },
   obligList: { margin: "0 0 0 18px", lineHeight: 1.6, opacity: 0.92 },
 
@@ -966,13 +912,5 @@ const styles = {
     flexWrap: "wrap"
   },
   ctaTitle: { fontWeight: 950, marginBottom: 4 },
-  ctaBtns: { display: "flex", gap: 10, flexWrap: "wrap" },
-
-  glowWarn: {
-    border: "1px solid rgba(255, 193, 7, .55)",
-    boxShadow:
-      "0 0 0 1px rgba(255, 193, 7, .15), 0 0 22px rgba(255, 193, 7, .18), 0 18px 60px rgba(0,0,0,.25)",
-    background:
-      "linear-gradient(180deg, rgba(255,193,7,.06), rgba(255,255,255,.06))"
-  }
+  ctaBtns: { display: "flex", gap: 10, flexWrap: "wrap" }
 };

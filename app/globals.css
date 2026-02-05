@@ -737,4 +737,40 @@ a {
     /* rompe líneas sin desbordar */
     word-break: break-word;
   }
+
+  /* ===== FIX MOBILE: Gran Escala full width ===== */
+.granBox{
+  width: 100%;
+  max-width: 100%;
+}
+
+.granGrid{
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+@media (max-width: 900px){
+  .granGrid{
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* Evita overflow lateral por textos */
+.granCard, .granBox, .granGrid *{
+  min-width: 0;
+}
+
+.granCard{
+  width: 100%;
+  max-width: 100%;
+}
+
+/* Si algún texto largo empuja */
+.granCard p, .granCard li{
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: auto;
+}
+
 }
