@@ -1,3 +1,4 @@
+// app/page.jsx
 import Link from "next/link";
 
 export default function HomePage() {
@@ -11,25 +12,23 @@ export default function HomePage() {
         <div style={styles.heroGlowB} />
 
         <div style={styles.container}>
-          
-
-          <div style={styles.heroGrid}>
-            <div>
+          <div className="heroGrid">
+            <div style={{ minWidth: 0 }}>
               <div style={styles.kicker}>
                 <span style={styles.kickerDot} />
                 En Ecuador • LOPDP • Evidencia verificable
               </div>
 
-              <h1 style={styles.h1}>
+              <h1 className="homeH1" style={styles.h1}>
                 DataConSentido es tu aliado para{" "}
                 <span style={styles.h1Accent}>cumplir la LOPDP</span>{" "}
                 con método, evidencias y resultados.
               </h1>
 
               <p style={styles.sub}>
-                Implementamos privacidad de forma práctica: diagnóstico, RAT/RID, DPIA, políticas,
-                contratos con encargados, controles y capacitación. Menos “papel bonito” y más
-                ejecución real que puedas sostener.
+                Implementamos privacidad de forma práctica: diagnóstico, RAT/RID, DPIA,
+                políticas, contratos con encargados, controles y capacitación. Menos “papel bonito”
+                y más ejecución real que puedas sostener.
               </p>
 
               <div style={styles.valueChips}>
@@ -41,8 +40,7 @@ export default function HomePage() {
 
               <div style={styles.ctaRow}>
                 <Link href="/dpo" style={{ ...styles.btn, ...styles.btnPrimary }}>
-                  Quiero DPO/DPD para mi organización
-                  <span style={styles.btnArrow}>→</span>
+                  Quiero DPO/DPD para mi organización <span style={styles.btnArrow}>→</span>
                 </Link>
 
                 <Link href="/formacion-dpo" style={{ ...styles.btn, ...styles.btnGhost }}>
@@ -81,26 +79,10 @@ export default function HomePage() {
                 <div style={styles.heroCardTitle}>¿Qué hacemos en 4 pasos?</div>
 
                 <div style={styles.steps}>
-                  <Step
-                    n="1"
-                    title="Diagnóstico"
-                    desc="Levantamos tratamientos, inventarios, brechas y riesgo real."
-                  />
-                  <Step
-                    n="2"
-                    title="Plan"
-                    desc="Roadmap con responsables, plazos y quick wins medibles."
-                  />
-                  <Step
-                    n="3"
-                    title="Evidencias"
-                    desc="RAT/RID, DPIA, políticas, contratos y controles implementados."
-                  />
-                  <Step
-                    n="4"
-                    title="Mejora"
-                    desc="Monitoreo, incidentes, auditorías internas y actualización continua."
-                  />
+                  <Step n="1" title="Diagnóstico" desc="Levantamos tratamientos, inventarios, brechas y riesgo real." />
+                  <Step n="2" title="Plan" desc="Roadmap con responsables, plazos y quick wins medibles." />
+                  <Step n="3" title="Evidencias" desc="RAT/RID, DPIA, políticas, contratos y controles implementados." />
+                  <Step n="4" title="Mejora" desc="Monitoreo, incidentes, auditorías internas y actualización continua." />
                 </div>
 
                 <div style={styles.heroCardCtas}>
@@ -110,8 +92,7 @@ export default function HomePage() {
                     rel="noreferrer"
                     style={{ ...styles.btn, ...styles.btnPrimary, width: "100%" }}
                   >
-                    Hablar por WhatsApp
-                    <span style={styles.btnArrow}>→</span>
+                    Hablar por WhatsApp <span style={styles.btnArrow}>→</span>
                   </a>
 
                   <div style={styles.heroHint}>
@@ -134,14 +115,10 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div style={styles.cards3}>
+          <div className="cards3Fix" style={styles.cards3}>
             <Card
               title="Servicios DPO (DPD externo / DPOaaS)"
-              points={[
-                "Diagnóstico inicial + brechas",
-                "RAT/RID + evidencias y controles",
-                "Informes y mejora continua",
-              ]}
+              points={["Diagnóstico inicial + brechas", "RAT/RID + evidencias y controles", "Informes y mejora continua"]}
               primaryHref="/dpo"
               primaryLabel="Ver servicios"
               secondaryHref="https://wa.me/593992801005"
@@ -151,11 +128,7 @@ export default function HomePage() {
 
             <Card
               title="Formación avanzada DPO"
-              points={[
-                "Aplicación práctica (no solo teoría)",
-                "Plantillas, recursos y casos",
-                "Para profesionales y organizaciones",
-              ]}
+              points={["Aplicación práctica (no solo teoría)", "Plantillas, recursos y casos", "Para profesionales y organizaciones"]}
               primaryHref="/formacion-dpo"
               primaryLabel="Ver programa"
               secondaryHref="/masterclass"
@@ -165,11 +138,7 @@ export default function HomePage() {
 
             <Card
               title="Calculadora MTGE"
-              points={[
-                "Calificación directa + variables",
-                "Determina si califica gran escala",
-                "Resumen copiable para informes",
-              ]}
+              points={["Calificación directa + variables", "Determina si califica gran escala", "Resumen copiable para informes"]}
               primaryHref="/calcular-mtge"
               primaryLabel="Calcular ahora"
               tag="Herramienta gratuita"
@@ -182,7 +151,7 @@ export default function HomePage() {
       <section style={styles.ctaBand}>
         <div style={styles.container}>
           <div style={styles.ctaBandInner}>
-            <div>
+            <div style={{ minWidth: 0 }}>
               <div style={styles.ctaBandTitle}>¿Tu operación podría ser “gran escala”?</div>
               <div style={styles.ctaBandText}>
                 Usa la calculadora MTGE y, si te marca gran escala, te ayudamos a armar evidencias:
@@ -209,7 +178,7 @@ export default function HomePage() {
             <div style={styles.footerLeft}>
               <div style={styles.footerBrand}>
                 <div style={styles.brandMarkSm} />
-                <div>
+                <div style={{ minWidth: 0 }}>
                   <div style={styles.footerName}>DataConSentido</div>
                   <div style={styles.footerDesc}>Privacidad, Cumplimiento y Tecnología con Sentido</div>
                 </div>
@@ -239,7 +208,7 @@ function Step({ n, title, desc }) {
   return (
     <div style={styles.step}>
       <div style={styles.stepN}>{n}</div>
-      <div>
+      <div style={{ minWidth: 0 }}>
         <div style={styles.stepTitle}>{title}</div>
         <div style={styles.stepDesc}>{desc}</div>
       </div>
@@ -259,7 +228,7 @@ function Card({ title, points, primaryHref, primaryLabel, secondaryHref, seconda
       <ul style={styles.cardList}>
         {points.map((p) => (
           <li key={p} style={styles.cardLi}>
-            <span style={styles.check}>✓</span> {p}
+            <span style={styles.check}>✓</span> <span style={{ minWidth: 0 }}>{p}</span>
           </li>
         ))}
       </ul>
@@ -271,7 +240,12 @@ function Card({ title, points, primaryHref, primaryLabel, secondaryHref, seconda
 
         {secondaryHref ? (
           secondaryHref.startsWith("http") ? (
-            <a href={secondaryHref} target="_blank" rel="noreferrer" style={{ ...styles.btn, ...styles.btnGhost, width: "100%" }}>
+            <a
+              href={secondaryHref}
+              target="_blank"
+              rel="noreferrer"
+              style={{ ...styles.btn, ...styles.btnGhost, width: "100%" }}
+            >
               {secondaryLabel}
             </a>
           ) : (
@@ -287,17 +261,14 @@ function Card({ title, points, primaryHref, primaryLabel, secondaryHref, seconda
 
 const styles = {
   page: {
-    background: "radial-gradient(900px 500px at 15% 10%, rgba(6,182,212,.10), transparent 60%), radial-gradient(900px 500px at 85% 0%, rgba(245,158,11,.10), transparent 60%), #0b1220",
+    background:
+      "radial-gradient(900px 500px at 15% 10%, rgba(6,182,212,.10), transparent 60%), radial-gradient(900px 500px at 85% 0%, rgba(245,158,11,.10), transparent 60%), #0b1220",
     color: "#e8eefc",
     minHeight: "100vh",
   },
-  container: { maxWidth: 1080, margin: "0 auto", padding: "22px" },
+  container: { maxWidth: 1080, margin: "0 auto", padding: 22 },
 
-  heroWrap: {
-    position: "relative",
-    overflow: "hidden",
-    paddingBottom: 18,
-  },
+  heroWrap: { position: "relative", overflow: "hidden", paddingBottom: 18 },
   heroGlowA: {
     position: "absolute",
     inset: "-40% -20% auto -20%",
@@ -316,51 +287,6 @@ const styles = {
     pointerEvents: "none",
   },
 
-  topBar: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    gap: 12,
-    flexWrap: "wrap",
-    padding: "14px 16px",
-    borderRadius: 18,
-    border: "1px solid rgba(232,238,252,.14)",
-    background: "rgba(255,255,255,.06)",
-    boxShadow: "0 18px 60px rgba(0,0,0,.25)",
-    backdropFilter: "blur(12px)",
-    WebkitBackdropFilter: "blur(12px)",
-  },
-
-  brandMini: { display: "flex", alignItems: "center", gap: 10 },
-  brandMark: {
-    width: 34,
-    height: 34,
-    borderRadius: 12,
-    background:
-      "linear-gradient(135deg, rgba(34,197,94,.55), rgba(6,182,212,.45), rgba(245,158,11,.35))",
-    border: "1px solid rgba(232,238,252,.16)",
-    boxShadow: "0 12px 30px rgba(0,0,0,.20)",
-  },
-  brandName: { fontWeight: 950, letterSpacing: 0.2 },
-  brandTag: { fontSize: 12, opacity: 0.82, marginTop: 1 },
-
-  topLinks: { display: "flex", gap: 10, flexWrap: "wrap" },
-  pillLink: {
-    padding: "10px 12px",
-    borderRadius: 999,
-    border: "1px solid rgba(232,238,252,.18)",
-    background: "rgba(255,255,255,.05)",
-    fontWeight: 850,
-    opacity: 0.95,
-  },
-
-  heroGrid: {
-    marginTop: 18,
-    display: "grid",
-    gridTemplateColumns: "1.2fr .8fr",
-    gap: 14,
-  },
-
   kicker: {
     display: "inline-flex",
     alignItems: "center",
@@ -371,6 +297,7 @@ const styles = {
     background: "rgba(255,255,255,.05)",
     fontWeight: 850,
     opacity: 0.95,
+    maxWidth: "100%",
   },
   kickerDot: {
     width: 10,
@@ -378,9 +305,16 @@ const styles = {
     borderRadius: 999,
     background: "rgba(34,197,94,.85)",
     boxShadow: "0 0 0 4px rgba(34,197,94,.15)",
+    flex: "0 0 auto",
   },
 
-  h1: { margin: "14px 0 0 0", fontSize: 44, lineHeight: 1.07, letterSpacing: -0.6, fontWeight: 950 },
+  h1: {
+    margin: "14px 0 0 0",
+    fontSize: 44,
+    lineHeight: 1.07,
+    letterSpacing: -0.6,
+    fontWeight: 950,
+  },
   h1Accent: {
     background: "linear-gradient(90deg, rgba(34,197,94,1), rgba(6,182,212,1), rgba(245,158,11,1))",
     WebkitBackgroundClip: "text",
@@ -398,6 +332,7 @@ const styles = {
     opacity: 0.95,
     fontWeight: 800,
     fontSize: 13,
+    maxWidth: "100%",
   },
 
   ctaRow: { marginTop: 14, display: "flex", gap: 10, flexWrap: "wrap" },
@@ -415,6 +350,8 @@ const styles = {
     fontWeight: 950,
     boxShadow: "0 14px 40px rgba(0,0,0,.18)",
     textDecoration: "none",
+    maxWidth: "100%",
+    whiteSpace: "normal",
   },
   btnPrimary: {
     border: "1px solid rgba(6,182,212,.28)",
@@ -424,19 +361,14 @@ const styles = {
   btnGhost: { background: "rgba(255,255,255,.04)" },
   btnArrow: { opacity: 0.95 },
 
-  trustRow: {
-    marginTop: 14,
-    display: "flex",
-    gap: 12,
-    flexWrap: "wrap",
-    opacity: 0.92,
-  },
+  trustRow: { marginTop: 14, display: "flex", gap: 12, flexWrap: "wrap", opacity: 0.92 },
   trustItem: {
     padding: "10px 12px",
     borderRadius: 16,
     border: "1px solid rgba(232,238,252,.12)",
     background: "rgba(11,18,32,.35)",
     minWidth: 180,
+    maxWidth: "100%",
   },
   trustNum: { fontWeight: 950, fontSize: 16 },
   trustTxt: { fontSize: 12, opacity: 0.84, marginTop: 4 },
@@ -447,6 +379,7 @@ const styles = {
     background: "rgba(255,255,255,.06)",
     boxShadow: "0 18px 80px rgba(0,0,0,.35)",
     overflow: "hidden",
+    minWidth: 0,
   },
   heroCardTop: {
     display: "flex",
@@ -456,6 +389,7 @@ const styles = {
     borderBottom: "1px solid rgba(232,238,252,.10)",
     background:
       "radial-gradient(900px 140px at 15% 0%, rgba(6,182,212,.14), transparent 55%), radial-gradient(900px 140px at 85% 0%, rgba(245,158,11,.12), transparent 55%), rgba(11,18,32,.55)",
+    flexWrap: "wrap",
   },
   heroBadge: {
     padding: "8px 10px",
@@ -483,6 +417,7 @@ const styles = {
     borderRadius: 16,
     border: "1px solid rgba(232,238,252,.10)",
     background: "rgba(11,18,32,.35)",
+    minWidth: 0,
   },
   stepN: {
     width: 28,
@@ -494,6 +429,7 @@ const styles = {
     fontWeight: 950,
     border: "1px solid rgba(232,238,252,.14)",
     background: "rgba(255,255,255,.06)",
+    flex: "0 0 auto",
   },
   stepTitle: { fontWeight: 950 },
   stepDesc: { fontSize: 12, opacity: 0.84, lineHeight: 1.45, marginTop: 3 },
@@ -506,11 +442,7 @@ const styles = {
   h2: { margin: 0, fontSize: 26, fontWeight: 950, letterSpacing: -0.3 },
   p: { margin: "8px 0 0 0", opacity: 0.85, lineHeight: 1.6 },
 
-  cards3: {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, 1fr)",
-    gap: 12,
-  },
+  cards3: { display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 12 },
 
   card: {
     padding: 16,
@@ -518,6 +450,7 @@ const styles = {
     border: "1px solid rgba(232,238,252,.12)",
     background: "rgba(255,255,255,.06)",
     boxShadow: "0 18px 60px rgba(0,0,0,.25)",
+    minWidth: 0,
   },
   cardTop: { display: "flex", justifyContent: "flex-end" },
   cardTag: {
@@ -531,7 +464,7 @@ const styles = {
   },
   cardTitle: { marginTop: 8, fontWeight: 950, fontSize: 16 },
   cardList: { margin: "10px 0 0 0", padding: 0, listStyle: "none", lineHeight: 1.7, opacity: 0.9 },
-  cardLi: { display: "flex", gap: 8, alignItems: "flex-start", marginTop: 8 },
+  cardLi: { display: "flex", gap: 8, alignItems: "flex-start", marginTop: 8, minWidth: 0 },
   check: {
     width: 18,
     height: 18,
@@ -544,12 +477,11 @@ const styles = {
     fontWeight: 950,
     fontSize: 12,
     marginTop: 2,
+    flex: "0 0 auto",
   },
   cardCtas: { marginTop: 14, display: "grid", gap: 10 },
 
-  ctaBand: {
-    padding: "14px 0 26px",
-  },
+  ctaBand: { padding: "14px 0 26px" },
   ctaBandInner: {
     borderRadius: 22,
     border: "1px solid rgba(232,238,252,.14)",
@@ -590,16 +522,4 @@ const styles = {
 
   footerLinks: { display: "flex", gap: 12, flexWrap: "wrap", alignItems: "center" },
   footerLink: { color: "#e8eefc", textDecoration: "none", opacity: 0.9 },
-
-  /* Responsive */
-  "@media": {},
 };
-
-/*
-NOTA:
-Si quieres que sea responsive al 100% sin CSS externo, añade en globals.css:
-@media (max-width: 980px){
-  .heroGrid{ grid-template-columns: 1fr; }
-}
-Pero como aquí usamos inline styles, lo resolvemos fácil en CSS global.
-*/
