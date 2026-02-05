@@ -86,7 +86,7 @@ export default function DPOPage() {
             </p>
           </div>
 
-          <div style={styles.grid2}>
+          <div className="dpoGrid2Fix" style={styles.grid2}>
             <div className="card" style={styles.card}>
               <div style={styles.cardTitle}>Entregables / Evidencias</div>
               <ul style={styles.list}>
