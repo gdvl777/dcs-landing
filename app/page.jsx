@@ -11,23 +11,7 @@ export default function HomePage() {
         <div style={styles.heroGlowB} />
 
         <div style={styles.container}>
-          {/* Top bar simple (solo para home) */}
-          <div style={styles.topBar}>
-            <div style={styles.brandMini}>
-              <div style={styles.brandMark} />
-              <div>
-                <div style={styles.brandName}>DataConSentido</div>
-                <div style={styles.brandTag}>Privacidad • Cumplimiento • Tecnología con sentido</div>
-              </div>
-            </div>
-
-            <div style={styles.topLinks}>
-              <Link style={styles.pillLink} href="/dpo">Servicios DPO</Link>
-              <Link style={styles.pillLink} href="/formacion-dpo">Formación DPO</Link>
-              <Link style={styles.pillLink} href="/calcular-mtge">Calculadora MTGE</Link>
-              <Link style={styles.pillLink} href="/politica-de-privacidad">Privacidad</Link>
-            </div>
-          </div>
+          
 
           <div style={styles.heroGrid}>
             <div>
