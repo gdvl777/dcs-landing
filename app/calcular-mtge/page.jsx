@@ -705,8 +705,7 @@ export default function CalcularMTGEPage() {
           </div>
         </div>
       </main>
-    </>
-  );
+    );
 }
 
 const styles = {
