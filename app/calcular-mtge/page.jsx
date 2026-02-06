@@ -1,4 +1,3 @@
-// app/calcular-mtge/page.jsx
 "use client";
 
 import React, { useMemo, useState, useCallback, useRef, useEffect } from "react";
