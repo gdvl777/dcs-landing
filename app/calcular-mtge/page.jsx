@@ -509,7 +509,7 @@ export default function CalcularMTGEPage() {
           <div>
             <h1 style={styles.h1}>Calculadora MTGE</h1>
             <p style={styles.sub}>
-              Primero revisa <b>calificación directa</b>. Si no aplica, calcula el puntaje con las{" "}
+              Esta herramienta te permite saber en menos de 2 minutos si tu organización DEBE evidenciar gran escala según la SPDP. Primero revisa <b>calificación directa</b>. Si no aplica, calcula el puntaje con las{" "}
               <b>6 variables</b> (umbral <b>6 puntos</b>).
             </p>
           </div>
