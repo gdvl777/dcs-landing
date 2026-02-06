@@ -360,14 +360,14 @@ export default function CalcularMTGEPage() {
     );
 
     await navigator.clipboard.writeText(lines.join("\n"));
-    alert("Copiado al portapapeles.");
+
     gaEvent("mtge_copy_summary", {
-      page_path: window.location.pathname,
       gran_escala: isGranEscala ? "si" : "no",
       metodo: isDirect ? "directa" : "puntaje",
-      total: totalFinal
+      puntaje: total,
     });
-
+    alert("Copiado al portapapeles.");
+    
   }
 
   function ObligacionesYCTA() {
