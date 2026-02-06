@@ -358,8 +358,11 @@ export default function CalcularMTGEPage() {
       `Resultado: ${isGranEscala ? "CALIFICA como Gran Escala" : "NO califica como Gran Escala"
       }`
     );
+
+    // Evento: resultado MTGE
     gaEvent("mtge_gran_escala", {
-      result: "yes",
+      gran_escala: isGranEscala ? "si" : "no",
+      metodo: isDirect ? "directa" : "puntaje",
       score: total,
     });
 
@@ -543,6 +546,7 @@ export default function CalcularMTGEPage() {
             </div>
           ) : null}
 
+
           <div style={styles.cardTitle}>Calificación directa — opcional</div>
           <p style={styles.small}>
             Si aplica alguno de estos supuestos, la calificación como gran escala es directa.
@@ -583,6 +587,7 @@ export default function CalcularMTGEPage() {
             </div>
           ) : null}
         </section>
+
 
         {/* ✅ Ahora SÍ: Gran escala va como sección SEPARADA (no dentro de la card de calificación directa) */}
         {showGranEscalaBlockAfterDirect ? <ObligacionesYCTA /> : null}
@@ -659,6 +664,7 @@ export default function CalcularMTGEPage() {
               ) : (
                 <div className="uiBadge uiBadgeNo">NO CALIFICA COMO GRAN ESCALA</div>
               )}
+
 
               {isDirect ? <div style={styles.note}>Marcaste calificación directa.</div> : null}
             </div>
