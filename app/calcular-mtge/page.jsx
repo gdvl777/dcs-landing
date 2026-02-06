@@ -7,17 +7,14 @@ import { usePathname } from "next/navigation";
 import { gaEvent } from "@/lib/ga";
 
 
-const directSectionRef = useRef(null);
-
-
-
-
-
 function fmt(n) {
   return n.toLocaleString("es-EC", { maximumFractionDigits: 2 });
 }
 
 export default function CalcularMTGEPage() {
+  const stampSectionRef = useRef(null);
+  const [stampSeen, setStampSeen] = useState(false);
+
   const pathname = usePathname();
 
   // =========================
@@ -212,26 +209,26 @@ export default function CalcularMTGEPage() {
   };
 
   useEffect(() => {
-    if (!directSectionRef.current) return;
+    if (stampSeen) return;
+    if (!stampSectionRef.current) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          gaEvent("mtge_estampa_vista", {
-            motivo: isDirect ? "directa" : "puntaje",
-          });
-          observer.disconnect(); // 🔑 solo una vez
+    const el = stampSectionRef.current;
+
+    const io = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (entry?.isIntersecting) {
+          setStampSeen(true);
+          gaEvent("mtge_direct_section_view", { seen: "yes" });
+          io.disconnect();
         }
       },
-      {
-        threshold: 0.5, // 50% visible
-      }
+      { threshold: 0.35 }
     );
 
-    observer.observe(directSectionRef.current);
-
-    return () => observer.disconnect();
-  }, [isDirect]);
+    io.observe(el);
+    return () => io.disconnect();
+  }, [stampSeen]);
 
 
   const openHelp = (key) => setOpenHelpKey(key);
@@ -565,7 +562,7 @@ export default function CalcularMTGEPage() {
         </section>
 
         {/* 1) Calificación directa (SOLO esta card tiene estampa) */}
-        <section ref={directSectionRef} style={{ ...styles.card, position: "relative", overflow: "hidden" }}>
+        <section ref={stampSectionRef} style={{ ...styles.card, position: "relative", overflow: "hidden" }}>
           {isDirect ? (
             <div style={styles.directOverlay} aria-hidden="true">
               <div style={styles.directOverlayText}>CALIFICA COMO GRAN ESCALA</div>
