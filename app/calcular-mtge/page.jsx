@@ -306,9 +306,7 @@ export default function CalcularMTGEPage() {
     setDirectSelected({});
     setOpenHelpKey(null);
 
-    gaEvent("mtge_reset", {
-      page_path: window.location.pathname
-    });
+    gaEvent("mtge_reset");
 
   }
 
@@ -457,12 +455,7 @@ export default function CalcularMTGEPage() {
               target="_blank"
               rel="noopener noreferrer"
               className="uiBtn uiBtnGhost"
-              onClick={() =>
-                gaEvent("cta_whatsapp_click", {
-                  page_path: window.location.pathname,
-                  location: "mtge_dock_or_cta"
-                })
-              }
+              onClick={() => gaEvent("cta_whatsapp_click", { origen: "mtge" })}
             >
               <span className="uiIcon">💬</span>
               WhatsApp
