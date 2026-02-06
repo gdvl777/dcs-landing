@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { gaEvent } from "@/lib/ga";
-import { useRef, useEffect } from "react";
+
 
 const directSectionRef = useRef(null);
 
