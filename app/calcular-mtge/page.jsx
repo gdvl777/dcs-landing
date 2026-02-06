@@ -9,6 +9,7 @@ import { gaEvent } from "@/lib/ga";
 
 
 
+
 function fmt(n) {
   return n.toLocaleString("es-EC", { maximumFractionDigits: 2 });
 }
