@@ -6,6 +6,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { gaEvent } from "@/lib/ga";
+import { useRef, useEffect } from "react";
+
+const directSectionRef = useRef(null);
+
 
 
 
@@ -207,6 +211,29 @@ export default function CalcularMTGEPage() {
       ]
     }
   };
+
+  useEffect(() => {
+    if (!directSectionRef.current) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          gaEvent("mtge_estampa_vista", {
+            motivo: isDirect ? "directa" : "puntaje",
+          });
+          observer.disconnect(); // 🔑 solo una vez
+        }
+      },
+      {
+        threshold: 0.5, // 50% visible
+      }
+    );
+
+    observer.observe(directSectionRef.current);
+
+    return () => observer.disconnect();
+  }, [isDirect]);
+
 
   const openHelp = (key) => setOpenHelpKey(key);
   const closeHelp = () => setOpenHelpKey(null);
@@ -539,7 +566,7 @@ export default function CalcularMTGEPage() {
         </section>
 
         {/* 1) Calificación directa (SOLO esta card tiene estampa) */}
-        <section style={{ ...styles.card, position: "relative", overflow: "hidden" }}>
+        <section ref={directSectionRef} style={{ ...styles.card, position: "relative", overflow: "hidden" }}>
           {isDirect ? (
             <div style={styles.directOverlay} aria-hidden="true">
               <div style={styles.directOverlayText}>CALIFICA COMO GRAN ESCALA</div>
@@ -586,6 +613,8 @@ export default function CalcularMTGEPage() {
               <b>6 variables</b> quedan bloqueadas.
             </div>
           ) : null}
+
+
         </section>
 
 
