@@ -358,6 +358,11 @@ export default function CalcularMTGEPage() {
       `Resultado: ${isGranEscala ? "CALIFICA como Gran Escala" : "NO califica como Gran Escala"
       }`
     );
+    gaEvent("mtge_gran_escala", {
+      result: "yes",
+      score: total,
+    });
+
 
     await navigator.clipboard.writeText(lines.join("\n"));
 
@@ -367,7 +372,7 @@ export default function CalcularMTGEPage() {
       puntaje: total,
     });
     alert("Copiado al portapapeles.");
-    
+
   }
 
   function ObligacionesYCTA() {
