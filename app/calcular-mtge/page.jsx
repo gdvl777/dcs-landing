@@ -5,7 +5,7 @@ import React, { useMemo, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { gaEvent } from "@/lib/ga";
+import { gaEvent } from "../../lib/ga,";
 
 
 function fmt(n) {
