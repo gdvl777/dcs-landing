@@ -5,6 +5,8 @@ import React, { useMemo, useState, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { gaEvent } from "@/lib/ga";
+
 
 function fmt(n) {
   return n.toLocaleString("es-EC", { maximumFractionDigits: 2 });
@@ -303,7 +305,11 @@ export default function CalcularMTGEPage() {
     setGeografiaIdx(0);
     setDirectSelected({});
     setOpenHelpKey(null);
-    
+
+    gaEvent("mtge_reset", {
+      page_path: window.location.pathname
+    });
+
   }
 
   async function copySummary() {
@@ -355,6 +361,13 @@ export default function CalcularMTGEPage() {
 
     await navigator.clipboard.writeText(lines.join("\n"));
     alert("Copiado al portapapeles.");
+    gaEvent("mtge_copy_summary", {
+      page_path: window.location.pathname,
+      gran_escala: isGranEscala ? "si" : "no",
+      metodo: isDirect ? "directa" : "puntaje",
+      total: totalFinal
+    });
+
   }
 
   function ObligacionesYCTA() {
@@ -444,6 +457,12 @@ export default function CalcularMTGEPage() {
               target="_blank"
               rel="noopener noreferrer"
               className="uiBtn uiBtnGhost"
+              onClick={() =>
+                gaEvent("cta_whatsapp_click", {
+                  page_path: window.location.pathname,
+                  location: "mtge_dock_or_cta"
+                })
+              }
             >
               <span className="uiIcon">💬</span>
               WhatsApp
@@ -458,254 +477,254 @@ export default function CalcularMTGEPage() {
   const showGranEscalaBlockAfterResult = !isDirect && isGranEscala;
 
   return (
-       <main style={styles.page} className="hasDock">
-        <div style={styles.container}>
-          <header style={styles.header}>
-            <div>
-              <h1 style={styles.h1}>Calculadora MTGE</h1>
-              <p style={styles.sub}>
-                Primero revisa <b>calificación directa</b>. Si no aplica, calcula el puntaje con las{" "}
-                <b>6 variables</b> (umbral <b>6 puntos</b>).
-              </p>
-            </div>
-          </header>
-
-
-          {/* Resumen operativo */}
-          <section className="card cardGlow">
-            <div style={styles.cardTitle}>
-              Según la resolución No.{" "}
-              <a
-                href="https://spdp.gob.ec/r52026/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="gradLink"
-              >
-                <span className="gradText">SPDP-SPD-2026-0005-R</span>
-                <svg
-                  className="extIcon"
-                  viewBox="0 0 24 24"
-                  width="16"
-                  height="16"
-                  aria-hidden="true"
-                  focusable="false"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h7v2H7v10h10v-5h2v7H5V5z"
-                  />
-                </svg>
-              </a>{" "}
-              (resumen operativo)
-            </div>
-
-            <ul style={{ margin: "10px 0 0 18px", lineHeight: 1.6, opacity: 0.92 }}>
-              <li>
-                La calificación de <b>gran escala</b> puede resultar por <b>calificación directa</b>{" "}
-                (si se cumple alguno de los supuestos) o por <b>puntaje</b> (P).
-              </li>
-              <li>
-                Si no hay calificación directa, se calcula <b>P</b> como la <b>suma de 6 variables</b>.
-              </li>
-              <li>
-                Regla práctica en esta calculadora: si <b>P ≥ 6</b> ⇒ <b>califica como gran escala</b>.
-              </li>
-              <li style={{ opacity: 0.9 }}>
-                Nota: Esta calculadora es un apoyo operativo; siempre valida con tu contexto y evidencia.
-              </li>
-            </ul>
-          </section>
-
-          {/* 1) Calificación directa (SOLO esta card tiene estampa) */}
-          <section style={{ ...styles.card, position: "relative", overflow: "hidden" }}>
-            {isDirect ? (
-              <div style={styles.directOverlay} aria-hidden="true">
-                <div style={styles.directOverlayText}>CALIFICA COMO GRAN ESCALA</div>
-              </div>
-            ) : null}
-
-            <div style={styles.cardTitle}>Calificación directa — opcional</div>
-            <p style={styles.small}>
-              Si aplica alguno de estos supuestos, la calificación como gran escala es directa.
+    <main style={styles.page} className="hasDock">
+      <div style={styles.container}>
+        <header style={styles.header}>
+          <div>
+            <h1 style={styles.h1}>Calculadora MTGE</h1>
+            <p style={styles.sub}>
+              Primero revisa <b>calificación directa</b>. Si no aplica, calcula el puntaje con las{" "}
+              <b>6 variables</b> (umbral <b>6 puntos</b>).
             </p>
+          </div>
+        </header>
 
-            <div className="directGridUI" style={{ marginTop: 10 }}>
-              {directCases.map((c) => (
-                <div key={c.key} className="uiCheckCard">
-                  <div className="uiCheckRow">
-                    <label className="uiCheckLabel" style={styles.noWeirdBreaks}>
-                      <input
-                        type="checkbox"
-                        checked={Boolean(directSelected[c.key])}
-                        onChange={() => toggleDirect(c.key)}
-                        style={{ marginTop: 2 }}
-                      />
-                      <span style={styles.noWeirdBreaks}>{c.label}</span>
-                    </label>
 
-                    <button
-                      type="button"
-                      className="uiInfoBtn"
-                      onClick={() => openHelp(c.key)}
-                      aria-label={`Más información sobre: ${c.label}`}
-                      title="Más información"
-                    >
-                      i
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {isDirect ? (
-              <div style={styles.directNotice}>
-                Marcaste al menos un caso de <b>calificación directa</b>. Por claridad, las{" "}
-                <b>6 variables</b> quedan bloqueadas.
-              </div>
-            ) : null}
-          </section>
-
-          {/* ✅ Ahora SÍ: Gran escala va como sección SEPARADA (no dentro de la card de calificación directa) */}
-          {showGranEscalaBlockAfterDirect ? <ObligacionesYCTA /> : null}
-
-          {/* 2) Variables */}
-          <section style={styles.card}>
-            <div style={styles.cardTitle}>Variables del MTGE</div>
-
-            <SelectRow
-              label="1) Número de titulares (12 meses)"
-              options={titularesOptions}
-              valueIdx={titularesIdx}
-              onChange={setTitularesIdx}
-              disabled={variablesDisabled}
-            />
-            <SelectRow
-              label="2) Volumen de datos (tipos por titular)"
-              options={volumenOptions}
-              valueIdx={volumenIdx}
-              onChange={setVolumenIdx}
-              disabled={variablesDisabled}
-            />
-            <SelectRow
-              label="3) Categorías de datos"
-              options={categoriasOptions}
-              valueIdx={categoriasIdx}
-              onChange={setCategoriasIdx}
-              disabled={variablesDisabled}
-            />
-            <SelectRow
-              label="4) Frecuencia del tratamiento"
-              options={frecuenciaOptions}
-              valueIdx={frecuenciaIdx}
-              onChange={setFrecuenciaIdx}
-              disabled={variablesDisabled}
-            />
-            <SelectRow
-              label="5) Permanencia del tratamiento"
-              options={permanenciaOptions}
-              valueIdx={permanenciaIdx}
-              onChange={setPermanenciaIdx}
-              disabled={variablesDisabled}
-            />
-            <SelectRow
-              label="6) Alcance geográfico"
-              options={geografiaOptions}
-              valueIdx={geografiaIdx}
-              onChange={setGeografiaIdx}
-              disabled={variablesDisabled}
-            />
-
-            {variablesDisabled ? (
-              <div style={styles.variablesLockedHint}>
-                Variables bloqueadas por calificación directa. Si deseas calcular P, desmarca todas las
-                opciones directas.
-              </div>
-            ) : null}
-          </section>
-
-          {/* RESULTADO */}
-          <section style={{ ...styles.card, ...styles.resultCard }}>
-            <div style={styles.resultTop}>
-              <div>
-                <div style={styles.resultLabel}>Puntaje total (P)</div>
-                <div style={styles.resultValue}>{fmt(total)} pts</div>
-                <div style={styles.small}>
-                  {isDirect ? "P es referencial (hay calificación directa)." : "P = suma de las 6 variables"}
-                </div>
-              </div>
-
-              <div style={styles.badgeWrap}>
-                {isGranEscala ? (
-                  <div className="uiBadge uiBadgeOk">CALIFICA COMO GRAN ESCALA</div>
-                ) : (
-                  <div className="uiBadge uiBadgeNo">NO CALIFICA COMO GRAN ESCALA</div>
-                )}
-
-                {isDirect ? <div style={styles.note}>Marcaste calificación directa.</div> : null}
-              </div>
-            </div>
-          </section>
-
-          {/* ✅ Si califica por puntaje, va DESPUÉS del resultado como sección separada */}
-          {showGranEscalaBlockAfterResult ? <ObligacionesYCTA /> : null}
-
-          {/* MODAL AYUDA */}
-          {openHelpKey ? (
-            <div
-              style={styles.modalOverlay}
-              onClick={closeHelp}
-              role="dialog"
-              aria-modal="true"
+        {/* Resumen operativo */}
+        <section className="card cardGlow">
+          <div style={styles.cardTitle}>
+            Según la resolución No.{" "}
+            <a
+              href="https://spdp.gob.ec/r52026/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="gradLink"
             >
-              <div style={styles.modalCard} onClick={(e) => e.stopPropagation()}>
-                <div style={styles.modalHeader}>
-                  <h3 style={styles.modalTitle}>
-                    {directCases.find((x) => x.key === openHelpKey)?.label}
-                  </h3>
-                  <button type="button" className="uiBtn uiBtnGhost" onClick={closeHelp}>
-                    <span className="uiIcon">✖️</span>
-                    Cerrar
-                  </button>
-                </div>
+              <span className="gradText">SPDP-SPD-2026-0005-R</span>
+              <svg
+                className="extIcon"
+                viewBox="0 0 24 24"
+                width="16"
+                height="16"
+                aria-hidden="true"
+                focusable="false"
+              >
+                <path
+                  fill="currentColor"
+                  d="M14 3h7v7h-2V6.41l-9.29 9.3-1.42-1.42 9.3-9.29H14V3zM5 5h7v2H7v10h10v-5h2v7H5V5z"
+                />
+              </svg>
+            </a>{" "}
+            (resumen operativo)
+          </div>
 
-                <div style={styles.modalBody}>
-                  <div style={styles.modalSectionTitle}>¿Qué contempla?</div>
-                  <div>{directHelp[openHelpKey]?.what}</div>
+          <ul style={{ margin: "10px 0 0 18px", lineHeight: 1.6, opacity: 0.92 }}>
+            <li>
+              La calificación de <b>gran escala</b> puede resultar por <b>calificación directa</b>{" "}
+              (si se cumple alguno de los supuestos) o por <b>puntaje</b> (P).
+            </li>
+            <li>
+              Si no hay calificación directa, se calcula <b>P</b> como la <b>suma de 6 variables</b>.
+            </li>
+            <li>
+              Regla práctica en esta calculadora: si <b>P ≥ 6</b> ⇒ <b>califica como gran escala</b>.
+            </li>
+            <li style={{ opacity: 0.9 }}>
+              Nota: Esta calculadora es un apoyo operativo; siempre valida con tu contexto y evidencia.
+            </li>
+          </ul>
+        </section>
 
-                  <div style={styles.modalSectionTitle}>Ejemplos</div>
-                  <ul style={styles.modalList}>
-                    {(directHelp[openHelpKey]?.examples || []).map((ex) => (
-                      <li key={ex}>{ex}</li>
-                    ))}
-                  </ul>
-
-                  <div style={styles.modalSectionTitle}>Checklist rápido</div>
-                  <ul style={styles.modalList}>
-                    {(directHelp[openHelpKey]?.quickCheck || []).map((q) => (
-                      <li key={q}>{q}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+        {/* 1) Calificación directa (SOLO esta card tiene estampa) */}
+        <section style={{ ...styles.card, position: "relative", overflow: "hidden" }}>
+          {isDirect ? (
+            <div style={styles.directOverlay} aria-hidden="true">
+              <div style={styles.directOverlayText}>CALIFICA COMO GRAN ESCALA</div>
             </div>
           ) : null}
-        </div>
-        {/* ACTION DOCK fixed (siempre visible) */}
-        <div style={styles.actionDock} role="region" aria-label="Acciones rápidas">
-          <div style={styles.actionDockInner}>
-            <button onClick={copySummary} className="uiBtn uiBtnGhost" style={styles.dockBtn}>
-              <span className="uiIcon">📋</span>
-              Copiar resumen
-            </button>
 
-            <button onClick={resetAll} className="uiBtn uiBtnGhost" style={styles.dockBtn}>
-              <span className="uiIcon">🔄</span>
-              Reset
-            </button>
+          <div style={styles.cardTitle}>Calificación directa — opcional</div>
+          <p style={styles.small}>
+            Si aplica alguno de estos supuestos, la calificación como gran escala es directa.
+          </p>
+
+          <div className="directGridUI" style={{ marginTop: 10 }}>
+            {directCases.map((c) => (
+              <div key={c.key} className="uiCheckCard">
+                <div className="uiCheckRow">
+                  <label className="uiCheckLabel" style={styles.noWeirdBreaks}>
+                    <input
+                      type="checkbox"
+                      checked={Boolean(directSelected[c.key])}
+                      onChange={() => toggleDirect(c.key)}
+                      style={{ marginTop: 2 }}
+                    />
+                    <span style={styles.noWeirdBreaks}>{c.label}</span>
+                  </label>
+
+                  <button
+                    type="button"
+                    className="uiInfoBtn"
+                    onClick={() => openHelp(c.key)}
+                    aria-label={`Más información sobre: ${c.label}`}
+                    title="Más información"
+                  >
+                    i
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
+
+          {isDirect ? (
+            <div style={styles.directNotice}>
+              Marcaste al menos un caso de <b>calificación directa</b>. Por claridad, las{" "}
+              <b>6 variables</b> quedan bloqueadas.
+            </div>
+          ) : null}
+        </section>
+
+        {/* ✅ Ahora SÍ: Gran escala va como sección SEPARADA (no dentro de la card de calificación directa) */}
+        {showGranEscalaBlockAfterDirect ? <ObligacionesYCTA /> : null}
+
+        {/* 2) Variables */}
+        <section style={styles.card}>
+          <div style={styles.cardTitle}>Variables del MTGE</div>
+
+          <SelectRow
+            label="1) Número de titulares (12 meses)"
+            options={titularesOptions}
+            valueIdx={titularesIdx}
+            onChange={setTitularesIdx}
+            disabled={variablesDisabled}
+          />
+          <SelectRow
+            label="2) Volumen de datos (tipos por titular)"
+            options={volumenOptions}
+            valueIdx={volumenIdx}
+            onChange={setVolumenIdx}
+            disabled={variablesDisabled}
+          />
+          <SelectRow
+            label="3) Categorías de datos"
+            options={categoriasOptions}
+            valueIdx={categoriasIdx}
+            onChange={setCategoriasIdx}
+            disabled={variablesDisabled}
+          />
+          <SelectRow
+            label="4) Frecuencia del tratamiento"
+            options={frecuenciaOptions}
+            valueIdx={frecuenciaIdx}
+            onChange={setFrecuenciaIdx}
+            disabled={variablesDisabled}
+          />
+          <SelectRow
+            label="5) Permanencia del tratamiento"
+            options={permanenciaOptions}
+            valueIdx={permanenciaIdx}
+            onChange={setPermanenciaIdx}
+            disabled={variablesDisabled}
+          />
+          <SelectRow
+            label="6) Alcance geográfico"
+            options={geografiaOptions}
+            valueIdx={geografiaIdx}
+            onChange={setGeografiaIdx}
+            disabled={variablesDisabled}
+          />
+
+          {variablesDisabled ? (
+            <div style={styles.variablesLockedHint}>
+              Variables bloqueadas por calificación directa. Si deseas calcular P, desmarca todas las
+              opciones directas.
+            </div>
+          ) : null}
+        </section>
+
+        {/* RESULTADO */}
+        <section style={{ ...styles.card, ...styles.resultCard }}>
+          <div style={styles.resultTop}>
+            <div>
+              <div style={styles.resultLabel}>Puntaje total (P)</div>
+              <div style={styles.resultValue}>{fmt(total)} pts</div>
+              <div style={styles.small}>
+                {isDirect ? "P es referencial (hay calificación directa)." : "P = suma de las 6 variables"}
+              </div>
+            </div>
+
+            <div style={styles.badgeWrap}>
+              {isGranEscala ? (
+                <div className="uiBadge uiBadgeOk">CALIFICA COMO GRAN ESCALA</div>
+              ) : (
+                <div className="uiBadge uiBadgeNo">NO CALIFICA COMO GRAN ESCALA</div>
+              )}
+
+              {isDirect ? <div style={styles.note}>Marcaste calificación directa.</div> : null}
+            </div>
+          </div>
+        </section>
+
+        {/* ✅ Si califica por puntaje, va DESPUÉS del resultado como sección separada */}
+        {showGranEscalaBlockAfterResult ? <ObligacionesYCTA /> : null}
+
+        {/* MODAL AYUDA */}
+        {openHelpKey ? (
+          <div
+            style={styles.modalOverlay}
+            onClick={closeHelp}
+            role="dialog"
+            aria-modal="true"
+          >
+            <div style={styles.modalCard} onClick={(e) => e.stopPropagation()}>
+              <div style={styles.modalHeader}>
+                <h3 style={styles.modalTitle}>
+                  {directCases.find((x) => x.key === openHelpKey)?.label}
+                </h3>
+                <button type="button" className="uiBtn uiBtnGhost" onClick={closeHelp}>
+                  <span className="uiIcon">✖️</span>
+                  Cerrar
+                </button>
+              </div>
+
+              <div style={styles.modalBody}>
+                <div style={styles.modalSectionTitle}>¿Qué contempla?</div>
+                <div>{directHelp[openHelpKey]?.what}</div>
+
+                <div style={styles.modalSectionTitle}>Ejemplos</div>
+                <ul style={styles.modalList}>
+                  {(directHelp[openHelpKey]?.examples || []).map((ex) => (
+                    <li key={ex}>{ex}</li>
+                  ))}
+                </ul>
+
+                <div style={styles.modalSectionTitle}>Checklist rápido</div>
+                <ul style={styles.modalList}>
+                  {(directHelp[openHelpKey]?.quickCheck || []).map((q) => (
+                    <li key={q}>{q}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        ) : null}
+      </div>
+      {/* ACTION DOCK fixed (siempre visible) */}
+      <div style={styles.actionDock} role="region" aria-label="Acciones rápidas">
+        <div style={styles.actionDockInner}>
+          <button onClick={copySummary} className="uiBtn uiBtnGhost" style={styles.dockBtn}>
+            <span className="uiIcon">📋</span>
+            Copiar resumen
+          </button>
+
+          <button onClick={resetAll} className="uiBtn uiBtnGhost" style={styles.dockBtn}>
+            <span className="uiIcon">🔄</span>
+            Reset
+          </button>
         </div>
-      </main>
-    );
+      </div>
+    </main>
+  );
 }
 
 const styles = {
