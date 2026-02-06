@@ -303,7 +303,7 @@ export default function CalcularMTGEPage() {
     setGeografiaIdx(0);
     setDirectSelected({});
     setOpenHelpKey(null);
-    setNavOpen(false);
+    
   }
 
   async function copySummary() {
@@ -458,11 +458,7 @@ export default function CalcularMTGEPage() {
   const showGranEscalaBlockAfterResult = !isDirect && isGranEscala;
 
   return (
-    <div className="app-shell">
-
-
-      {/* CONTENIDO */}
-      <main style={styles.page}>
+       <main style={styles.page} className="hasDock">
         <div style={styles.container}>
           <header style={styles.header}>
             <div>
@@ -708,9 +704,8 @@ export default function CalcularMTGEPage() {
             </button>
           </div>
         </div>
-
       </main>
-    </div>
+    </>
   );
 }
 
