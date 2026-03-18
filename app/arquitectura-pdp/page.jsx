@@ -176,7 +176,7 @@ export default function Page() {
                             </p>
 
                             <a
-                                href="https://pay.hotmart.com/TU-LINK"
+                                href="https://pay.hotmart.com/Q104933430P"
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="mt-5 inline-flex w-full items-center justify-center rounded-2xl bg-cyan-400 px-6 py-4 text-base font-semibold text-slate-950 transition hover:bg-cyan-300"
