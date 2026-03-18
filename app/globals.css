@@ -21,10 +21,9 @@
   --btnBorder: rgba(232, 238, 252, 0.18);
   --shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
 
-  /* reserva vertical */
-  --navOffsetDesktop: 108px;
-  --navOffsetTablet: 180px;
-  --navOffsetMobile: 210px;
+  --navOffsetDesktop: 104px;
+  --navOffsetTablet: 124px;
+  --navOffsetMobile: 112px;
 
   --dockH: 74px;
 }
