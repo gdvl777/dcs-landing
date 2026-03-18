@@ -57,7 +57,8 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`nav-pro-link ${active ? "is-active" : ""}`}
+                  className={`nav-mobile-link ${active ? "is-active-mobile" : ""}`}
+                  onClick={() => setOpen(false)}
                 >
                   {link.label}
                 </Link>
@@ -79,7 +80,7 @@ export default function Navbar() {
         </header>
 
         {open ? (
-          <div className="nav-mobile-panel">
+          <div className="nav-mobile-panel" onClick={(e) => e.stopPropagation()}>
             {links.map((link) => {
               const active =
                 pathname === link.href || pathname.startsWith(`${link.href}/`);

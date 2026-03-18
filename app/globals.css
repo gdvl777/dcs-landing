@@ -849,10 +849,13 @@ button {
 }
 
 .nav-mobile-panel {
+  position: relative;
+  z-index: 10000;
+  pointer-events: auto;
   margin-top: 10px;
   border-radius: 18px;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(15, 23, 42, 0.92);
+  background: rgba(15, 23, 42, 0.96);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   padding: 10px;
@@ -860,15 +863,20 @@ button {
 }
 
 .nav-mobile-link {
+  position: relative;
+  z-index: 10001;
+  pointer-events: auto;
   display: block;
   width: 100%;
-  padding: 12px 14px;
+  padding: 14px 16px;
   border-radius: 14px;
   font-size: 0.96rem;
   font-weight: 700;
   color: rgba(241, 245, 249, 0.92);
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .nav-mobile-link + .nav-mobile-link {
