@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import {
-  ShieldCheck,
   FileText,
   Target,
   AlertTriangle,
@@ -20,6 +19,7 @@ import {
   Scale,
   BrainCircuit,
   DollarSign,
+  ShieldCheck,
 } from "lucide-react";
 
 const curriculum = [
@@ -149,47 +149,15 @@ function SectionTitle({ badge, title, description }) {
 
 export default function LandingArquitecturaPdp() {
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100">
+    <div className="relative min-h-screen overflow-hidden bg-slate-950 text-slate-100">
       <div className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="absolute -top-24 left-1/2 h-[30rem] w-[30rem] -translate-x-1/2 rounded-full bg-cyan-500/15 blur-3xl" />
         <div className="absolute right-0 top-96 h-[24rem] w-[24rem] rounded-full bg-violet-500/10 blur-3xl" />
         <div className="absolute left-0 top-[70rem] h-[24rem] w-[24rem] rounded-full bg-amber-500/10 blur-3xl" />
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/80 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
-          <div className="flex items-center gap-3">
-            <Image
-              src="/images/logo-dataconsentido.png"
-              alt="DataConSentido"
-              width={170}
-              height={48}
-              className="h-auto w-auto"
-              priority
-            />
-          </div>
-
-          <nav className="hidden items-center gap-6 text-sm text-slate-300 md:flex">
-            <a href="#programa" className="transition hover:text-white">Programa</a>
-            <a href="#aprendizajes" className="transition hover:text-white">Resultados</a>
-            <a href="#inversion" className="transition hover:text-white">Inversión</a>
-            <a href="#dirigido" className="transition hover:text-white">Dirigido a</a>
-            <a href="#faq" className="transition hover:text-white">FAQ</a>
-          </nav>
-
-          <a
-            href="https://wa.me/593999999999?text=Hola,%20quiero%20inscribirme%20en%20Arquitectura%20Profesional%20de%20Protección%20de%20Datos"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="rounded-2xl bg-cyan-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
-          >
-            Reservar cupo
-          </a>
-        </div>
-      </header>
-
-      <main>
-        <section className="relative mx-auto max-w-7xl px-6 pb-20 pt-16 lg:px-8 lg:pt-24">
+      <main className="relative z-10">
+        <section className="mx-auto max-w-7xl px-6 pb-20 pt-16 lg:px-8 lg:pt-24">
           <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_0.8fr]">
             <motion.div
               variants={fadeUp}
@@ -198,6 +166,25 @@ export default function LandingArquitecturaPdp() {
               transition={{ duration: 0.55 }}
               className="space-y-8"
             >
+              <div className="flex items-center gap-4">
+                <Image
+                  src="/images/logo-dataconsentido.png"
+                  alt="DataConSentido"
+                  width={56}
+                  height={56}
+                  className="rounded-2xl"
+                  priority
+                />
+                <div>
+                  <p className="text-sm font-semibold uppercase tracking-[0.24em] text-cyan-300">
+                    DataConSentido
+                  </p>
+                  <p className="text-sm text-slate-400">
+                    Formación avanzada en protección de datos
+                  </p>
+                </div>
+              </div>
+
               <div className="flex flex-wrap gap-3">
                 <div className="rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1 text-sm text-cyan-200">
                   Programa intensivo
@@ -563,7 +550,7 @@ export default function LandingArquitecturaPdp() {
         </section>
       </main>
 
-      <footer className="border-t border-white/10 py-8">
+      <footer className="relative z-10 border-t border-white/10 py-8">
         <div className="mx-auto flex max-w-7xl flex-col gap-4 px-6 text-sm text-slate-400 lg:flex-row lg:items-center lg:justify-between lg:px-8">
           <div className="flex items-center gap-3">
             <Users className="h-4 w-4 text-cyan-300" />
