@@ -1,231 +1,123 @@
-// app/formacion-dpo/page.jsx
-"use client";
-
 import Link from "next/link";
 
-export default function FormacionDPOPage() {
-  const year = new Date().getFullYear();
+const cursos = [
+  {
+    slug: "/formacion-avanzada",
+    badge: "Programa activo",
+    titulo: "Formación Avanzada para el DPO",
+    descripcion:
+      "Programa práctico para fortalecer capacidades en cumplimiento, documentación, operación real del rol DPO/DPD y evidencia verificable.",
+    detalles: [
+      "Enfoque aplicado",
+      "Plantillas y recursos",
+      "Casos prácticos",
+      "Orientado a ejecución",
+    ],
+    cta: "Ver programa",
+    destacado: false,
+  },
+  {
+    slug: "/arquitectura-pdp",
+    badge: "Nuevo programa",
+    titulo: "Arquitectura Profesional de Protección de Datos",
+    descripcion:
+      "Cómo estructurar PANSI, RAT, MTGE y EIPD bajo el nuevo enfoque operativo de la LOPDP, con criterio técnico y visión ejecutiva.",
+    detalles: [
+      "PANSI · RAT · MTGE · EIPD",
+      "4 sesiones intensivas",
+      "10 horas de formación",
+      "Aplicación inmediata",
+    ],
+    cta: "Ver detalles",
+    destacado: true,
+  },
+];
 
+export const metadata = {
+  title: "Formación DPO | DataConSentido",
+  description:
+    "Conoce los programas y cursos de DataConSentido para DPO, DPD y equipos de cumplimiento.",
+};
+
+export default function FormacionDpoPage() {
   return (
-    <div className="container">
-      {/* HERO */}
-      <section className="hero" style={styles.hero}>
-        <div style={styles.heroGlowA} aria-hidden="true" />
-        <div style={styles.heroGlowB} aria-hidden="true" />
+    <main className="min-h-screen bg-slate-950 text-white">
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(6,182,212,0.18),transparent_30%),radial-gradient(circle_at_top_right,rgba(245,158,11,0.12),transparent_28%)]" />
+        <div className="relative mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
+          <div className="max-w-3xl">
+            <span className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1 text-sm text-cyan-200">
+              Formación DPO
+            </span>
 
-        <div style={styles.kicker}>
-          <span style={styles.kickerDot} />
-          Formación • DPO/DPD • Enfoque ejecutable
-        </div>
+            <h1 className="mt-6 text-4xl font-bold leading-tight md:text-6xl">
+              Elige el programa que mejor se adapta a tu nivel y necesidad
+            </h1>
 
-        <h1 className="h1" style={styles.h1}>
-          Formación avanzada DPO para{" "}
-          <span style={styles.h1Accent}>ejecutar cumplimiento</span>, no solo entenderlo.
-        </h1>
-
-        <p className="sub" style={styles.sub}>
-          Programa práctico para dominar criterios, documentación, riesgos y la operación real del rol
-          DPO/DPD. Saldrás con un método, plantillas y checklist para implementar evidencia verificable.
-        </p>
-
-        <div style={styles.chips}>
-          <span style={styles.chip}>✅ RAT/RID + flujos</span>
-          <span style={styles.chip}>✅ DPIA + riesgos</span>
-          <span style={styles.chip}>✅ Políticas + contratos</span>
-          <span style={styles.chip}>✅ Operación ARCO+</span>
-        </div>
-
-        <div className="ctaRow" style={{ marginTop: 14 }}>
-          <Link className="uiBtn uiBtnPrimary" href="https://masterclass.dataconsentido.com/">
-            Reservar cupo <span className="uiIcon">→</span>
-          </Link>
-
-          <a
-            className="uiBtn uiBtnGhost"
-            href="https://wa.me/593992801005"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Consultar por WhatsApp
-          </a>
-
-          <Link className="uiBtn uiBtnGhost" href="/dpo">
-            Ver servicios DPO/DPD
-          </Link>
-        </div>
-
-        <div style={styles.heroMiniGrid}>
-          <div style={styles.heroStat}>
-            <div style={styles.heroStatNum}>100%</div>
-            <div style={styles.heroStatTxt}>orientado a ejecución</div>
+            <p className="mt-6 text-lg leading-8 text-slate-300 md:text-xl">
+              Programas diseñados para fortalecer capacidades reales en protección
+              de datos, cumplimiento, documentación y ejecución operativa.
+            </p>
           </div>
-          <div style={styles.heroStat}>
-            <div style={styles.heroStatNum}>Plantillas</div>
-            <div style={styles.heroStatTxt}>checklists + evidencias</div>
-          </div>
-          <div style={styles.heroStat}>
-            <div style={styles.heroStatNum}>LOPDP</div>
-            <div style={styles.heroStatTxt}>criterio operativo</div>
+
+          <div className="mt-12 grid gap-6 lg:grid-cols-2">
+            {cursos.map((curso) => (
+              <article
+                key={curso.slug}
+                className={`rounded-[2rem] border p-7 shadow-xl transition duration-200 hover:-translate-y-1 ${
+                  curso.destacado
+                    ? "border-cyan-400/25 bg-gradient-to-br from-cyan-400/10 via-slate-900 to-slate-900"
+                    : "border-white/10 bg-white/5"
+                }`}
+              >
+                <div className="flex items-start justify-between gap-4">
+                  <span
+                    className={`inline-flex rounded-full px-3 py-1 text-sm ${
+                      curso.destacado
+                        ? "border border-cyan-400/30 bg-cyan-400/10 text-cyan-200"
+                        : "border border-white/10 bg-white/5 text-slate-300"
+                    }`}
+                  >
+                    {curso.badge}
+                  </span>
+                </div>
+
+                <h2 className="mt-5 text-2xl font-bold text-white md:text-3xl">
+                  {curso.titulo}
+                </h2>
+
+                <p className="mt-4 text-base leading-7 text-slate-300 md:text-lg">
+                  {curso.descripcion}
+                </p>
+
+                <div className="mt-6 flex flex-wrap gap-3">
+                  {curso.detalles.map((detalle) => (
+                    <span
+                      key={detalle}
+                      className="rounded-full border border-white/10 bg-slate-950/40 px-3 py-1 text-sm text-slate-300"
+                    >
+                      {detalle}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="mt-8">
+                  <Link
+                    href={curso.slug}
+                    className={`inline-flex items-center justify-center rounded-2xl px-6 py-3 text-base font-semibold transition ${
+                      curso.destacado
+                        ? "bg-cyan-400 text-slate-950 hover:bg-cyan-300"
+                        : "border border-white/15 text-white hover:bg-white/5"
+                    }`}
+                  >
+                    {curso.cta}
+                  </Link>
+                </div>
+              </article>
+            ))}
           </div>
         </div>
       </section>
-
-
-
-
-
-      {/* Footer mini */}
-      <div className="footer" style={{ marginTop: 18 }}>
-        <div style={{ opacity: 0.85 }}>© {year} DataConSentido</div>
-        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-          <Link href="/">Inicio</Link>
-          <Link href="/politica-de-privacidad">Política de Privacidad</Link>
-          <Link href="/dpo">Servicios DPO</Link>
-        </div>
-      </div>
-    </div>
+    </main>
   );
 }
-
-const styles = {
-  hero: {
-    position: "relative",
-    overflow: "hidden",
-    padding: 18,
-    borderRadius: 18,
-  },
-  heroGlowA: {
-    position: "absolute",
-    inset: "-45% -25% auto -25%",
-    height: 520,
-    background: "radial-gradient(closest-side, rgba(6,182,212,.18), transparent 70%)",
-    filter: "blur(22px)",
-    pointerEvents: "none",
-  },
-  heroGlowB: {
-    position: "absolute",
-    inset: "-45% -25% auto auto",
-    height: 520,
-    width: 520,
-    background: "radial-gradient(closest-side, rgba(245,158,11,.14), transparent 70%)",
-    filter: "blur(22px)",
-    pointerEvents: "none",
-  },
-
-  kicker: {
-    position: "relative",
-    zIndex: 1,
-    display: "inline-flex",
-    alignItems: "center",
-    gap: 10,
-    padding: "8px 12px",
-    borderRadius: 999,
-    border: "1px solid rgba(232,238,252,.14)",
-    background: "rgba(255,255,255,.05)",
-    fontWeight: 850,
-    opacity: 0.95,
-  },
-  kickerDot: {
-    width: 10,
-    height: 10,
-    borderRadius: 999,
-    background: "rgba(34,197,94,.85)",
-    boxShadow: "0 0 0 4px rgba(34,197,94,.15)",
-  },
-
-  h1: { position: "relative", zIndex: 1 },
-  h1Accent: {
-    background: "linear-gradient(90deg, rgba(34,197,94,1), rgba(6,182,212,1), rgba(245,158,11,1))",
-    WebkitBackgroundClip: "text",
-    backgroundClip: "text",
-    color: "transparent",
-  },
-  sub: { position: "relative", zIndex: 1, marginTop: 12, opacity: 0.9, lineHeight: 1.6 },
-
-  chips: { position: "relative", zIndex: 1, marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap" },
-  chip: {
-    padding: "8px 10px",
-    borderRadius: 999,
-    border: "1px solid rgba(232,238,252,.12)",
-    background: "rgba(11,18,32,.35)",
-    fontWeight: 850,
-    fontSize: 13,
-    opacity: 0.95,
-  },
-
-  heroMiniGrid: {
-    position: "relative",
-    zIndex: 1,
-    marginTop: 14,
-    display: "flex",
-    gap: 12,
-    flexWrap: "wrap",
-  },
-  heroStat: {
-    padding: "10px 12px",
-    borderRadius: 16,
-    border: "1px solid rgba(232,238,252,.12)",
-    background: "rgba(11,18,32,.35)",
-    minWidth: 170,
-  },
-  heroStatNum: { fontWeight: 950, fontSize: 16 },
-  heroStatTxt: { fontSize: 12, opacity: 0.84, marginTop: 4 },
-
-  section: { padding: "18px 0" },
-  sectionHead: { marginBottom: 12 },
-  h2: { margin: 0, fontSize: 26, fontWeight: 950, letterSpacing: -0.3 },
-  p: { margin: "8px 0 0 0", opacity: 0.85, lineHeight: 1.6 },
-
-  grid2: {
-    display: "grid",
-    gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
-    gap: 12,
-  },
-
-  card: {
-    padding: 16,
-    borderRadius: 20,
-    border: "1px solid rgba(232,238,252,.12)",
-    background: "rgba(255,255,255,.06)",
-    boxShadow: "0 18px 60px rgba(0,0,0,.25)",
-  },
-  cardTop: { display: "flex", justifyContent: "space-between", gap: 10, flexWrap: "wrap" },
-  cardTag: {
-    padding: "8px 10px",
-    borderRadius: 999,
-    border: "1px solid rgba(232,238,252,.12)",
-    background: "rgba(11,18,32,.35)",
-    fontWeight: 900,
-    fontSize: 12,
-    opacity: 0.9,
-  },
-  cardTagAlt: {
-    padding: "8px 10px",
-    borderRadius: 999,
-    border: "1px solid rgba(6,182,212,.22)",
-    background: "rgba(6,182,212,.10)",
-    fontWeight: 900,
-    fontSize: 12,
-  },
-  cardTitle: { marginTop: 8, fontWeight: 950, fontSize: 16 },
-  list: { marginTop: 10, lineHeight: 1.6 },
-
-  ctaBand: {
-    marginTop: 10,
-    borderRadius: 22,
-    border: "1px solid rgba(232,238,252,.14)",
-    background:
-      "radial-gradient(900px 140px at 15% 0%, rgba(6,182,212,.14), transparent 55%), radial-gradient(900px 140px at 85% 0%, rgba(245,158,11,.12), transparent 55%), rgba(255,255,255,.06)",
-    boxShadow: "0 18px 80px rgba(0,0,0,.35)",
-    padding: 16,
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: 12,
-    flexWrap: "wrap",
-  },
-  ctaLeft: { minWidth: 240, maxWidth: 680 },
-  ctaTitle: { fontWeight: 950, fontSize: 18 },
-  ctaText: { marginTop: 6, opacity: 0.86, lineHeight: 1.55 },
-  ctaBtns: { display: "flex", gap: 10, flexWrap: "wrap" },
-};
