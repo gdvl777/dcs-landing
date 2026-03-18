@@ -29,7 +29,7 @@ export default function Navbar() {
 
   return (
     <div className="nav-wrap">
-      <div className="w-full max-w-[1180px]">
+      <div className="nav-shell">
         <header className="nav-pro">
           <Link href="/" className="nav-brand">
             <Image
@@ -48,7 +48,7 @@ export default function Navbar() {
             </div>
           </Link>
 
-          <nav className="nav-pro-links nav-pro-links-desktop">
+          <nav className="nav-pro-links-desktop">
             {links.map((link) => {
               const active =
                 pathname === link.href || pathname.startsWith(`${link.href}/`);
@@ -57,8 +57,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`nav-mobile-link ${active ? "is-active-mobile" : ""}`}
-                  onClick={() => setOpen(false)}
+                  className={`nav-pro-link ${active ? "is-active" : ""}`}
                 >
                   {link.label}
                 </Link>
@@ -79,7 +78,7 @@ export default function Navbar() {
           </button>
         </header>
 
-        {open ? (
+        {open && (
           <div className="nav-mobile-panel" onClick={(e) => e.stopPropagation()}>
             {links.map((link) => {
               const active =
@@ -90,13 +89,14 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   className={`nav-mobile-link ${active ? "is-active-mobile" : ""}`}
+                  onClick={() => setOpen(false)}
                 >
                   {link.label}
                 </Link>
               );
             })}
           </div>
-        ) : null}
+        )}
       </div>
     </div>
   );
