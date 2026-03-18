@@ -812,3 +812,112 @@ button {
   pointer-events: none;
   z-index: -1;
 }
+/* =========================
+   NAVBAR MOBILE MENU
+   ========================= */
+
+.nav-pro-links-desktop {
+  display: flex;
+}
+
+.nav-hamburger {
+  display: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.nav-hamburger:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.nav-hamburger-line {
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: #f8fafc;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-mobile-panel {
+  margin-top: 10px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  padding: 10px;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.28);
+}
+
+.nav-mobile-link {
+  display: block;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 0.96rem;
+  font-weight: 700;
+  color: rgba(241, 245, 249, 0.92);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nav-mobile-link + .nav-mobile-link {
+  margin-top: 8px;
+}
+
+.nav-mobile-link:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-mobile-link.is-active-mobile {
+  background: linear-gradient(
+    135deg,
+    rgba(8, 145, 178, 0.22),
+    rgba(14, 165, 233, 0.16)
+  );
+  border-color: rgba(34, 211, 238, 0.35);
+  color: #ecfeff;
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.08);
+}
+
+@media (max-width: 900px) {
+  .nav-pro {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-pro-links-desktop {
+    display: none;
+  }
+
+  .nav-hamburger {
+    display: inline-flex;
+    flex: 0 0 auto;
+  }
+
+  .nav-brand {
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .nav-brand-copy {
+    align-items: flex-start;
+  }
+}
+
+@media (min-width: 901px) {
+  .nav-mobile-panel {
+    display: none;
+  }
+}
