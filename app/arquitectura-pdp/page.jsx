@@ -1,7 +1,7 @@
 export const metadata = {
   title: "Arquitectura Profesional de Protección de Datos | DataConSentido",
   description:
-    "Cómo estructurar PANSI, RAT, MTGE y EIPD bajo el nuevo enfoque operativo de la LOPDP. Programa intensivo de 4 sesiones de 2.5 horas.",
+    "Programa intensivo para estructurar PANSI, RAT, MTGE y EIPD bajo el nuevo enfoque operativo de la LOPDP.",
 };
 
 const modules = [
@@ -48,37 +48,30 @@ const modules = [
 ];
 
 const benefits = [
-  "Traducir exigencias regulatorias a acciones operativas concretas.",
+  "Traducir exigencias regulatorias a decisiones operativas concretas.",
   "Diseñar un PANSI accionable y alineado con riesgos y continuidad.",
   "Construir un RAT ampliado con criterio técnico y trazabilidad.",
   "Estructurar un MTGE robusto y defendible.",
-  "Determinar cuándo procede una EIPD.",
-  "Tomar decisiones con criterio técnico, regulatorio y de negocio.",
+  "Determinar cuándo procede una EIPD y cómo documentarla.",
+  "Elevar tu nivel profesional en protección de datos con herramientas aplicables.",
 ];
 
 const includes = [
   "4 sesiones intensivas de 2.5 horas.",
-  "Contenido especializado sobre PANSI, RAT, MTGE y EIPD.",
+  "Temario especializado sobre PANSI, RAT, MTGE y EIPD.",
   "Preguntas y respuestas por jornada.",
   "Evaluación de cierre por sesión.",
-  "Enfoque ejecutivo-práctico.",
-];
-
-const audience = [
-  "Delegados de Protección de Datos",
-  "Abogados y consultores",
-  "Líderes de cumplimiento y riesgos",
-  "Responsables de tratamiento",
+  "Enfoque ejecutivo-práctico orientado a implementación.",
 ];
 
 const faqs = [
   {
     q: "¿El programa es teórico o práctico?",
-    a: "Tiene un enfoque ejecutivo-práctico. La idea es que puedas aterrizar criterios, decisiones y documentación a casos reales de cumplimiento.",
+    a: "Tiene un enfoque ejecutivo-práctico. No se queda en la teoría: aterriza decisiones, criterios y documentación aplicable.",
   },
   {
-    q: "¿Sirve para empresas privadas e instituciones públicas?",
-    a: "Sí. Está diseñado para organizaciones que necesitan elevar la madurez de su gestión de protección de datos personales.",
+    q: "¿Está dirigido solo a DPO?",
+    a: "No. También está pensado para abogados, consultores, líderes de cumplimiento, riesgos y responsables de tratamiento.",
   },
   {
     q: "¿Incluye evaluación?",
@@ -106,11 +99,11 @@ export default function Page() {
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(6,182,212,0.18),transparent_30%),radial-gradient(circle_at_top_right,rgba(245,158,11,0.16),transparent_28%)]" />
         <div className="relative mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
-          <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
             <div>
-              <div className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1 text-sm text-cyan-200">
+              <span className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1 text-sm text-cyan-200">
                 Formación avanzada DataConSentido
-              </div>
+              </span>
 
               <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-tight md:text-6xl">
                 Arquitectura Profesional de Protección de Datos
@@ -127,18 +120,21 @@ export default function Page() {
                 <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1 text-sm text-emerald-200">
                   24, 25, 31 de marzo y 1 de abril
                 </span>
+                <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1 text-sm text-slate-300">
+                  4 sesiones · 10 horas
+                </span>
               </div>
 
               <div className="mt-10 grid gap-4 sm:grid-cols-3">
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
+                <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
                   <p className="text-sm text-slate-400">Duración</p>
                   <p className="mt-2 text-xl font-semibold">4 sesiones</p>
                 </div>
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
+                <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
                   <p className="text-sm text-slate-400">Formato</p>
                   <p className="mt-2 text-xl font-semibold">2.5h por sesión</p>
                 </div>
-                <div className="rounded-3xl border border-white/10 bg-white/5 p-5 backdrop-blur-sm">
+                <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
                   <p className="text-sm text-slate-400">Inversión</p>
                   <p className="mt-2 text-xl font-semibold text-cyan-300">$110 USD</p>
                 </div>
@@ -155,10 +151,12 @@ export default function Page() {
                 </a>
 
                 <a
-                  href="#programa"
+                  href="https://wa.me/593999999999?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20del%20programa%20Arquitectura%20Profesional%20de%20Protecci%C3%B3n%20de%20Datos"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/15 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/5"
                 >
-                  Ver programa
+                  Solicitar información
                 </a>
               </div>
             </div>
@@ -184,23 +182,23 @@ export default function Page() {
                 </div>
 
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <p className="text-sm text-slate-400">Total de horas</p>
-                  <p className="mt-2 text-lg font-semibold">10 horas de formación</p>
+                  <p className="text-sm text-slate-400">Incluye</p>
+                  <p className="mt-2 text-lg font-semibold">Preguntas y respuestas + evaluación</p>
                 </div>
 
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <p className="text-sm text-slate-400">Modalidad</p>
-                  <p className="mt-2 text-lg font-semibold">Programa intensivo</p>
+                  <p className="text-sm text-slate-400">Ideal para</p>
+                  <p className="mt-2 text-lg font-semibold">DPO, consultores, abogados y líderes de cumplimiento</p>
                 </div>
               </div>
 
               <a
-                href="https://wa.me/593999999999?text=Hola,%20quiero%20informaci%C3%B3n%20del%20programa%20Arquitectura%20Profesional%20de%20Protecci%C3%B3n%20de%20Datos"
+                href="https://pay.hotmart.com/TU-LINK"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-6 inline-flex w-full items-center justify-center rounded-2xl border border-white/15 px-6 py-4 text-base font-semibold text-white transition hover:bg-white/5"
+                className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-cyan-400 px-6 py-4 text-base font-semibold text-slate-950 transition hover:bg-cyan-300"
               >
-                Consultar por WhatsApp
+                Reservar mi cupo
               </a>
             </div>
           </div>
@@ -209,9 +207,9 @@ export default function Page() {
 
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <SectionHeader
-          eyebrow="Qué lograrás"
-          title="Un programa diseñado para llevarte de la norma a la ejecución"
-          text="La estructura del curso está orientada a ayudarte a decidir, documentar y defender técnicamente una gestión de protección de datos más madura."
+          eyebrow="Por qué este programa"
+          title="No es una capacitación genérica. Es una arquitectura de trabajo."
+          text="Este programa está diseñado para ayudarte a estructurar decisiones, documentación y trazabilidad con una lógica operativa real, más allá del cumplimiento superficial."
         />
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -225,9 +223,9 @@ export default function Page() {
 
       <section id="programa" className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <SectionHeader
-          eyebrow="Programa"
-          title="Cuatro bloques para estructurar una gestión PDP madura y defendible"
-          text="Cada jornada combina base conceptual, aterrizaje operativo y criterios prácticos para implementación."
+          eyebrow="Contenido del programa"
+          title="Cuatro bloques para una gestión PDP madura y defendible"
+          text="Cada jornada aterriza conceptos, criterios regulatorios y decisiones operativas para que puedas aplicarlos en contextos reales."
         />
 
         <div className="grid gap-6 lg:grid-cols-2">
@@ -278,7 +276,7 @@ export default function Page() {
             </div>
 
             <p className="mt-4 text-lg leading-8 text-slate-300">
-              Acceso al programa intensivo completo de <span className="font-semibold text-white">4 sesiones de 2.5 horas</span>.
+              Un valor accesible para un programa diseñado para darte estructura, criterio técnico y capacidad de ejecución.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">
@@ -296,9 +294,9 @@ export default function Page() {
 
           <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8">
             <SectionHeader
-              eyebrow="Incluye"
-              title="Una inversión accesible para un programa especializado"
-              text="Este programa está diseñado para aportar estructura, criterio técnico y capacidad de ejecución."
+              eyebrow="Qué incluye"
+              title="Todo lo necesario para vivir el programa de forma intensiva"
+              text="El objetivo es que cada sesión te aporte claridad, método y herramientas conceptuales aplicables."
             />
 
             <div className="space-y-4">
@@ -315,34 +313,18 @@ export default function Page() {
         </div>
       </section>
 
-      <section id="dirigido" className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
-        <SectionHeader
-          eyebrow="Dirigido a"
-          title="Ideal para quienes necesitan gobernar decisiones, riesgos y evidencia"
-          text="El enfoque del programa responde a la necesidad de construir una gestión de protección de datos más robusta y menos improvisada."
-        />
-
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-          {audience.map((item) => (
-            <div key={item} className="rounded-[2rem] border border-white/10 bg-white/5 p-6">
-              <h3 className="text-lg font-semibold text-white">{item}</h3>
-            </div>
-          ))}
-        </div>
-      </section>
-
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="rounded-[2.5rem] border border-white/10 bg-gradient-to-r from-cyan-400/15 via-slate-900 to-violet-400/15 p-10 shadow-xl">
           <span className="inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-1 text-sm text-cyan-200">
-            Reserva tu cupo
+            Decisión inteligente
           </span>
 
           <h2 className="mt-4 max-w-4xl text-3xl font-bold tracking-tight text-white md:text-5xl">
-            Convierte regulación, riesgo y evidencia en una ventaja profesional real
+            Si vas a trabajar protección de datos en serio, necesitas una arquitectura, no solo conceptos.
           </h2>
 
           <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-200">
-            Inscríbete y fortalece tu capacidad para estructurar una arquitectura de protección de datos con criterio operativo, técnico y estratégico.
+            Este programa te ayuda a conectar norma, evidencia, trazabilidad y criterio operativo para que tu gestión PDP tenga sustancia real.
           </p>
 
           <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -352,7 +334,7 @@ export default function Page() {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-2xl bg-cyan-400 px-7 py-4 text-base font-semibold text-slate-950 transition hover:bg-cyan-300"
             >
-              Inscribirme ahora
+              Quiero inscribirme
             </a>
 
             <a
@@ -361,7 +343,7 @@ export default function Page() {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/5"
             >
-              Solicitar información
+              Hablar por WhatsApp
             </a>
           </div>
         </div>
@@ -369,9 +351,9 @@ export default function Page() {
 
       <section id="faq" className="mx-auto max-w-5xl px-6 py-16 lg:px-8">
         <SectionHeader
-          eyebrow="FAQ"
-          title="Respuestas rápidas antes de inscribirte"
-          text="Estas son algunas preguntas frecuentes sobre el programa."
+          eyebrow="Preguntas frecuentes"
+          title="Lo que necesitas saber antes de reservar"
+          text="Aquí tienes respuestas rápidas para ayudarte a tomar la decisión."
           centered
         />
 
