@@ -183,6 +183,19 @@ export default function Page() {
                             >
                                 Comprar ahora
                             </a>
+                            <button
+                                type="button"
+                                onClick={() => {
+                                    window.open(
+                                        "https://pay.hotmart.com/TU-LINK",
+                                        "hotmartCheckout",
+                                        "width=520,height=760,menubar=no,toolbar=no,location=no,status=no"
+                                    );
+                                }}
+                                className="mt-5 inline-flex w-full items-center justify-center rounded-2xl bg-cyan-400 px-6 py-4 text-base font-semibold text-slate-950 transition hover:bg-cyan-300"
+                            >
+                                🛒 Comprar ahora
+                            </button>
                         </div>
                     </div>
                 </div>
