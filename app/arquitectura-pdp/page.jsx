@@ -7,61 +7,61 @@ export const metadata = {
 const modules = [
   {
     day: "Día 1",
-    title: "PANSI",
+    title: "🛡️ PANSI",
     topics: [
-      "Estado de la técnica y medidas de seguridad.",
-      "Alineación entre estrategia, continuidad y gestión PDP.",
-      "Modelo operativo para decisiones informadas.",
-      "PANSI como instrumento de planificación.",
+      "🔹 Estado de la técnica y medidas de seguridad.",
+      "🔹 Alineación entre estrategia, continuidad y gestión PDP.",
+      "🔹 Modelo operativo para decisiones informadas.",
+      "🔹 PANSI como instrumento de planificación.",
     ],
   },
   {
     day: "Día 2",
-    title: "RAT Ampliado",
+    title: "🗂️ RAT Ampliado",
     topics: [
-      "Construcción práctica del RAT.",
-      "Finalidad y bases de licitud.",
-      "Trazabilidad de tratamientos.",
-      "Gran escala y escenarios complejos.",
+      "🔹 Construcción práctica del RAT.",
+      "🔹 Finalidad y bases de licitud.",
+      "🔹 Trazabilidad de tratamientos.",
+      "🔹 Gran escala y escenarios complejos.",
     ],
   },
   {
     day: "Día 3",
-    title: "MTGE",
+    title: "🎯 MTGE",
     topics: [
-      "Evaluación del nivel de gestión.",
-      "Priorización de riesgos y controles.",
-      "Rationales o argumentos de acción.",
-      "Documentación defendible.",
+      "🔹 Evaluación del nivel de gestión.",
+      "🔹 Priorización de riesgos y controles.",
+      "🔹 Rationales o argumentos de acción.",
+      "🔹 Documentación defendible.",
     ],
   },
   {
     day: "Día 4",
-    title: "EIPD",
+    title: "⚖️ EIPD",
     topics: [
-      "Cuándo corresponde una EIPD.",
-      "Riesgos sobre derechos y libertades.",
-      "Medidas mitigadoras.",
-      "Estructura práctica de una EIPD.",
+      "🔹 Cuándo corresponde una EIPD.",
+      "🔹 Riesgos sobre derechos y libertades.",
+      "🔹 Medidas mitigadoras.",
+      "🔹 Estructura práctica de una EIPD.",
     ],
   },
 ];
 
 const benefits = [
-  "Traducir exigencias regulatorias a decisiones operativas concretas.",
-  "Diseñar un PANSI accionable y alineado con riesgos y continuidad.",
-  "Construir un RAT ampliado con criterio técnico y trazabilidad.",
-  "Estructurar un MTGE robusto y defendible.",
-  "Determinar cuándo procede una EIPD y cómo documentarla.",
-  "Elevar tu nivel profesional en protección de datos con herramientas aplicables.",
+  "✅ Traducir exigencias regulatorias a decisiones operativas concretas.",
+  "✅ Diseñar un PANSI accionable y alineado con riesgos y continuidad.",
+  "✅ Construir un RAT ampliado con criterio técnico y trazabilidad.",
+  "✅ Estructurar un MTGE robusto y defendible.",
+  "✅ Determinar cuándo procede una EIPD y cómo documentarla.",
+  "✅ Elevar tu nivel profesional en protección de datos con herramientas aplicables.",
 ];
 
 const includes = [
-  "4 sesiones intensivas de 2.5 horas.",
-  "Temario especializado sobre PANSI, RAT, MTGE y EIPD.",
-  "Preguntas y respuestas por jornada.",
-  "Evaluación de cierre por sesión.",
-  "Enfoque ejecutivo-práctico orientado a implementación.",
+  "📚 4 sesiones intensivas de 2.5 horas.",
+  "🧩 Temario especializado sobre PANSI, RAT, MTGE y EIPD.",
+  "💬 Preguntas y respuestas por jornada.",
+  "📝 Evaluación de cierre por sesión.",
+  "🚀 Enfoque ejecutivo-práctico orientado a implementación.",
 ];
 
 const faqs = [
@@ -102,7 +102,7 @@ export default function Page() {
           <div className="grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
             <div>
               <span className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1 text-sm text-cyan-200">
-                Formación avanzada DataConSentido
+                🎓 Formación avanzada DataConSentido
               </span>
 
               <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-tight md:text-6xl">
@@ -115,27 +115,27 @@ export default function Page() {
 
               <div className="mt-6 flex flex-wrap gap-3">
                 <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1 text-sm text-slate-300">
-                  PANSI · RAT · MTGE · EIPD
+                  🛡️ PANSI · 🗂️ RAT · 🎯 MTGE · ⚖️ EIPD
                 </span>
                 <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1 text-sm text-emerald-200">
-                  24, 25, 31 de marzo y 1 de abril
+                  📅 24, 25, 31 de marzo y 1 de abril
                 </span>
                 <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1 text-sm text-slate-300">
-                  4 sesiones · 10 horas
+                  ⏱️ 4 sesiones · 10 horas
                 </span>
               </div>
 
               <div className="mt-10 grid gap-4 sm:grid-cols-3">
                 <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                  <p className="text-sm text-slate-400">Duración</p>
+                  <p className="text-sm text-slate-400">⏳ Duración</p>
                   <p className="mt-2 text-xl font-semibold">4 sesiones</p>
                 </div>
                 <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                  <p className="text-sm text-slate-400">Formato</p>
+                  <p className="text-sm text-slate-400">💻 Formato</p>
                   <p className="mt-2 text-xl font-semibold">2.5h por sesión</p>
                 </div>
                 <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                  <p className="text-sm text-slate-400">Inversión</p>
+                  <p className="text-sm text-slate-400">💵 Inversión</p>
                   <p className="mt-2 text-xl font-semibold text-cyan-300">$110 USD</p>
                 </div>
               </div>
@@ -147,7 +147,7 @@ export default function Page() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-2xl bg-cyan-400 px-7 py-4 text-base font-semibold text-slate-950 transition hover:bg-cyan-300"
                 >
-                  Inscribirme ahora
+                  🚀 Inscribirme ahora
                 </a>
 
                 <a
@@ -156,7 +156,7 @@ export default function Page() {
                   rel="noopener noreferrer"
                   className="inline-flex items-center justify-center rounded-2xl border border-white/15 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/5"
                 >
-                  Solicitar información
+                  📲 Solicitar información
                 </a>
               </div>
             </div>
@@ -164,7 +164,7 @@ export default function Page() {
             <div className="rounded-[2rem] border border-white/10 bg-gradient-to-br from-slate-900 to-slate-800 p-8 shadow-2xl">
               <div className="rounded-3xl border border-amber-400/20 bg-amber-400/10 p-6">
                 <p className="text-sm font-medium uppercase tracking-[0.2em] text-amber-200">
-                  Inversión especial
+                  💰 Inversión especial
                 </p>
                 <div className="mt-3 flex items-end gap-2">
                   <span className="text-5xl font-bold text-white">$110</span>
@@ -177,17 +177,17 @@ export default function Page() {
 
               <div className="mt-6 space-y-4">
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <p className="text-sm text-slate-400">Fechas</p>
+                  <p className="text-sm text-slate-400">📅 Fechas</p>
                   <p className="mt-2 text-lg font-semibold">24, 25, 31 de marzo y 1 de abril</p>
                 </div>
 
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <p className="text-sm text-slate-400">Incluye</p>
+                  <p className="text-sm text-slate-400">📝 Incluye</p>
                   <p className="mt-2 text-lg font-semibold">Preguntas y respuestas + evaluación</p>
                 </div>
 
                 <div className="rounded-2xl border border-white/10 bg-white/5 p-5">
-                  <p className="text-sm text-slate-400">Ideal para</p>
+                  <p className="text-sm text-slate-400">👥 Ideal para</p>
                   <p className="mt-2 text-lg font-semibold">DPO, consultores, abogados y líderes de cumplimiento</p>
                 </div>
               </div>
@@ -198,7 +198,7 @@ export default function Page() {
                 rel="noopener noreferrer"
                 className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-cyan-400 px-6 py-4 text-base font-semibold text-slate-950 transition hover:bg-cyan-300"
               >
-                Reservar mi cupo
+                ✅ Reservar mi cupo
               </a>
             </div>
           </div>
@@ -207,7 +207,7 @@ export default function Page() {
 
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <SectionHeader
-          eyebrow="Por qué este programa"
+          eyebrow="📌 Por qué este programa"
           title="No es una capacitación genérica. Es una arquitectura de trabajo."
           text="Este programa está diseñado para ayudarte a estructurar decisiones, documentación y trazabilidad con una lógica operativa real, más allá del cumplimiento superficial."
         />
@@ -223,7 +223,7 @@ export default function Page() {
 
       <section id="programa" className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <SectionHeader
-          eyebrow="Contenido del programa"
+          eyebrow="📚 Contenido del programa"
           title="Cuatro bloques para una gestión PDP madura y defendible"
           text="Cada jornada aterriza conceptos, criterios regulatorios y decisiones operativas para que puedas aplicarlos en contextos reales."
         />
@@ -244,7 +244,7 @@ export default function Page() {
                   </h3>
                 </div>
                 <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-sm text-slate-300">
-                  Bloque clave
+                  🔑 Bloque clave
                 </span>
               </div>
 
@@ -267,7 +267,7 @@ export default function Page() {
         <div className="grid gap-6 lg:grid-cols-[0.95fr_1.05fr]">
           <div className="rounded-[2rem] border border-emerald-400/20 bg-gradient-to-br from-emerald-400/10 via-slate-900 to-slate-900 p-8 shadow-xl">
             <span className="inline-flex rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1 text-sm text-emerald-200">
-              Inversión
+              💵 Inversión
             </span>
 
             <div className="mt-6 flex items-end gap-2">
@@ -281,20 +281,20 @@ export default function Page() {
 
             <div className="mt-6 flex flex-wrap gap-3">
               <span className="rounded-full border border-white/10 px-3 py-1 text-sm text-slate-300">
-                10 horas totales
+                ⏱️ 10 horas totales
               </span>
               <span className="rounded-full border border-white/10 px-3 py-1 text-sm text-slate-300">
-                Evaluación por sesión
+                📝 Evaluación por sesión
               </span>
               <span className="rounded-full border border-white/10 px-3 py-1 text-sm text-slate-300">
-                Cupo limitado
+                🎯 Cupo limitado
               </span>
             </div>
           </div>
 
           <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8">
             <SectionHeader
-              eyebrow="Qué incluye"
+              eyebrow="🎁 Qué incluye"
               title="Todo lo necesario para vivir el programa de forma intensiva"
               text="El objetivo es que cada sesión te aporte claridad, método y herramientas conceptuales aplicables."
             />
@@ -316,7 +316,7 @@ export default function Page() {
       <section className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="rounded-[2.5rem] border border-white/10 bg-gradient-to-r from-cyan-400/15 via-slate-900 to-violet-400/15 p-10 shadow-xl">
           <span className="inline-flex rounded-full border border-cyan-300/20 bg-cyan-300/10 px-4 py-1 text-sm text-cyan-200">
-            Decisión inteligente
+            🧠 Decisión inteligente
           </span>
 
           <h2 className="mt-4 max-w-4xl text-3xl font-bold tracking-tight text-white md:text-5xl">
@@ -334,7 +334,7 @@ export default function Page() {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-2xl bg-cyan-400 px-7 py-4 text-base font-semibold text-slate-950 transition hover:bg-cyan-300"
             >
-              Quiero inscribirme
+              🚀 Quiero inscribirme
             </a>
 
             <a
@@ -343,7 +343,7 @@ export default function Page() {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center rounded-2xl border border-white/15 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/5"
             >
-              Hablar por WhatsApp
+              💬 Hablar por WhatsApp
             </a>
           </div>
         </div>
@@ -351,7 +351,7 @@ export default function Page() {
 
       <section id="faq" className="mx-auto max-w-5xl px-6 py-16 lg:px-8">
         <SectionHeader
-          eyebrow="Preguntas frecuentes"
+          eyebrow="❓ Preguntas frecuentes"
           title="Lo que necesitas saber antes de reservar"
           text="Aquí tienes respuestas rápidas para ayudarte a tomar la decisión."
           centered
