@@ -33,7 +33,7 @@ export default function Navbar() {
         <header className="nav-pro">
           <Link href="/" className="nav-brand">
             <Image
-              src="./../logo_DataConSentido_transparencia_PaginaWeb.png"
+              src="./logo_DataConSentido_transparencia_PaginaWeb.png"
               alt="DataConSentido"
               width={44}
               height={44}
