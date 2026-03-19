@@ -121,7 +121,7 @@ export default function ArquitecturaPdpClient() {
                     🛡️ PANSI · 🗂️ RAT · 🎯 MTGE · ⚖️ EIPD
                   </span>
                   <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1 text-sm text-emerald-200">
-                    📅 24, 25, 31 de marzo y 1 de abril
+                    📅 31 de marzo, 1, 7 y 8 de abril
                   </span>
                   <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1 text-sm text-slate-300">
                     ⏱️ 4 sesiones · 10 horas
