@@ -52,7 +52,7 @@ const benefits = [
   "✅ Construir un RAT ampliado con criterio técnico y trazabilidad.",
   "✅ Estructurar un MTGE robusto y defendible.",
   "✅ Determinar cuándo procede una EIPD y cómo documentarla.",
-  "✅ Elevar tu nivel profesional en protección de datos con herramientas aplicables.",
+  "✅ Elevar tu nivel profesional en protección de datos personales con herramientas aplicables.",
 ];
 
 const includes = [
@@ -109,7 +109,7 @@ export default function ArquitecturaPdpClient() {
                 </span>
 
                 <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-tight md:text-6xl">
-                  Arquitectura Profesional de Protección de Datos
+                  Arquitectura Profesional de Protección de Datos Personales
                 </h1>
 
                 <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300 md:text-xl">
@@ -304,7 +304,7 @@ export default function ArquitecturaPdpClient() {
             </span>
 
             <h2 className="mt-4 max-w-4xl text-3xl font-bold tracking-tight text-white md:text-5xl">
-              Si vas a trabajar protección de datos en serio, necesitas una arquitectura, no solo conceptos.
+              Si vas a trabajar protección de datos personales en serio, necesitas una arquitectura, no solo conceptos.
             </h2>
 
             <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-200">
