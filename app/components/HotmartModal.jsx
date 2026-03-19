@@ -5,7 +5,7 @@ export default function HotmartModal({ open, onClose, checkoutUrl }) {
 
   return (
     <div
-      className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/70 p-4"
+      className="fixed inset-0 z-[10000] flex items-center justify-center bg-black/75 p-4"
       onClick={onClose}
     >
       <div
@@ -15,28 +15,34 @@ export default function HotmartModal({ open, onClose, checkoutUrl }) {
         <button
           type="button"
           onClick={onClose}
-          className="absolute right-4 top-4 z-20 rounded-full border border-white/15 bg-black/40 px-3 py-2 text-sm font-semibold text-white hover:bg-black/60"
+          className="absolute right-4 top-4 z-20 rounded-full border border-white/15 bg-black/40 px-3 py-2 text-sm font-semibold text-white transition hover:bg-black/60"
         >
           Cerrar
         </button>
 
-        <div className="border-b border-white/10 bg-slate-950/95 px-6 py-5">
-          <p className="text-xs font-bold uppercase tracking-[0.2em] text-amber-300">
-            Checkout Hotmart
-          </p>
-          <p className="mt-2 text-base font-semibold text-white">
-            Completa tu pago en un entorno seguro
-          </p>
-          <p className="mt-2 max-w-4xl text-sm leading-7 text-slate-300">
+        <div className="border-b border-white/10 bg-[radial-gradient(circle_at_top_left,rgba(6,182,212,0.15),transparent_35%),radial-gradient(circle_at_top_right,rgba(245,158,11,0.12),transparent_30%)] px-6 py-5">
+          <div className="flex flex-wrap items-center gap-3">
+            <span className="inline-flex rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-emerald-200">
+              Pago seguro
+            </span>
+            <span className="inline-flex rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">
+              Checkout Hotmart
+            </span>
+          </div>
+
+          <h3 className="mt-4 text-xl font-bold text-white md:text-2xl">
+            Completa tu pago en un entorno confiable
+          </h3>
+
+          <p className="mt-3 max-w-4xl text-sm leading-7 text-slate-300 md:text-base">
             El formulario que verás a continuación pertenece a{" "}
             <span className="font-semibold text-amber-300">Hotmart</span>. Tus
-            datos de pago se procesan directamente en Hotmart, bajo sus
-            políticas de protección de datos personales y sus estándares de
-            seguridad, lo que garantiza un flujo de pago seguro y confiable.
+            datos de pago se procesan directamente en Hotmart, bajo sus políticas
+            de protección de datos personales y sus estándares de seguridad.
           </p>
         </div>
 
-        <div className="min-h-0 flex-1">
+        <div className="min-h-0 flex-1 bg-slate-950">
           <iframe
             src={checkoutUrl}
             title="Checkout Hotmart"
