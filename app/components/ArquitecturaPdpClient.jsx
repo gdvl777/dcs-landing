@@ -278,7 +278,7 @@ export default function ArquitecturaPdpClient() {
 
             <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8">
               <SectionHeader
-                eyebrow="🎁 Qué incluye"
+                eyebrow="🎁 ¿Qué incluye?"
                 title="Todo lo necesario para vivir el programa de forma intensiva"
                 text="El objetivo es que cada sesión te aporte claridad, método y herramientas conceptuales aplicables."
               />
