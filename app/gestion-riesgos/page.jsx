@@ -7,7 +7,7 @@ export default function GestionRiesgosPage() {
   return (
     <main className="w-full bg-[#03152b]">
       <iframe
-        src="/gestion-riesgos/index.html"
+        src="/public/gestion-riesgos/index.html"
         title="Gestión de Riesgos"
         className="block w-full border-0"
         style={{ height: "calc(100vh - 110px)" }}
