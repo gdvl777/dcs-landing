@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DataConSentido · Gestión de Riesgos y EIPD</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap');
+  :root {
+    --bg:#08162b; --surface:rgba(7,20,39,0.92); --surface2:#0e2746; --border:rgba(193,205,220,0.18);
+    --accent:#7f9ab9; --accent-light:#d9e4f2; --accent-strong:#a7bdd6; --accent-glow:rgba(167,189,214,0.22);
+    --text:#f4f7fb; --text-muted:#c3cfdd; --text-dim:#91a4ba;
+    --panel-bg:rgba(7,19,37,0.96); --toggle-bg:#143155; --toggle-border:#4f6f95; --toggle-hover:#234774;
+    --brand-shadow:0 20px 60px rgba(0,0,0,0.35);
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:
+      radial-gradient(circle at top center, rgba(136,170,210,0.10), transparent 30%),
+      linear-gradient(180deg, #0b1f3d 0%, #08162b 100%);
+      color:var(--text);font-family:'DM Mono',monospace;height:100vh;overflow:hidden;}
+  body::before{content:'';position:fixed;inset:0;background:
+      repeating-linear-gradient(90deg, rgba(255,255,255,0.025) 0 1px, transparent 1px 90px),
+      linear-gradient(180deg, transparent, rgba(0,0,0,0.18));
+      pointer-events:none;opacity:.38;}
+  body::after{content:'';position:fixed;inset:auto -120px -140px auto;width:420px;height:420px;
+      background:radial-gradient(circle, rgba(167,189,214,0.12), transparent 68%);
+      filter:blur(18px);pointer-events:none;}
+
+  /* TOOLBAR */
+  #toolbar{position:fixed;top:0;left:0;right:0;min-height:58px;height:auto;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;flex-wrap:wrap;padding:8px 18px;gap:12px;z-index:100;backdrop-filter:blur(14px);box-shadow:0 12px 30px rgba(0,0,0,0.22);}
+  #toolbar h1{font-family:'Syne',sans-serif;font-weight:800;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent-light);white-space:nowrap;}
+  #toolbar .sep{width:1px;height:22px;background:var(--border);}
+  #toolbar .badge{font-size:9px;letter-spacing:.1em;color:var(--text-muted);border:1px solid var(--border);padding:3px 7px;border-radius:2px;white-space:nowrap;}
+  #toolbar .spacer{flex:1;}
+  .ctrl-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);font-family:'DM Mono',monospace;font-size:10px;padding:4px 10px;cursor:pointer;border-radius:2px;transition:all .15s;white-space:nowrap;}
+  .ctrl-btn:hover{border-color:var(--accent);color:var(--accent-light);}
+
+  /* CANVAS */
+  #canvas-wrap{position:fixed;top:58px;left:0;right:0;bottom:0;overflow:hidden;}
+  #canvas{width:100%;height:100%;cursor:grab;}
+  #canvas:active{cursor:grabbing;}
+
+  /* NODE TYPES */
+  /* I. and II. title branches — bold green border */
+  .node-title rect{fill:#102745;stroke:#8aa6c7;stroke-width:1.5;}
+  .node-title .lbl{fill:#eef4fb;font-family:'Syne',sans-serif;font-weight:700;font-size:10.5px;}
+  /* sub-branches inside a title */
+  .node-branch rect{fill:#0d223c;stroke:#395879;stroke-width:1;}
+  .node-branch .lbl{fill:#d8e4f2;font-family:'Syne',sans-serif;font-weight:600;font-size:10px;}
+  /* categories */
+  .node-category rect{fill:#0a1a2f;stroke:#274566;stroke-width:1;}
+  .node-category .lbl{fill:#c8d8ea;font-family:'Syne',sans-serif;font-weight:600;font-size:9.5px;}
+  /* leaves */
+  .node-leaf rect{fill:#091526;stroke:#1b3350;stroke-width:1;}
+  .node-leaf .lbl{fill:#aabed4;font-size:8.5px;}
+  /* root */
+  .node-root rect{fill:url(#rootGrad);stroke:#f0f5fb;stroke-width:1.6;filter:drop-shadow(0 6px 18px rgba(0,0,0,0.32));}
+  .node-root .lbl{fill:#ffffff;font-family:'Syne',sans-serif;font-weight:700;font-size:11px;}
+  /* hover */
+  .node-title:hover rect,.node-branch:hover rect,.node-category:hover rect,.node-leaf:hover rect,.node-root:hover rect{stroke:var(--accent-light);cursor:pointer;}
+  /* info dot on leaves */
+  .info-dot{fill:#edf3fb;opacity:.8;pointer-events:none;}
+
+  /* TOGGLE BUTTON */
+  .tbtn rect{fill:var(--toggle-bg);stroke:var(--toggle-border);stroke-width:1;cursor:pointer;}
+  .tbtn:hover rect{fill:var(--toggle-hover);stroke:var(--accent-light);}
+  .tbtn text{fill:var(--accent-light);font-family:'DM Mono',monospace;font-size:10px;font-weight:500;cursor:pointer;user-select:none;}
+
+  /* CONNECTORS */
+  .conn{stroke:#29476b;stroke-width:1;fill:none;}
+  .conn-title{stroke:#6181a7;stroke-width:1.5;}
+
+  /* DETAIL PANEL */
+  #detail{position:fixed;right:-420px;top:58px;bottom:0;width:400px;max-width:100vw;background:var(--panel-bg);border-left:1px solid var(--border);padding:18px 24px 28px;overflow-y:auto;overflow-x:hidden;transition:right .32s cubic-bezier(.22,1,.36,1);z-index:110;box-shadow:var(--brand-shadow);backdrop-filter:blur(12px);box-sizing:border-box;}
+  #detail.open{right:0;}
+  #dcl{position:sticky;top:0;display:flex;align-items:center;justify-content:center;margin-left:auto;margin-bottom:12px;background:rgba(7,19,37,.96);border:1px solid var(--border);color:var(--text-muted);font-family:'DM Mono',monospace;font-size:10px;padding:6px 10px;cursor:pointer;border-radius:999px;transition:all .15s;z-index:20;max-width:max-content;white-space:nowrap;}
+  #dcl:hover{border-color:var(--accent);color:var(--accent-light);}
+  #dtag{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-light);margin-bottom:8px;display:block;}
+  #dtitle{font-family:'DM Serif Display',serif;font-size:20px;line-height:1.3;color:var(--text);margin-bottom:16px;padding-right:0;}
+  #dbody{font-size:11px;line-height:1.85;color:var(--text-muted);}
+  #dbody h4{font-family:'Syne',sans-serif;font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-light);margin:18px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px;}
+  #dbody p{margin-bottom:10px;}
+  #dbody ul{list-style:none;}
+  #dbody ul li{padding:5px 0;border-bottom:1px solid #131e17;font-size:10.5px;line-height:1.6;}
+  #dbody ul li::before{content:'→ ';color:var(--accent);}
+  #dbody .ref{font-size:9.5px;color:var(--text-dim);font-style:italic;margin-top:14px;padding-top:10px;border-top:1px solid var(--border);}
+  #dbody .formula{background:#0f1c14;border:1px solid var(--border);padding:8px 12px;margin:10px 0;font-size:10px;color:#7fc4a0;border-radius:3px;line-height:1.7;}
+
+  /* SEARCH */
+  #sw{position:fixed;top:72px;left:50%;transform:translateX(-50%);z-index:100;display:none;}
+  #sw.vis{display:block;}
+  #si{background:var(--surface);border:1px solid var(--accent);color:var(--text);font-family:'DM Mono',monospace;font-size:11px;padding:7px 14px;width:300px;outline:none;border-radius:2px;}
+
+  /* LEGEND */
+  #legend{position:fixed;bottom:24px;left:24px;background:rgba(7,19,37,0.88);border:1px solid var(--border);padding:12px 16px;font-size:9px;color:var(--text-muted);border-radius:14px;line-height:2.1;z-index:50;box-shadow:var(--brand-shadow);backdrop-filter:blur(12px);}
+  .li{display:flex;align-items:center;gap:8px;}
+  .ld{width:8px;height:4px;border-radius:1px;}
+  #legend .hint{font-size:8px;color:var(--text-dim);margin-top:6px;border-top:1px solid var(--border);padding-top:6px;line-height:1.6;}
+
+  /* TOAST */
+  #toast{position:fixed;bottom:140px;left:50%;transform:translateX(-50%) translateY(16px);background:#0e2746;border:1px solid #6787ad;color:var(--accent-light);font-size:10px;padding:9px 16px;border-radius:999px;opacity:0;transition:all .25s;pointer-events:none;white-space:nowrap;z-index:200;box-shadow:var(--brand-shadow);}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  #detail::-webkit-scrollbar{width:3px;}
+  #detail::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px;}
+
+  .brand{display:flex;align-items:center;gap:12px;min-width:0;flex:1 1 360px;}
+  .brand span{display:block;min-width:0;max-width:min(44vw,520px);font-family:'Syne',sans-serif;font-weight:800;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-light);white-space:normal;overflow-wrap:anywhere;line-height:1.15;}
+
+  .brand-logo{width:34px;height:34px;border-radius:10px;object-fit:cover;box-shadow:0 8px 20px rgba(0,0,0,.28);border:1px solid rgba(255,255,255,.12);}
+  .brand-copy{display:flex;flex-direction:column;gap:1px;}
+  .brand-sub{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--text-dim);white-space:nowrap;}
+  .brand-url{position:fixed;right:24px;bottom:24px;display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:999px;background:rgba(7,19,37,.88);border:1px solid var(--border);color:var(--text-muted);font-size:10px;z-index:60;text-decoration:none;box-shadow:var(--brand-shadow);backdrop-filter:blur(12px);}
+  .brand-url img{width:24px;height:24px;border-radius:50%;object-fit:cover;}
+  .brand-url strong{color:var(--accent-light);font-family:'Syne',sans-serif;font-size:11px;}
+  #detail::before{content:'';position:absolute;inset:0 0 auto 0;height:120px;background:linear-gradient(180deg, rgba(167,189,214,.10), transparent);pointer-events:none;}
+  #detail .detail-brand{display:flex;align-items:flex-start;gap:10px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border);padding-right:0;}
+  #detail .detail-brand img{width:34px;height:34px;border-radius:10px;object-fit:cover;}
+  #detail .detail-brand span{font-family:'Syne',sans-serif;font-size:11px;letter-spacing:.08em;color:var(--accent-light);min-width:0;overflow-wrap:anywhere;line-height:1.25;}
+  #toolbar .badge{font-size:9px;letter-spacing:.1em;color:var(--text-muted);border:1px solid var(--border);padding:4px 8px;border-radius:999px;white-space:nowrap;background:rgba(255,255,255,.02);}
+  .ctrl-btn{background:rgba(255,255,255,.03);border:1px solid var(--border);color:var(--text-muted);font-family:'DM Mono',monospace;font-size:10px;padding:6px 11px;cursor:pointer;border-radius:999px;transition:all .15s;white-space:nowrap;}
+  #si{background:rgba(7,19,37,0.95);border:1px solid #5f82aa;color:var(--text);font-family:'DM Mono',monospace;font-size:11px;padding:10px 14px;width:320px;outline:none;border-radius:999px;box-shadow:var(--brand-shadow);}
+
+  .download-btn{display:inline-flex;align-items:center;gap:6px;color:var(--accent-light);border-color:rgba(167,189,214,.28);background:linear-gradient(180deg, rgba(167,189,214,.10), rgba(255,255,255,.03));text-decoration:none;}
+  .download-btn:hover{border-color:var(--accent-light);box-shadow:0 8px 18px rgba(0,0,0,.18);}
+  .download-btn .dl-emoji{font-size:12px;line-height:1;display:inline-block;}
+  .download-btn .dl-label{display:inline-block;}
+  @media (max-width: 860px) {
+    #toolbar .brand-sub, #toolbar .badge:nth-of-type(2), .brand-url{display:none;}
+    #legend{max-width:250px}
+    #detail{width:min(96vw,400px);max-width:96vw;right:-100vw;padding:52px 18px 20px;}
+    #dcl{top:0;padding:6px 10px;font-size:10px;background:rgba(7,19,37,.96);backdrop-filter:blur(8px);}
+  }
+  @media (max-width: 640px) {
+    #toolbar{padding:8px 10px;gap:8px;}
+    .brand{flex-basis:100%;}
+    .brand span{max-width:100%;font-size:10px;letter-spacing:.05em;line-height:1.2;}
+    .ctrl-btn{font-size:9px;padding:6px 9px;}
+    #si{width:min(42vw,220px);padding:9px 12px;font-size:10px;}
+    .download-btn{padding-left:9px;padding-right:9px;}
+    .download-btn .dl-label{display:none;}
+    .download-btn .dl-emoji{font-size:14px;}
+  }
+  @media (max-width: 520px) {
+    #toolbar{padding:8px 8px;gap:6px;}
+    .brand span{font-size:9px;letter-spacing:.04em;}
+    #detail{width:100vw;max-width:100vw;right:-100vw;top:92px;padding:54px 16px 18px;border-left:none;}
+    #dcl{top:0;font-size:10px;padding:6px 10px;border-radius:999px;}
+    .ctrl-btn{font-size:8px;padding:5px 8px;}
+    #si{width:110px;padding:8px 10px;font-size:9px;}
+  }
+
+</style>
+</head>
+<body>
+
+<div id="toolbar">
+  <div class="brand">
+    <img class="brand-logo" src="data:image/png;base64,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" alt="DataConSentido">
+    <div class="brand-copy">
+      <h1>DataConSentido · Gestión de Riesgos</h1>
+      <div class="brand-sub">Mindmap interactivo para dataconsentido.com/gestion-riesgos</div>
+    </div>
+  </div>
+  <div class="sep"></div>
+  <span class="badge">EIPD · Art. 42</span>
+  <span class="badge">Versión 2 · 2026</span>
+  <div class="spacer"></div>
+  <a class="ctrl-btn download-btn" href="/gestion-riesgos/guia-riesgos.pdf" download aria-label="Descargar PDF de la guía de riesgos" title="Descargar PDF"><span class="dl-emoji">📥</span><span class="dl-label">Descargar PDF</span></a>
+  <button class="ctrl-btn" onclick="toggleSearch()">🔎 Buscar</button>
+  <button class="ctrl-btn" onclick="expandAll()">↕️ Expandir todo</button>
+  <button class="ctrl-btn" onclick="collapseAll()">↘️ Colapsar todo</button>
+  <button class="ctrl-btn" onclick="resetView()">🎯 Centrar</button>
+</div>
+
+<div id="sw"><input id="si" type="text" placeholder="Buscar en el mapa..." oninput="doSearch(this.value)" onkeydown="if(event.key==='Escape')toggleSearch()"></div>
+
+<div id="canvas-wrap">
+  <svg id="canvas" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <filter id="glow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <linearGradient id="rootGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#173a67"/>
+        <stop offset="55%" stop-color="#0d2648"/>
+        <stop offset="100%" stop-color="#6c87a7"/>
+      </linearGradient>
+    </defs>
+    <g id="vp"><g id="edges"></g><g id="nodes"></g></g>
+  </svg>
+</div>
+
+<div id="detail">
+  <button id="dcl" onclick="closeDetail()">✕ cerrar</button>
+  <div class="detail-brand">
+    <img src="data:image/png;base64,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" alt="DataConSentido">
+    <span>DataConSentido · Arquitectura profesional en privacidad</span>
+  </div>
+  <span id="dtag"></span>
+  <div id="dtitle"></div>
+  <div id="dbody"></div>
+</div>
+
+<div id="legend">
+  <div class="li"><div class="ld" style="background:#3d7a5c;border:1px solid #5aad84"></div>Título principal (I / II)</div>
+  <div class="li"><div class="ld" style="background:#2a4535"></div>Subrama temática</div>
+  <div class="li"><div class="ld" style="background:#1e3228"></div>Categoría</div>
+  <div class="li"><div class="ld" style="background:#182318"></div>Elemento &nbsp;<span style="color:#5aad84;font-size:10px">●</span> tiene detalle</div>
+  <div class="hint">› Clic → ver detalle<br>› Botón &gt; / &lt; → expandir / colapsar<br>› Scroll → zoom · Arrastrar → paneo<br>› ↺ ajusta la vista automáticamente</div>
+</div>
+
+<a class="brand-url" href="https://dataconsentido.com/gestion-riesgos" target="_blank" rel="noopener">
+  <img src="data:image/png;base64,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" alt="DataConSentido">
+  <span><strong>DataConSentido</strong> · dataconsentido.com/gestion-riesgos</span>
+</a>
+
+<div id="toast"></div>
+
+<script>
+// ═══════════════════════════════════════
+// TREE DATA
+// ═══════════════════════════════════════
+const T = {
+  id:'root', label:'Mapa de Gestión de Riesgos\ny EIPD · DataConSentido', type:'root',
+  info:{tag:'Marco General · SPDP Ecuador',
+    desc:'La LOPDP se fundamenta en la gestión de riesgos para la protección de los derechos y libertades de los titulares de datos. Su finalidad es reducir la incertidumbre de los responsables y encargados del tratamiento para que puedan tomar decisiones informadas.',
+    items:['Autor: Luis Enríquez Álvarez · Editora: Vanessa Hervás Novoa','Supervisión: Fabrizio Peralta-Díaz, Superintendente de la SPDP','Versión 2 · 2026 · Escalable para PYMES y grandes organizaciones','Explorar visualmente: dataconsentido.com/gestion-riesgos'],
+    ref:'Guía de gestión de riesgos y evaluación de impacto del tratamiento de datos personales – V2 2026. SPDP Ecuador.'},
+  children:[
+
+  // ══════════════════════════════════════
+  // I. PRINCIPIOS FUNDAMENTALES
+  // ══════════════════════════════════════
+  {id:'principios', label:'I. Principios Fundamentales', type:'title',
+    info:{tag:'Título I · Obligatorio',
+      desc:'Carácter obligatorio para todos los responsables y encargados del tratamiento. Establece los fundamentos de la gestión de riesgos para la protección de derechos y libertades de los titulares de datos.',
+      items:['Obligatorio para todos los responsables y encargados','Construir cultura de conformidad en riesgos, no solo listas de chequeo','Aprender a utilizar datos confiables y calibrar opiniones de expertos','Se complementa con el Título II de procedimientos por etapa'],
+      ref:'LOPDP Art. 37, 40, 42 · ISO/IEC 27005:2022'},
+    children:[
+
+      {id:'definiciones', label:'0. Definiciones Aplicadas', type:'category',
+        info:{tag:'Glosario Técnico',
+          desc:'Términos esenciales para comprender el marco de gestión de riesgos en protección de datos personales bajo la LOPDP. Todos los conceptos deben manejarse con precisión para evitar análisis superficiales.'},
+        children:[
+          {id:'d-riesgo', label:'Riesgo', type:'leaf', info:{tag:'Definición', desc:'Pérdida potencial, desastre u otro evento no deseado que puede vulnerar los derechos y libertades de los titulares de datos personales. Debe ser estimado con probabilidades y/o frecuencias de ocurrencia asignadas a impactos de varias magnitudes.', items:['No es un concepto binario','Debe cuantificarse o cualificarse con rationales','Distinguir probabilidad (estimable) de posibilidad (binaria)']}},
+          {id:'d-ri', label:'Riesgo inherente y residual', type:'leaf', info:{tag:'Definición', desc:'Riesgo inherente: niveles de probabilidad e impacto preexistentes sin nuevas medidas de seguridad. Riesgo residual: lo que permanece luego de implementar dichas medidas. El residual es inevitable; la obligación es reducirlo al máximo posible.', items:['Riesgo inherente: antes de controles','Riesgo residual: después de controles','Siempre existe riesgo residual','Documentar el nivel aceptado de riesgo residual']}},
+          {id:'d-amenaza', label:'Amenaza y Comunidades de amenaza', type:'leaf', info:{tag:'Definición', desc:'Amenaza: potencial causa de un incidente que vulnere los derechos y libertades. Comunidades de amenaza: grupos que intencionalmente amenazan el derecho de protección de datos.', items:['Cibercriminales: motivados por ganancia económica','Hacktivistas: motivados por ideología','Empleados con/sin privilegios: amenazas internas','Amenazas naturales: inundaciones, terremotos, incendios','Los propios responsables cuando violan derechos intencionalmente']}},
+          {id:'d-vuln', label:'Vulnerabilidades (jurídicas, org., técnicas)', type:'leaf', info:{tag:'Definición', desc:'Debilidades que pueden ser explotadas por una amenaza para producir un evento con efecto negativo en los derechos y libertades de los titulares.', items:['Jurídicas: falta de cumplimiento de obligaciones LOPDP','Organizacionales: debilidades en procesos, políticas y operaciones','Técnicas: vulnerabilidades de software y hardware no visibles sin herramientas','Toda vulnerabilidad técnica puede vulnerar datos personales']}},
+          {id:'d-cid', label:'Confidencialidad, Integridad y Disponibilidad', type:'leaf', info:{tag:'Tríada CID', desc:'Las tres dimensiones de la seguridad de datos personales. Toda vulneración de seguridad de la información puede ocasionar la violación de los derechos y libertades de los titulares.', items:['Confidencialidad: acceso solo a personas autorizadas por el titular','Integridad: datos no alterados sin autorización','Disponibilidad: datos accesibles cuando el titular los requiere','Cada dimensión requiere escenarios de riesgo independientes']}},
+          {id:'d-incertidumbre', label:'Tipos de incertidumbre', type:'leaf', info:{tag:'Definición', desc:'La gestión de riesgos de protección de datos es de naturaleza epistemológica: la incertidumbre puede reducirse con mayor conocimiento.', items:['Aleatoria: irreducible y random (ej: lanzar un dado)','Epistemológica: reducible con conocimiento en derecho, seguridad y contexto','La incertidumbre epistemológica es la relevante para la LOPDP','Mayor conocimiento interno → menor incertidumbre']}},
+          {id:'d-rationale', label:'Rationale', type:'leaf', info:{tag:'Definición', desc:'Razonamiento de respaldo que sustenta cualquier valor de entrada en una gestión de riesgos. Evita valores sin sustento que distorsionen el análisis.', items:['Todo valor cuantitativo o cualitativo debe tener su rationale','Cuantitativo: métodos estadísticos, probabilísticos, Bayesianos, Monte Carlo','Cualitativo: calibración de expertos (Delphi, Lens)','PYMES: un solo experto calibrado puede ser suficiente']}}
+        ]},
+
+      {id:'gestion', label:'1. Gestión de Riesgos: Fundamentos', type:'category',
+        info:{tag:'Fundamentos',
+          desc:'La LOPDP obliga a reducir al máximo posible la probabilidad de ocurrencia y el impacto en diversos escenarios de riesgo. La gestión de riesgos no es llenar formularios: es un proceso analítico, calibrado y demostrable.',
+          items:['Gestión de riesgos distinto de llenado de formularios','Modelos adecuados + métricas significativas + comparaciones efectivas','Siempre prevalece la protección de derechos y libertades','Riesgo dinámico: calibrar de manera constante']},
+        children:[
+          {id:'g-reducir', label:'Objetivo: reducir incertidumbre', type:'leaf', info:{tag:'Objetivo', desc:'La gestión de riesgos es el mecanismo para disminuir la incertidumbre y tomar decisiones informadas en la implementación de medidas de seguridad en el tratamiento de datos personales.', items:['No se trata de grandes papeles declarativos a la SPDP','Justificar los procedimientos utilizados para mitigar riesgos','Modelo adecuado + métricas significativas + comparaciones efectivas']}},
+          {id:'g-derechos', label:'Objetivo: protección de derechos', type:'leaf', info:{tag:'Objetivo', desc:'La gestión de riesgos no pone en cuestión la protección al cien por ciento de los derechos y libertades de los titulares. El riesgo residual es inevitable, pero debe reducirse al máximo posible.', items:['En conflicto entre normas y principios: prevalece la protección de derechos','La obligación de prevención es proactiva, no reactiva','El riesgo residual siempre existe; la obligación es minimizarlo']}},
+          {id:'g-etapas', label:'Las 5 etapas mínimas', type:'leaf', info:{tag:'Estructura del Proceso', desc:'Una gestión de riesgos incluye al menos cinco etapas obligatorias. Es fundamental cumplirlas de manera efectiva, evitando un ejercicio de conformidad superficial.', items:['1. Establecimiento del Contexto','2. Identificación de Riesgos','3. Análisis de Riesgos','4. Evaluación de Riesgos (EIPD)','5. Tratamiento de Riesgos','+ Comunicación y Monitoreo continuo']}}
+        ]},
+
+      {id:'integracion', label:'2. Integración de Riesgos', type:'category',
+        info:{tag:'Interdependencias',
+          desc:'Los riesgos de seguridad de la información y los riesgos de conformidad a la LOPDP son interdependientes. Deben analizarse de manera holística, integrando riesgos jurídicos, operacionales y financieros.',
+          items:['Todo riesgo de seguridad de la información vinculado al tratamiento se convierte en riesgo contra los derechos y libertades','Interacción permanente DPD + abogados + CISO + Oficial de Riesgo','Metodologías compatibles y sincronizadas entre las áreas']},
+        children:[
+          {id:'i-ciso', label:'Integración DPD ↔ CISO', type:'leaf', info:{tag:'Integración Operativa', desc:'El DPD debe auditar y sugerir los controles de riesgo pertinentes en el ámbito de la seguridad de la información. Las metodologías de gestión de riesgos deben ser compatibles y sincronizadas.', items:['Facultad de revisar veracidad de auditorías de seguridad','Sugerir controles de riesgo específicos para protección de datos','Revisión conjunta de escenarios de riesgo','Sincronizar criterios de evaluación entre áreas']}},
+          {id:'i-juridico', label:'Integración DPD ↔ Jurídico', type:'leaf', info:{tag:'Integración Jurídica', desc:'El DPD debe auditar los resultados de las auditorías jurídicas de cumplimiento a la LOPDP para solicitar controles de riesgos y recomendar cambios en políticas, convenios y mecanismos de ejercicio de derechos.', items:['Auditar informes recibidos a través de las EIPD','Pedir ajustes en controles de riesgos jurídicos','Políticas de protección de datos personales','Convenios responsable-encargado del tratamiento']}}
+        ]},
+
+      {id:'rationales-sec', label:'3. Justificación de Rationales', type:'category',
+        info:{tag:'Principio Fundamental',
+          desc:'Los responsables y encargados del tratamiento están obligados a justificar cualquier estimación cuantitativa o cualitativa con respecto al probable impacto de una gestión de riesgos en los derechos y libertades de los titulares de datos.',
+          items:['Todo valor de entrada debe tener su rationale documentado','Cuantitativo: frecuentistas, Bayesianos, Monte Carlo, conformal prediction','Cualitativo: calibración de expertos (Delphi, Lens)','Evita los análisis de riesgos superficiales']},
+        children:[
+          {id:'r-cuant', label:'Rationales cuantitativos', type:'leaf', info:{tag:'Racional Cuantitativo', desc:'Justificados en función de métodos frecuentistas, estadísticos, Bayesianos, de probabilidad condicional, análisis de Monte Carlo, conformal prediction y similares. Representados en distribuciones de probabilidades y curvas de superación de pérdidas.', items:['Frecuentistas: frecuencia histórica de incidentes','Bayesianos: probabilidad condicional entre eventos','Monte Carlo: 10 000 escenarios aleatorios dentro de intervalos','Conformal prediction: intervalos de acierto a nivel de confianza determinado']}},
+          {id:'r-cual', label:'Rationales cualitativos', type:'leaf', info:{tag:'Racional Cualitativo', desc:'Justificados en función de la opinión de expertos. Se recomienda usar métodos de calibración como el método Delphi o el modelo Lens para reducir sesgo y ruido.', items:['Delphi: consultas anónimas a 5+ expertos, promediadas','Lens: expertos identifican factores, se promedia con Logistic Regression','Análisis argumental: evaluación de precedentes jurídicos y sanciones de la SPDP','Automatizable con NLP entrenado en resoluciones de la SPDP']}}
+        ]},
+
+      {id:'conformidad', label:'4. Conformidad en Riesgos', type:'category',
+        info:{tag:'Principios de Estimación',
+          desc:'La LOPDP requiere de la gestión de riesgos como mecanismo para disminuir la incertidumbre y mitigar la probabilidad de ocurrencia y el impacto. El riesgo es dinámico y debe ser calibrado de manera constante.',
+          items:['Objetividad: sustentar estimaciones en datos confiables','Rangos de acierto: estimar en rangos, no en valores precisos ($12 000–$16 000)','Probabilidad sobre posibilidad: lógica probabilística (0% a 100%)','Algunos requisitos son binarios (plazos, registros), otros probabilísticos']},
+        children:[
+          {id:'c-principios', label:'Principios para estimación del riesgo', type:'leaf', info:{tag:'Principios Clave', desc:'Cuatro criterios fundamentales para incrementar la confianza en las estimaciones sobre los niveles de riesgo.', items:['a) Objetividad: evitar sesgos (prejuicios) y ruido (estimación deficiente)','b) Rangos de acierto: mejor estimar entre $12 000 y $16 000 que precisar $14 359','c) Probabilidad sobre posibilidad: un riesgo posible puede tener probabilidad de 0.01%','d) Tipos de cumplimiento: algunos son binarios, otros requieren gestión probabilística']}}
+        ]},
+
+      {id:'metarregulacion', label:'5. Metarregulación y Rol de la SPDP', type:'category',
+        info:{tag:'Modelo Regulatorio',
+          desc:'La LOPDP establece un modelo de metarregulación mediante el cual la SPDP supervisa la autorregulación de los responsables y encargados del tratamiento. No establece los mecanismos específicos, sino el objetivo: proteger los derechos y libertades de los titulares.',
+          items:['Metarregulación: la SPDP controla la autorregulación de los responsables','Los responsables tienen libertad metodológica escalable para cumplir','La SPDP controla los mecanismos de gestión de riesgos utilizados','Sanciones administrativas: insumo para jurimetría y analítica predictiva legal','Resoluciones de la SPDP: fuente para calibrar criterios cuantitativos'],
+          ref:'Parker, C. (2022). The Open Corporation, Cambridge University Press · LOPDP Art. 40, 42'},
+        children:[
+          {id:'m-spdp', label:'Rol sancionatorio de la SPDP', type:'leaf', info:{tag:'SPDP · Sanciones', desc:'Las resoluciones y precedentes sancionatorios de la SPDP son un insumo fundamental para calibrar los criterios cuantitativos de evaluación de riesgos. La jurimetría y la analítica predictiva legal permiten comprender la psicología sancionadora de la SPDP.', items:['Analizar resoluciones y guías de la SPDP para elaborar criterios de evaluación','Jurimetría: estudio cuantitativo del derecho aplicado a sanciones','NLP sobre resoluciones para automatizar análisis argumental','Reportes de actividades de la SPDP: datos externos para calibración']}},
+          {id:'m-arco', label:'Derechos ARCO y obligaciones', type:'leaf', info:{tag:'Derechos de los Titulares', desc:'Los titulares de datos personales tienen derechos reconocidos en la LOPDP que los responsables y encargados del tratamiento están obligados a garantizar en la práctica.', items:['Art. 12: Derecho a la información','Art. 13: Derecho de acceso','Art. 14: Derecho de rectificación y actualización','Art. 15: Derecho de eliminación','Art. 16: Derecho de oposición','Art. 17: Derecho a la portabilidad','Art. 20: Derecho a no ser objeto de decisiones automatizadas']}}
+        ]},
+
+      {id:'auditorias-cat', label:'6. Auditorías', type:'category',
+        info:{tag:'Control y Verificación',
+          desc:'Los responsables y encargados del tratamiento están obligados a realizar auditorías periódicas. Auditar es verificar el cumplimiento en normas y riesgos con respecto a las obligaciones establecidas en la LOPDP. Se requieren tres tipos.',
+          items:['Auditorías periódicas y planificadas obligatorias','Tres tipos obligatorios: jurídicas, organizacionales y técnicas','Auditores deben ser expertos específicos en cada área','Responsabilidad proactiva y demostrada']},
+        children:[
+          {id:'a-juridica', label:'Auditorías jurídicas', type:'leaf', info:{tag:'Auditoría Jurídica', desc:'Auditorías de cumplimiento a la LOPDP. El auditor debe constatar que se cumplan en la práctica los principios del tratamiento, el ejercicio de los derechos de los titulares y las obligaciones de llenar registros de la SPDP. El SER, no el DEBER SER.', items:['Verificar mecanismos reales para el ejercicio de derechos ARCO','Constatar políticas en la práctica, no solo en el papel','Verificar legitimidad de bases de tratamiento (Art. 7-9 LOPDP)','Auditores deben ser expertos en derecho de protección de datos']}},
+          {id:'a-org', label:'Auditorías organizacionales', type:'leaf', info:{tag:'Auditoría Organizacional', desc:'Esenciales para el cumplimiento de la LOPDP. Basar las políticas en normas como ISO/IEC 27001, 27702, 27005, COBIT, FAIR, FAIR-CAM. Lo esencial es el cumplimiento en el campo práctico.', items:['Verificar que las políticas se cumplen en la práctica','Revisar implementación del principio de mínimo privilegio','Constatar formación real del personal en protección de datos','Auditores: expertos en seguridad organizacional e implementación de estándares']}},
+          {id:'a-tecnica', label:'Auditorías técnicas (Pentesting)', type:'leaf', info:{tag:'Auditoría Técnica', desc:'Identificar las vulnerabilidades del software y hardware. No son visibles sin herramientas especializadas. Hacer la seguridad visible es un gran desafío: todo el software tiene vulnerabilidades que deben ser detectadas y corregidas.', items:['Escaneo de puertos, redes, aplicaciones web, librerías de software','OWASP Top 10: vulnerabilidades críticas en aplicaciones web','Repositorio CVE (cve.mitre.org): base de vulnerabilidades conocidas','Programas de bug bounty para vulnerabilidades Zero Day','Auditores: hackers éticos, pen testers, informática forense']}},
+          {id:'a-proactiva', label:'Responsabilidad proactiva y demostrada', type:'leaf', info:{tag:'Accountability', desc:'El principio de accountability exige no solo cumplir sino poder demostrar el cumplimiento. Requiere documentación, evidencias, registros de decisiones y un enfoque proactivo que anticipe los riesgos antes de que se materialicen.', items:['Documentar todos los procesos de gestión de riesgos','Conservar evidencias de las decisiones tomadas','Mantener el RAT (Registro de Actividades del Tratamiento) actualizado','El riesgo es dinámico: calibrar constantemente, no solo una vez al año']}}
+        ]},
+
+      {id:'vulneraciones', label:'7. Vulneraciones de Seguridad', type:'category',
+        info:{tag:'Tipos de Vulneraciones',
+          desc:'Las vulneraciones de la seguridad de datos personales son violaciones a cualquiera de las tres dimensiones de la seguridad de la información. Obligación de notificar a la SPDP en 5 días ante cualquier sospecha.',
+          items:['Notificación obligatoria a la SPDP ante cualquier sospecha','Plazo: 5 días establecidos en la LOPDP','Las vulneraciones de confidencialidad pueden ser irreversibles','Las de integridad y disponibilidad pueden ser temporales si hay backups']},
+        children:[
+          {id:'v-conf', label:'Vulneraciones de confidencialidad', type:'leaf', info:{tag:'Confidencialidad', desc:'Acceso, distribución y/o publicación de datos personales sin la autorización del titular. Pueden tener un impacto negativo irreversible, especialmente con datos sensibles y grupos vulnerables.', items:['Troyanos y Malware','Ataques Man in the Middle (MITM)','SQL Injection','Broken Access Control','Filtración por empleados internos']}},
+          {id:'v-int', label:'Vulneraciones de integridad', type:'leaf', info:{tag:'Integridad', desc:'Alteración de los datos personales de los titulares. Pueden ser temporales si el responsable ha implementado medidas necesarias para detectar y recuperar la integridad de los datos.', items:['Ataques internos (insiders)','Ransomware que modifica datos','Ingeniería social','Integrity failures en aplicaciones']}},
+          {id:'v-disp', label:'Vulneraciones de disponibilidad', type:'leaf', info:{tag:'Disponibilidad', desc:'Impedir el acceso o eliminar los datos personales de los titulares. Pueden ser temporales si el responsable tiene medidas para restaurar los datos.', items:['Ataques DDOS (Distributed Denial of Service)','Ransomware (cifrado de datos)','Robo de dispositivos de almacenamiento','Cortes de electricidad','Desastres naturales']}}
+        ]},
+
+      {id:'estandares-cat', label:'8. Estándares de Mejores Prácticas', type:'category',
+        info:{tag:'Marcos de Referencia',
+          desc:'Útiles para el cumplimiento de la LOPDP, pero NO garantizan la conformidad jurídica directa. No proveen el insumo de datos necesario para la gestión de riesgos ni métricas específicas para protección de datos personales.',
+          items:['Útiles como taxonomías de controles de riesgo','No garantizan conformidad jurídica directa con la LOPDP','No proveen métricas para protección de datos personales','Deben adaptarse al contexto específico de cada institución','EGSI: para instituciones públicas ecuatorianas']},
+        children:[
+          {id:'e-27001', label:'ISO/IEC 27001 (Seguridad)', type:'leaf', info:{tag:'Estándar Internacional', desc:'Principal estándar internacional para sistemas de gestión de seguridad de la información (SGSI). Versión 2022: 93 controles organizados en 4 temas (organizacionales, personas, físicos, tecnológicos). Certificable y auditable por terceros.', items:['Establece, implementa, mantiene y mejora continuamente la seguridad','93 controles en Anexo A (reducido de 114 en versión 2013)','Cláusula 8.13: obligación de borrar información cuando ya no sea requerida','Cláusula 5.15: principio de mínimo privilegio']}},
+          {id:'e-27701', label:'ISO/IEC 27701 (Privacidad)', type:'leaf', info:{tag:'Estándar Internacional', desc:'Extensión de ISO 27001 para la gestión de privacidad de la información (PIMS). Añade requisitos específicos para responsables (PIMO) y encargados del tratamiento (PISP). Versión 2025 actualizada.', items:['B.1.2.4: cuándo y cómo se obtiene el consentimiento del titular','B.1.2.5: mecanismo de obtención del consentimiento','B.1.2.6: evaluación de impacto del tratamiento (EIPD)','B.1.2.7: uso de criptografía para proteger datos personales','Cruzar cláusulas ISO 27701 con artículos de la LOPDP']}},
+          {id:'e-42001', label:'ISO/IEC 42001 (Inteligencia Artificial)', type:'leaf', info:{tag:'Estándar IA · Sistemas de Gestión', desc:'Estándar internacional para la implementación de Sistemas de Gestión de Inteligencia Artificial (SGAI). Fundamental para los responsables que utilicen modelos de ML, analítica predictiva legal o cualquier sistema de IA que procese datos personales.', items:['SGAI: establece, implementa, mantiene y mejora continuamente la gestión de IA','Aplica a modelos de ML que tratan datos personales','Complementa ISO 27001 y 27701 en entornos de IA','Art. 20 LOPDP: decisiones basadas únicamente en valoraciones automatizadas','Gestión de sesgos algorítmicos que amplifican impactos en grupos vulnerables','Calibración de riesgos en predicción conformal e intervalos de confianza de modelos','DAMA-DMBOK complementario: gobernanza y gestión de datos como insumo de los modelos'], ref:'ISO/IEC 42001:2023 · Artificial Intelligence Management Systems · LOPDP Art. 20'}},
+          {id:'e-nist', label:'NIST SP 800-61 (Incidentes)', type:'leaf', info:{tag:'Marco NIST', desc:'Guía del NIST para la gestión de incidentes de seguridad. Define cuatro fases para la gestión de vulneraciones de datos personales que deben notificarse a la SPDP.', items:['Fase 1: Preparación (planes, equipos, herramientas)','Fase 2: Detección y Análisis','Fase 3: Contención, Erradicación y Recuperación','Fase 4: Actividades Post-Incidente (lecciones aprendidas)','Plazo LOPDP: notificar a la SPDP en 5 días ante cualquier sospecha']}},
+          {id:'e-owasp', label:'OWASP (Seguridad Web)', type:'leaf', info:{tag:'Seguridad Aplicaciones', desc:'Open Web Application Security Project. El OWASP Top 10 identifica las vulnerabilidades más críticas en aplicaciones web. Fundamental para el desarrollo seguro y la protección de datos personales tratados mediante aplicaciones online.', items:['OWASP Top 10: SQL Injection, Broken Access Control, Cryptographic Failures, etc.','OWASP ASVS: Application Security Verification Standard','OWASP ZAP: herramienta de escaneo automatizado de vulnerabilidades web']}},
+          {id:'e-pcidss', label:'PCI-DSS (Pagos)', type:'leaf', info:{tag:'Sector Financiero', desc:'Payment Card Industry Data Security Standard. Aplicable a organizaciones que almacenan, procesan o transmiten datos de tarjetas de pago. Sus controles se solapan con los requerimientos de protección de datos bajo la LOPDP.', items:['Controles de seguridad técnica compatibles con ISO 27001 y LOPDP','Aplicar donde hay tratamiento de datos de tarjetas de crédito','Verificar cumplimiento complementario con Art. 11 LOPDP']}},
+          {id:'e-fair', label:'FAIR y FAIR-CAM', type:'leaf', info:{tag:'Modelo de Riesgo', desc:'FAIR (Factor Analysis of Information Risk): estándar del Open Group para cuantificar riesgos en términos financieros. FAIR-CAM: modelo para mapear controles en dimensiones de prevención, detección y respuesta.', items:['FAIR: ontología para descomponer el riesgo en factores cuantificables','FAIR-CAM: Loss Event Control Functions para gestión de varianzas','Ver: fairinstitute.org y Open Group Risk Taxonomy (O-RT) v3.01','Personalizable para cumplimiento LOPDP: calibrar directamente riesgos jurídicos']}}
+        ]},
+
+      {id:'siglas', label:'Glosario de Siglas', type:'category',
+        info:{tag:'Abreviaciones · Guía LOPDP V2',
+          desc:'Abreviaciones utilizadas en la Guía de Gestión de Riesgos y Evaluación de Impacto del Tratamiento de Datos Personales V2 2026.',
+          items:['CISO: Chief Information Security Officer','CoBiT: Control Objectives for Information Technologies','Cy-VaR: Cyber Value at Risk','DAMA-DMBOK: Data Management Body of Knowledge','DPD: Delegado de Protección de Datos Personales','EGSI: Esquema Gubernamental de Seguridad de la Información','EIPD: Evaluación de Impacto del Tratamiento de Datos Personales','FAIR: Factor Analysis of Information Risk','FAIR-CAM: FAIR Controls Analytics Model','LOPDP: Ley Orgánica de Protección de Datos Personales','NLP: Natural Language Processing','OSI: Oficial de Seguridad de la Información','OSINT: Open Source Intelligence','Pd-VaR: Personal Data Value at Risk','RAT: Registro de Actividades del Tratamiento','ROSI: Retorno a la Inversión en Seguridad','RPO: Recovery Point Objective','RTO: Recovery Time Objective','SOC: Security Operations Center','SPDP: Superintendencia de Protección de Datos Personales','TPRM: Third Party Risk Management','VaR: Value at Risk'],
+          ref:'Guía LOPDP V2 2026 · Sección Abreviaciones'},
+        children:[]
+      }
+
+    ]}, // end principios
+
+  // ══════════════════════════════════════
+  // II. ETAPAS
+  // ══════════════════════════════════════
+  {id:'etapas', label:'II. Etapas de la Gestión de Riesgos', type:'title',
+    info:{tag:'Título II · Procedimientos',
+      desc:'Las cinco etapas obligatorias de la gestión de riesgos para la protección de datos personales. No se deben implementar medidas de seguridad (etapa 5) sin haber cumplido con las cuatro etapas anteriores.',
+      items:['Art. 40 LOPDP: obligación de análisis de riesgo, amenazas y vulnerabilidades','Art. 37 LOPDP: obligación de implementar medidas de seguridad','Art. 42 LOPDP: obligación de realizar EIPD para tratamientos de alto riesgo','Los métodos son opcionales y escalables; los conceptos son obligatorios']},
+    children:[
+
+      {id:'etapa1', label:'1. Establecimiento del Contexto', type:'category',
+        info:{tag:'Etapa 1',
+          desc:'Establecer los criterios de evaluación de riesgos, las metodologías y modelos a implementarse, y definir la interacción entre el DPD y otras áreas de la organización.',
+          items:['Identificar tipos de datos especiales (Art. 25 LOPDP: datos sensibles)','Identificar grupos especialmente vulnerables (menores, discapacidad, género, etnia)','Determinar la cantidad de titulares de datos afectados','Analizar la naturaleza de las infracciones posibles','Estimar el volumen de datos personales tratados']},
+        children:[
+          {id:'e1-cuali', label:'Criterios cualitativos de impacto', type:'leaf', info:{tag:'Criterios Cualitativos', desc:'Cuando no se dispone de datos confiables, se utilizan criterios cualitativos para establecer los niveles de evaluación del riesgo. Ejemplo de etiquetado según metodología ENISA.', items:['Muy Alto: datos sensibles + grupo muy vulnerable + afectación masiva','Alto: datos sensibles o grupo vulnerable','Medio: datos personales ordinarios + afectación moderada','Bajo: datos no sensibles + afectación limitada','Agregar criterio: vulneración que afecte a +1 000 personas = riesgo muy alto']}},
+          {id:'e1-cuanti', label:'Criterios cuantitativos de impacto', type:'leaf', info:{tag:'Criterios Cuantitativos', desc:'Se respaldan en rangos cuantitativos de pérdidas financieras cuando se cuenta con datos confiables, estadísticas y métricas significativas. Se recomiendan criterios dinámicos que calibren los niveles en función de rangos.', items:['Datos internos: reportes de SOC, incidentes históricos','Datos externos: reportes de vulneraciones de la SPDP','Jurimetría: análisis cuantitativo de sanciones administrativas pasadas','Analítica legal predictiva: comprender la psicología sancionadora de la SPDP']}},
+          {id:'e1-prob', label:'Criterios de probabilidad de ocurrencia', type:'leaf', info:{tag:'Probabilidad', desc:'La probabilidad de ocurrencia se puede estimar entre 0 y 1, o en porcentajes. La frecuencia se considera en número de eventos. Siempre estimarlos dentro de un lapso determinado.', items:['Estimar siempre en un lapso determinado (anual recomendado)','Frecuencia mayor de 1: afecta el nivel de impacto estimado','Considerar la naturaleza multidimensional de los riesgos de seguridad','Riesgo dinámico: calibrar constantemente con nuevas circunstancias']}},
+          {id:'e1-aceptacion', label:'Aceptación del riesgo (apetito)', type:'leaf', info:{tag:'Apetito al Riesgo', formula:'Ej: "Acepto el riesgo residual de recibir una sanción administrativa menor a $10 000"', desc:'Siempre existirá un riesgo residual. Se recomienda determinar el apetito al riesgo en función de la capacidad al riesgo (cuantitativa) y la tolerancia al riesgo (cualitativa).', items:['Capacidad: monto máximo de impacto financiero soportable','Tolerancia: estimación subjetiva calibrada con expertos','Calibrar en función de sanciones administrativas precedentes de la SPDP','Analizar resoluciones y guías de la SPDP para elaborar criterios']}}
+        ]},
+
+      {id:'etapa2', label:'2. Identificación de Riesgos', type:'category',
+        info:{tag:'Etapa 2',
+          desc:'Proceso sistemático para descubrir, reconocer y describir los riesgos que pueden afectar los objetivos del tratamiento de datos personales. Enfoque multidimensional: riesgos jurídicos, operacionales y financieros.',
+          items:['Riesgos jurídicos: desde perspectiva del titular y del responsable','Riesgos operacionales: seguridad de la información y analítica predictiva','Riesgos financieros: sanciones administrativas y pérdidas secundarias','Utilizar datos históricos de la SPDP y reportes especializados de violaciones']},
+        children:[
+          {id:'e2-datos', label:'2.1. Identificación de activos y datos', type:'leaf', info:{tag:'Etapa 2 · Activos', desc:'El primer paso es identificar los activos. Los datos personales son activos condicionales (los titulares pueden oponerse en cualquier momento). Crear y mantener un Registro de Actividades del Tratamiento (RAT).', items:['¿En qué procesos hay tratamiento de datos personales?','¿Quién es el responsable del proceso?','¿Qué tipos de datos personales son tratados?','¿En dónde son guardados los datos personales?','¿Cuál es la cadena de dependencia de activos?','Los metadatos también pueden ser datos personales']}},
+          {id:'e2-amenazas', label:'2.2. Perfilamiento de amenazas', type:'leaf', info:{tag:'Etapa 2 · Amenazas', desc:'Perfilar amenazas es comprender sus objetivos y sus formas de ataque. Incluye comunidades de amenaza, amenazas naturales, capacidad de la amenaza y tipos de ataques y ciberataques.', items:['Cibercriminales: motivados por ganancia (robo de credenciales, ransomware)','Hacktivistas: ataques DDOS coordinados','Empleados con privilegios: filtración interna de datos','Amenazas naturales: inundaciones, terremotos, incendios (afectan disponibilidad)','Responsables del tratamiento: políticas no transparentes, consentimiento forzado']}},
+          {id:'e2-vulnerab', label:'2.3. Identificación de vulnerabilidades', type:'leaf', info:{tag:'Etapa 2 · Vulnerabilidades', desc:'Debilidades en el tratamiento de datos personales que pueden ser aprovechadas por las amenazas. Mitigar vulnerabilidades incrementa la resiliencia. El nivel de resiliencia debe ser superior a la capacidad de ataque de las comunidades de amenaza.', items:['Jurídicas: ausencia de legitimidad, falta de mecanismos ARCO, no notificar brechas','Organizacionales: falta de políticas de acceso, falta de capacitación al personal','Técnicas: escaneo con herramientas OWASP ZAP, NIST CVE, bug bounty','Grupos vulnerables: discapacidad, edad, género, pobreza']}},
+          {id:'e2-escenarios', label:'2.4. Escenarios de riesgo', type:'leaf', info:{tag:'Etapa 2 · Escenarios', desc:'Un escenario de riesgo combina: comunidad de amenaza + perfil + vector de ataque + vulnerabilidades + impactos primarios y secundarios.', items:['Ej: Cibercriminales venden datos de salud de hospital (confidencialidad)','Ej: Ransomware por empleado con privilegios en empresa online (disponibilidad)','Impacto primario: daño directo al titular o al responsable','Impacto secundario: reacción de terceros (discriminación laboral, sanciones, reputación)']}}
+        ]},
+
+      {id:'etapa3', label:'3. Análisis de Riesgos', type:'category',
+        info:{tag:'Etapa 3',
+          desc:'Calibrar la probabilidad o frecuencia de ocurrencia y el impacto en función de diversos escenarios de riesgo. Los modelos pueden ser cuantitativos, cualitativos o híbridos. Un modelo de riesgos no es descriptivo: es analítico.',
+          items:['Cuantitativo: valores numéricos continuos, porcentajes, pérdidas financieras','Cualitativo: escalas de atributos, opinión de expertos calibrados','Híbrido (más común): cualitativo para riesgos jurídicos + cuantitativo para riesgos operacionales','Referencia: ISO 31010, Risk Taxonomy (O-RT), ciencias actuariales']},
+        children:[
+          {id:'e3-frecuentista', label:'Métodos frecuentistas', type:'leaf', info:{tag:'Análisis Cuantitativo', formula:'Phishing: 2022→8, 2023→4, 2024→3 · Promedio: 5 · Intervalo 2025: [3–8]', desc:'Determinan la frecuencia de un incidente en un lapso determinado, basándose en análisis histórico estadístico.', items:['Calcular promedio histórico de incidentes','Estimar intervalo de acierto para el próximo año','Ajustar si las condiciones han cambiado significativamente','Complementar con datos externos si son escasos los internos']}},
+          {id:'e3-bayesiano', label:'Métodos Bayesianos', type:'leaf', info:{tag:'Análisis Cuantitativo', formula:'P(db|dpia)=26% vs P(db|~dpia)=74%\nLa EIPD reduce la probabilidad de vulneración de 74% a 26%', desc:'Estiman la probabilidad de un evento que depende de otro evento. Útiles para modelar el impacto de controles sobre la probabilidad de vulneración.', items:['Probabilidad condicional entre eventos relacionados','Actualización de probabilidades con nueva información','Ejemplo: EIPD efectiva reduce P(vulneración) de 74% a 26%','Combinar con datos históricos del responsable del tratamiento']}},
+          {id:'e3-montecarlo', label:'Análisis de Monte Carlo', type:'leaf', info:{tag:'Análisis Cuantitativo', formula:'10 000 iteraciones dentro de [$120, $15 000] → promedio ≈ $7 542', desc:'Genera datos aleatorios dentro de intervalos establecidos para mejorar la toma de decisiones en escenarios de incertidumbre.', items:['Usar distribuciones PERT (mínimo, más probable, máximo)','El promedio varía ligeramente en cada corrida','Resultado: distribución de pérdidas esperadas','Combinar con FAIR o Pd-VaR para mayor precisión']}},
+          {id:'e3-conformal', label:'Predicción conformal', type:'leaf', info:{tag:'Análisis Cuantitativo Avanzado', desc:'Método no paramétrico para calibrar intervalos de acierto a un nivel de confianza determinado, a través del análisis histórico. Aplicable para estimar el impacto en los derechos de los titulares y para predecir cuantías de sanciones administrativas de la SPDP.', items:['Calibrar intervalos de confianza al 90% sobre impactos','Estimar cuantía de sanciones administrativas de la SPDP','Usar datos históricos de sanciones + facturación bruta anual','Implementar con Linear Regression o modelos de ML']}},
+          {id:'e3-fair', label:'Modelo FAIR y Pd-VaR', type:'leaf', info:{tag:'Modelos Cuantitativos', formula:'ROSI = (Reducción de pérdida - Costo) / Costo\nEj: ($130 000 - $100 000) / $100 000 = 30%', desc:'FAIR (Factor Analysis of Information Risk): cuantifica riesgos cibernéticos en términos financieros. Pd-VaR (Personal Data Value at Risk): variante para datos personales. Utiliza Monte Carlo y distribución PERT.', items:['Pd-VaR: "Estoy seguro al 90% de que el impacto sera menor a $500 000 el proximo año"','FAIR-CAM: mapeo de controles en prevencion, deteccion y respuesta','ROSI: justificar inversion en seguridad ante alta direccion','Ver: app.fairu.net y FAIR Institute']}},
+          {id:'e3-delphi', label:'Metodos cualitativos (Delphi, Lens)', type:'leaf', info:{tag:'Analisis Cualitativo', desc:'Metodos de calibracion de opiniones de expertos para reducir sesgo y ruido. Recomendados cuando no hay datos cuantitativos confiables.', items:['Delphi: (1) consulta anonima, (2) diferentes puntos de vista, (3) 5+ expertos, (4) promedio','Lens: identificar factores, evaluar escenario, promediar, implementar Logistic Regression','Entrevistas estructuradas: DPD calibra al CISO para obtener intervalos de confianza','Analisis argumental: evaluar precedentes y sanciones de la SPDP']}},
+          {id:'e3-representacion', label:'Representacion (Matrices y Curvas)', type:'leaf', info:{tag:'Visualizacion de Riesgos', desc:'Los resultados del analisis cuantitativo se representan en distribuciones de probabilidades continuas/discretas, curvas de excedencia de perdidas (Loss Exceedance Curves) y matrices de riesgo.', items:['Distribuciones continuas: Gaussian, Beta, PERT, Exponential','Distribuciones discretas: Poisson Binomial, Beta-Binomial','Curvas de excedencia: excelente para comunicar riesgo no lineal a la direccion','Matrices de riesgo: utiles si los valores de entrada tienen rationale, no para calibrar','Referencia: app.blackkitetech.com para curvas de excedencia']}}
+        ]},
+
+      {id:'etapa4', label:'4. Evaluación de Impacto (EIPD)', type:'category',
+        info:{tag:'Etapa 4 · Art. 42 LOPDP',
+          desc:'Comparar los niveles obtenidos de cada riesgo con los criterios de evaluacion establecidos en el contexto. La EIPD es obligatoria segun Art. 42 cuando el tratamiento conlleva un alto riesgo. Se recomienda realizarla por defecto en cualquier tratamiento.',
+          items:['No se puede realizar una EIPD sin las etapas previas','Vision holistica y multidimensional del riesgo','La EIPD no es una lista de chequeo: es un instrumento de gestion de riesgos','Integrar resultados en todos los procesos organizacionales']},
+        children:[
+          {id:'e4-contenidos', label:'Contenidos obligatorios de la EIPD', type:'leaf', info:{tag:'EIPD · Contenido', desc:'La evaluacion de impacto del tratamiento de datos personales debe ser el resultado del establecimiento del contexto, de la identificacion y del analisis de riesgos.', items:['Criterios de evaluacion de riesgos para la proteccion de derechos','Descripcion de procesos que implican tratamiento de datos personales','Identificacion de tipos de datos personales tratados','Activos de los cuales dependen los datos personales','Elaboracion de escenarios de riesgo','Mecanismos para el ejercicio de derechos ARCO','Perfilamiento de amenazas e identificacion de vulnerabilidades','Analisis de probabilidad/frecuencia de ocurrencia e impacto','Calibracion de impacto en grupos especialmente vulnerables','Evaluacion de impacto por escenario','Medidas de tratamiento para reducir el nivel del riesgo evaluado']}},
+          {id:'e4-formula', label:'Formula del riesgo y sus limitaciones', type:'leaf', info:{tag:'EIPD · Evaluacion', formula:'R = P x I (basica)\nR = P x (I x V) con grupos vulnerables\nAlternativa: registrar P e I por separado para mantener ambas dimensiones visibles', desc:'Es comun pensar en R = P x I. No obstante, esto puede ofuscar el valor real del impacto, considerando que se protegen derechos, no activos.', items:['El riesgo no es lineal: no siempre conviene multiplicar P x I por defecto','Riesgo de baja P + alto I puede ser inaceptable (ej: accidente de avion vs carros chocones)','Usar registros de riesgos que mantengan P e I visibles por separado','Priorizar riesgos considerando grupos especialmente vulnerables']}},
+          {id:'e4-cuantitativa', label:'Evaluacion cuantitativa (Pd-VaR)', type:'leaf', info:{tag:'EIPD · Cuantitativo', desc:'Para riesgos operacionales de seguridad de la informacion, implementar una logica de Pd-VaR. Se recomienda utilizar frecuencia de ocurrencia (varios incidentes anuales son comunes en seguridad de la informacion).', items:['Jurimetria de sanciones: cuantificar el impacto estimando sanciones administrativas pasadas de la SPDP','Metodos estadisticos-probabilisticos: calibrar el promedio del impacto en los titulares','Riesgos juridicos: probabilidad de ocurrencia anual (0 a 1)','Riesgos operacionales: frecuencia de ocurrencia anual (numero de eventos)']}},
+          {id:'e4-anexo', label:'Anexo: Formato EIPD\n(Metodologia Hibrida)', type:'leaf', info:{tag:'EIPD · Anexo Practico', desc:'La guia incluye un Anexo con un ejemplo de formato de evaluacion de impacto del tratamiento de datos personales con metodologia hibrida: cualitativa para riesgos de cumplimiento juridico y cuantitativa para riesgos operacionales de seguridad de la informacion.', items:['Metodologia cualitativa: riesgos de cumplimiento juridico por articulo LOPDP','Metodologia cuantitativa: riesgos operacionales de seguridad (confidencialidad, integridad, disponibilidad)','Tablas de evaluacion con probabilidad/frecuencia de ocurrencia e impacto por grupos','Ejemplo de priorizacion de riesgos para informar la etapa de tratamiento','Util para bancos, seguros, PYMES y estudios juridicos segun su nivel de madurez'], ref:'Guia LOPDP V2 2026 · Anexo pag. 75'}}
+        ]},
+
+      {id:'etapa5', label:'5. Tratamiento de Riesgos', type:'category',
+        info:{tag:'Etapa 5',
+          desc:'Seleccionar e implementar las medidas de seguridad juridicas, organizacionales y tecnicas para mitigar los riesgos evaluados. Las medidas deben manejarse bajo una logica de prevencion, identificacion y respuesta.',
+          items:['Prevencion: mitigar la probabilidad de ocurrencia','Identificacion/Deteccion: monitorear riesgos en tiempo real','Respuesta: mitigar el impacto una vez materializado el riesgo','Inversion eficiente y eficaz, desde una logica de conformidad en riesgos']},
+        children:[
+          {id:'e5-estrategias', label:'Estrategias (Aceptar/Modificar/Transferir/Evitar)', type:'leaf', info:{tag:'Estrategias de Tratamiento', desc:'Cuatro estrategias fundamentales para el tratamiento de riesgos en la gestion de datos personales.', items:['Aceptar: riesgo residual dentro del umbral de aceptacion documentado','Modificar: implementar controles de seguridad juridicos, organizacionales y tecnicos','Transferir: compartir el riesgo mediante seguros, contratos o clausulas contractuales','Evitar: no realizar o suprimir el tratamiento que genera el riesgo','Siempre hay riesgo residual; la obligacion es minimizarlo al maximo posible']}},
+          {id:'e5-declaracion', label:'Declaracion de aplicabilidad (ISO 27701)', type:'leaf', info:{tag:'Taxonomias de Controles', desc:'Se recomienda utilizar taxonomias de controles de riesgos (ISO 27001-27002-27701, CIS Controls, etc.) en una declaracion de aplicabilidad que contiene: el control, su aplicabilidad, descripcion, justificacion, documentacion y responsable.', items:['ISO/IEC 27701:2025: controles especificos para proteccion de datos','Declaracion de aplicabilidad: cruzar clausula ISO con articulo LOPDP','FAIR-CAM: dimensiones de prevencion, deteccion y respuesta','Evitar calificadores fragiles: no dejar un escenario con un solo control','Evitar calificadores inestables: monitorear que los controles no se vuelvan ineficientes']}},
+          {id:'e5-rosi', label:'Retorno a la Inversion en Seguridad (ROSI)', type:'leaf', info:{tag:'ROSI · Inversion', formula:'ROSI = (Reduccion de perdida - Costo) / Costo\nEj: Pd-VaR=$260 000, Eficacia=50%, Costo=$100 000 -> ROSI=30%', desc:'Las medidas de seguridad deben considerarse como inversion y no como gasto. Adoptar una logica de Retorno a la Inversion en Seguridad para evaluar la eficiencia, eficacia y rentabilidad de las medidas implementadas.', items:['Pd-VaR: base para calcular la reduccion de perdida esperada','Implementar modelos de ML (Linear Regression, Random Forest) para medir el rendimiento conjunto','Ver: ENISA, Introduction to Return on Security Investment','Equilibrio de Nash: balance entre eficacia y rentabilidad de controles']}},
+          {id:'e5-interdep', label:'Interdependencias de controles', type:'leaf', info:{tag:'Analisis de Controles', desc:'Las medidas de control de riesgos son interdependientes. Analizar el grado de proteccion que ofrece cada una ayuda a identificar los riesgos que requieren mayor inversion y las areas en las que se esta invirtiendo un exceso.', items:['Teorema de Bayes: calibrar el nivel de proteccion de controles combinados','Equilibrio de Nash: balance entre eficacia y rentabilidad (ej: antivirus, cifrado)','Un control que funciona bien hoy puede volverse ineficiente en un ano','FAIR-CAM Variance Management Domain: monitoreo de efectividad de controles en el tiempo']}}
+        ]}
+
+    ]} // end etapas
+
+  ]
+}; // end TREE
+
+// ═══════════════════════════════════════
+// LAYOUT ENGINE
+// ═══════════════════════════════════════
+const WIDTHS  = { root:230, title:210, branch:195, category:175, leaf:195 };
+const HEIGHTS = { root:52,  title:40,  branch:36,  category:32,  leaf:28  };
+const V_GAP = 12, H_GAP = 50;
+const BTN_W = 28, BTN_H = 22;
+
+const collapsed = new Set();
+const pos = {};
+
+function nodeH(n) {
+  const lines = n.label.split('\n');
+  return (HEIGHTS[n.type] || 28) + (lines.length - 1) * 13;
+}
+
+function subtreeH(n) {
+  if (!n.children || !n.children.length || collapsed.has(n.id)) return nodeH(n);
+  const sum = n.children.reduce((s, c) => s + subtreeH(c) + V_GAP, -V_GAP);
+  return Math.max(nodeH(n), sum);
+}
+
+function layout(n, x, y) {
+  const h = nodeH(n), sh = subtreeH(n);
+  pos[n.id] = { x, y: y + sh / 2 - h / 2, w: WIDTHS[n.type] || 160, h };
+  if (n.children && n.children.length && !collapsed.has(n.id)) {
+    const cx = x + (WIDTHS[n.type] || 160) + H_GAP;
+    let cy = y;
+    for (const c of n.children) { layout(c, cx, cy); cy += subtreeH(c) + V_GAP; }
+  }
+}
+
+// ═══════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════
+const svgEl = document.getElementById('canvas');
+const edgeG = document.getElementById('edges');
+const nodeG = document.getElementById('nodes');
+
+function renderAll() {
+  layout(T, 40, 40);
+  edgeG.innerHTML = ''; nodeG.innerHTML = '';
+  renderEdges(T); renderNodes(T);
+}
+
+function mkEl(tag, attrs) {
+  const el = document.createElementNS('http://www.w3.org/2000/svg', tag);
+  for (const [k, v] of Object.entries(attrs || {})) el.setAttribute(k, v);
+  return el;
+}
+
+function renderEdges(n) {
+  if (!n.children || !n.children.length || collapsed.has(n.id)) return;
+  const p = pos[n.id];
+  const px = p.x + p.w, py = p.y + p.h / 2;
+  const cls = (n.type === 'title') ? 'conn conn-title' : 'conn';
+  for (const c of n.children) {
+    const cp = pos[c.id];
+    const cx = cp.x, cy = cp.y + cp.h / 2;
+    const mx = (px + cx) / 2;
+    edgeG.appendChild(mkEl('path', { d: `M${px},${py} C${mx},${py} ${mx},${cy} ${cx},${cy}`, class: cls }));
+    renderEdges(c);
+  }
+}
+
+function renderNodes(n) {
+  const p = pos[n.id];
+  const typeClass = n.type === 'title' ? 'node-title' : `node-${n.type}`;
+  const g = mkEl('g', { class: typeClass, transform: `translate(${p.x},${p.y})`, 'data-id': n.id });
+  const rx = (n.type === 'root' || n.type === 'title') ? 6 : 3;
+  g.appendChild(mkEl('rect', { width: p.w, height: p.h, rx }));
+
+  const lines = n.label.split('\n');
+  const lineH = 13, totalH = lineH * lines.length;
+  const startY = p.h / 2 - totalH / 2 + 10;
+  lines.forEach((line, i) => {
+    const t = mkEl('text', { x: p.w / 2, y: startY + i * lineH, 'text-anchor': 'middle', class: 'lbl' });
+    t.textContent = line;
+    g.appendChild(t);
+  });
+
+  // Info dot on leaf nodes with content
+  if (n.type === 'leaf' && n.info && (n.info.items && n.info.items.length || n.info.desc)) {
+    g.appendChild(mkEl('circle', { cx: p.w - 7, cy: 7, r: 3, class: 'info-dot' }));
+  }
+
+  g.addEventListener('click', e => { e.stopPropagation(); openDetail(n); });
+  nodeG.appendChild(g);
+
+  // Toggle button
+  if (n.children && n.children.length) {
+    const isOpen = !collapsed.has(n.id);
+    const bx = p.x + p.w + 4, by = p.y + p.h / 2 - BTN_H / 2;
+    const bg = mkEl('g', { class: 'tbtn', transform: `translate(${bx},${by})`, 'data-id': n.id });
+    bg.appendChild(mkEl('rect', { width: BTN_W, height: BTN_H, rx: 4 }));
+    const sym = mkEl('text', { x: BTN_W / 2, y: BTN_H / 2 + 4, 'text-anchor': 'middle' });
+    sym.textContent = isOpen ? '<' : '>';
+    bg.appendChild(sym);
+    bg.addEventListener('click', e => {
+      e.stopPropagation();
+      collapsed.has(n.id) ? collapsed.delete(n.id) : collapsed.add(n.id);
+      renderAll();
+    });
+    nodeG.appendChild(bg);
+  }
+
+  if (n.children && !collapsed.has(n.id)) n.children.forEach(renderNodes);
+}
+
+// ═══════════════════════════════════════
+// PAN & ZOOM
+// ═══════════════════════════════════════
+let tx = 0, ty = 0, scale = 1;
+let dragging = false, lastX, lastY;
+const vp = document.getElementById('vp');
+
+function applyT() { vp.setAttribute('transform', `translate(${tx},${ty}) scale(${scale})`); }
+
+svgEl.addEventListener('mousedown', e => { if (e.button !== 0) return; dragging = true; lastX = e.clientX; lastY = e.clientY; });
+window.addEventListener('mousemove', e => { if (!dragging) return; tx += e.clientX - lastX; ty += e.clientY - lastY; lastX = e.clientX; lastY = e.clientY; applyT(); });
+window.addEventListener('mouseup', () => { dragging = false; });
+svgEl.addEventListener('wheel', e => {
+  e.preventDefault();
+  const f = e.deltaY < 0 ? 1.1 : 0.9;
+  const r = svgEl.getBoundingClientRect();
+  const mx = e.clientX - r.left, my = e.clientY - r.top;
+  tx = mx - (mx - tx) * f; ty = my - (my - ty) * f;
+  scale = Math.max(0.15, Math.min(3, scale * f));
+  applyT();
+}, { passive: false });
+
+let tt = null;
+svgEl.addEventListener('touchstart', e => { if (e.touches.length === 1) { dragging = true; lastX = e.touches[0].clientX; lastY = e.touches[0].clientY; } else if (e.touches.length === 2) tt = e.touches; }, { passive: true });
+svgEl.addEventListener('touchmove', e => {
+  if (e.touches.length === 1 && dragging) { tx += e.touches[0].clientX - lastX; ty += e.touches[0].clientY - lastY; lastX = e.touches[0].clientX; lastY = e.touches[0].clientY; applyT(); }
+  else if (e.touches.length === 2 && tt) { const d1 = Math.hypot(tt[0].clientX - tt[1].clientX, tt[0].clientY - tt[1].clientY); const d2 = Math.hypot(e.touches[0].clientX - e.touches[1].clientX, e.touches[0].clientY - e.touches[1].clientY); scale = Math.max(0.15, Math.min(3, scale * d2 / d1)); tt = e.touches; applyT(); }
+}, { passive: true });
+svgEl.addEventListener('touchend', () => { dragging = false; tt = null; });
+
+// ═══════════════════════════════════════
+// AUTO-CENTER
+// ═══════════════════════════════════════
+function autoCenter() {
+  const allPos = Object.values(pos);
+  if (!allPos.length) return;
+  const minX = Math.min(...allPos.map(p => p.x));
+  const minY = Math.min(...allPos.map(p => p.y));
+  const maxX = Math.max(...allPos.map(p => p.x + p.w));
+  const maxY = Math.max(...allPos.map(p => p.y + p.h));
+  const treeW = maxX - minX, treeH = maxY - minY;
+  const vw = svgEl.clientWidth || window.innerWidth;
+  const vh = (svgEl.clientHeight || window.innerHeight) - 50;
+  scale = Math.min(0.92, Math.min(vw / (treeW + 100), vh / (treeH + 80)));
+  scale = Math.max(0.15, scale);
+  tx = (vw - treeW * scale) / 2 - minX * scale;
+  ty = (vh - treeH * scale) / 2 - minY * scale + 10;
+  applyT();
+}
+
+function resetView() { autoCenter(); }
+
+// ═══════════════════════════════════════
+// EXPAND / COLLAPSE ALL
+// ═══════════════════════════════════════
+function expandAll() { collapsed.clear(); renderAll(); showToast('Todo expandido'); }
+function collapseAll() {
+  function col(n) { if (n.children && n.children.length) { collapsed.add(n.id); n.children.forEach(col); } }
+  T.children.forEach(col); renderAll(); showToast('Todo colapsado');
+}
+
+// ═══════════════════════════════════════
+// DETAIL PANEL
+// ═══════════════════════════════════════
+function openDetail(n) {
+  document.getElementById('dtag').textContent = n.info.tag || n.type;
+  document.getElementById('dtitle').textContent = n.label.replace(/\n/g, ' ');
+  const body = document.getElementById('dbody');
+  let html = '';
+  if (n.info.desc) html += `<p>${n.info.desc}</p>`;
+  if (n.info.formula) html += `<div class="formula">${n.info.formula.replace(/\n/g, '<br>')}</div>`;
+  if (n.info.items && n.info.items.length) html += '<h4>Aspectos clave</h4><ul>' + n.info.items.map(i => `<li>${i}</li>`).join('') + '</ul>';
+  if (n.children && n.children.length) html += `<h4>Subnodos (${n.children.length})</h4><ul>` + n.children.map(c => `<li>${c.label.replace(/\n/g, ' ')}</li>`).join('') + '</ul>';
+  if (n.info.ref) html += `<div class="ref">Fuente: ${n.info.ref}</div>`;
+  body.innerHTML = html;
+  document.getElementById('detail').classList.add('open');
+}
+function closeDetail() { document.getElementById('detail').classList.remove('open'); }
+
+// ═══════════════════════════════════════
+// SEARCH
+// ═══════════════════════════════════════
+let searchVisible = false;
+function toggleSearch() {
+  searchVisible = !searchVisible;
+  document.getElementById('sw').classList.toggle('vis', searchVisible);
+  if (searchVisible) document.getElementById('si').focus();
+  else { document.getElementById('si').value = ''; clearHL(); }
+}
+function clearHL() { document.querySelectorAll('[data-id]').forEach(el => { el.style.filter = ''; el.style.opacity = ''; }); }
+function findNode(n, id) { if (n.id === id) return n; if (!n.children) return null; for (const c of n.children) { const r = findNode(c, id); if (r) return r; } return null; }
+function doSearch(q) {
+  if (!q) { clearHL(); return; }
+  const lo = q.toLowerCase();
+  document.querySelectorAll('[data-id]').forEach(el => {
+    const n = findNode(T, el.getAttribute('data-id'));
+    const match = n && (n.label.toLowerCase().includes(lo) || (n.info && n.info.desc && n.info.desc.toLowerCase().includes(lo)));
+    el.style.opacity = match ? '1' : '0.12';
+    el.style.filter = match ? 'url(#glow)' : '';
+  });
+}
+
+// ═══════════════════════════════════════
+// KEYBOARD
+// ═══════════════════════════════════════
+window.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeDetail(); if (searchVisible) toggleSearch(); }
+  if ((e.key === 'f') && (e.ctrlKey || e.metaKey)) { e.preventDefault(); toggleSearch(); }
+  if (e.key === '+' || e.key === '=') { scale = Math.min(3, scale * 1.15); applyT(); }
+  if (e.key === '-') { scale = Math.max(0.15, scale * 0.87); applyT(); }
+  if (e.key === '0') resetView();
+});
+
+// ═══════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ═══════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════
+// Collapse categories on load for a clean first view
+T.children.forEach(c => {
+  if (c.children) c.children.forEach(cc => {
+    if (cc.children && cc.children.length) collapsed.add(cc.id);
+  });
+});
+
+renderAll();
+autoCenter();
+showToast('DataConSentido · clic en un nodo para ver detalle');
+</script>
+</body>
+</html>
