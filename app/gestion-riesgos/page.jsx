@@ -1,4 +1,4 @@
-import GestionRiesgosMindmap from "@/components/GestionRiesgosMindmap";
+import GestionRiesgosMindmap from "../components/GestionRiesgosMindmap";
 
 export const metadata = {
   title: "Gestión de Riesgos | DataConSentido",
