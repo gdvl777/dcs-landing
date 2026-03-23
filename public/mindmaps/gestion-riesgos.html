@@ -1082,7 +1082,12 @@
                 letter-spacing: 0.03em;
             }
 
-            #intro-text p,
+            #intro-text p {
+    display: block;
+    font-size: 7.8px;
+    line-height: 1.4;
+    margin-top: 4px;
+  }
             .intro-source {
                 display: none;
             }
@@ -1093,6 +1098,52 @@
                 margin-top: 0;
             }
         }
+        /* Desktop base */
+#toolbar {
+  min-height: 58px;
+}
+
+#intro {
+  top: 58px;
+}
+
+#canvas-wrap {
+  top: 120px; /* 58 toolbar + aprox 62 intro */
+}
+
+/* Tablet */
+@media (max-width: 860px) {
+  #toolbar {
+    min-height: 58px;
+  }
+
+  #intro {
+    top: 58px;
+  }
+
+  #canvas-wrap {
+    top: 118px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 520px) {
+  #toolbar {
+    min-height: 96px;
+  }
+
+  #intro {
+    top: 96px;
+  }
+
+  #canvas-wrap {
+    top: 146px; /* 96 toolbar + ~50 intro */
+  }
+
+  #intro-show {
+    top: 104px;
+  }
+}
     </style>
 </head>
 
