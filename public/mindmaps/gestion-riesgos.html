@@ -912,7 +912,7 @@
 #intro.hidden{transform:translateY(-100%);pointer-events:none;}
 #intro-text{flex:1;min-width:0;}
 #intro-text h2{font-family:'Syne',sans-serif;font-weight:700;font-size:10.5px;letter-spacing:0.07em;color:#d9e4f2;margin-bottom:5px;text-transform:uppercase;}
-#intro-text p{font-family:'DM Mono',monospace;font-size:10px;line-height:1.75;color:#8fa4be;max-width:900px;}
+#intro-text p{font-family:'DM Mono',monospace;font-size:10px;line-height:1.65;color:#8fa4be;max-width:900px;word-wrap:break-word;overflow-wrap:break-word;}
 #intro-text p strong{color:#c8d8ea;font-weight:500;}
 .intro-source{display:block;margin-top:6px;font-size:8.5px;color:#4e6a88;font-style:italic;}
 #intro-close{flex-shrink:0;background:none;border:1px solid rgba(193,205,220,0.18);color:#7f9ab9;font-family:'DM Mono',monospace;font-size:9px;padding:4px 11px;border-radius:999px;cursor:pointer;margin-top:2px;white-space:nowrap;transition:all 0.15s;}
@@ -922,8 +922,9 @@
 #footnote{position:fixed;bottom:0;left:0;right:0;background:rgba(7,14,28,0.82);border-top:1px solid rgba(193,205,220,0.08);padding:5px 24px;font-family:'DM Mono',monospace;font-size:8.5px;color:#3e556e;text-align:center;z-index:40;backdrop-filter:blur(8px);line-height:1.5;}
 #footnote a{color:#5272a0;text-decoration:none;}
 #footnote a:hover{color:#a7bdd6;}
-@media(max-width:640px){#intro{padding:10px 14px;gap:12px;}#intro-text h2{font-size:9.5px;}#intro-text p{font-size:9px;}}
-@media(max-width:520px){#intro{flex-direction:column;gap:8px;}#intro-close{align-self:flex-end;margin-top:0;}}
+@media(max-width:860px){#intro{padding:11px 18px;}#intro-text p{font-size:9.5px;line-height:1.6;}}
+@media(max-width:640px){#intro{padding:9px 14px;gap:10px;}#intro-text h2{font-size:9px;}#intro-text p{font-size:8.5px;line-height:1.55;}.intro-source{display:none;}}
+@media(max-width:520px){#intro{padding:8px 12px;gap:8px;align-items:center;}#intro-text h2{font-size:8.5px;letter-spacing:0.03em;}#intro-text p,.intro-source{display:none;}#intro-close{padding:3px 8px;font-size:8px;margin-top:0;}}
     </style>
 </head>
 
