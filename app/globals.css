@@ -120,11 +120,11 @@ button {
 
 .nav-pro {
   pointer-events: auto;
-  width: min(1180px, 100%);
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 18px;
+  gap: 12px;
 
   padding: 14px 18px;
   border-radius: 22px;
@@ -147,9 +147,9 @@ button {
 .nav-brand {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
-  flex: 0 1 auto;
+  flex: 1 1 auto;
 }
 
 .nav-brand-logo {
@@ -167,19 +167,19 @@ button {
 }
 
 .nav-brand-title {
-  font-size: 1rem;
-  font-weight: 800;
-  line-height: 1.1;
-  color: #f8fafc;
-  letter-spacing: 0.01em;
+  display: block;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .nav-brand-subtitle {
-  margin-top: 2px;
-  font-size: 0.78rem;
-  line-height: 1.1;
-  color: rgba(226, 232, 240, 0.72);
+  display: block;
+  min-width: 0;
   white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .nav-pro-links {
