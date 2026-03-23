@@ -396,7 +396,7 @@ export default function GestionRiesgosPage() {
                 className="min-w-[240px] rounded-full border border-sky-200/15 bg-white/[0.04] px-5 py-3 text-white outline-none placeholder:text-sky-100/55"
               />
               <a
-                href="public\gestion-riesgos\guia-riesgos.pdf"
+                href="public/gestion-riesgos/guia-riesgos.pdf"
                 download
                 className="rounded-full border border-sky-200/15 bg-white/[0.04] px-5 py-3 text-center text-white transition hover:bg-white/[0.08]"
               >
