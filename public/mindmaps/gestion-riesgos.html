@@ -73,6 +73,7 @@
   /* DETAIL PANEL */
   #detail{position:fixed;right:-420px;top:58px;bottom:0;width:400px;max-width:100vw;background:var(--panel-bg);border-left:1px solid var(--border);padding:28px 24px;overflow-y:auto;overflow-x:hidden;transition:right .32s cubic-bezier(.22,1,.36,1);z-index:50;box-shadow:var(--brand-shadow);backdrop-filter:blur(12px);box-sizing:border-box;}
   #detail.open{right:0;}
+  #detail.open ~ #legend{display:none;}
   #dcl{position:absolute;top:14px;right:14px;background:none;border:1px solid var(--border);color:var(--text-muted);font-family:'DM Mono',monospace;font-size:10px;padding:3px 9px;cursor:pointer;border-radius:2px;transition:all .15s;z-index:5;max-width:calc(100% - 28px);white-space:nowrap;}
   #dcl:hover{border-color:var(--accent);color:var(--accent-light);}
   #dtag{font-size:8px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent-light);margin-bottom:8px;display:block;}
@@ -92,7 +93,26 @@
   #si{background:var(--surface);border:1px solid var(--accent);color:var(--text);font-family:'DM Mono',monospace;font-size:11px;padding:7px 14px;width:300px;outline:none;border-radius:2px;}
 
   /* LEGEND */
-  #legend{position:fixed;bottom:24px;left:24px;background:rgba(7,19,37,0.88);border:1px solid var(--border);padding:12px 16px;font-size:9px;color:var(--text-muted);border-radius:14px;line-height:2.1;z-index:50;box-shadow:var(--brand-shadow);backdrop-filter:blur(12px);}
+  #legend{
+  position:fixed;
+  bottom:24px;
+  left:24px;
+  background:rgba(7,19,37,0.88);
+  border:1px solid var(--border);
+  padding:12px 16px;
+  font-size:9px;
+  color:var(--text-muted);
+  border-radius:14px;
+  line-height:2.1;
+  z-index:40;
+  box-shadow:var(--brand-shadow);
+  backdrop-filter:blur(12px);
+  max-width:min(92vw, 420px);
+}
+body.detail-open #legend{
+  opacity:0;
+  pointer-events:none;
+}
   .li{display:flex;align-items:center;gap:8px;}
   .ld{width:8px;height:4px;border-radius:1px;}
   #legend .hint{font-size:8px;color:var(--text-dim);margin-top:6px;border-top:1px solid var(--border);padding-top:6px;line-height:1.6;}
@@ -126,29 +146,189 @@
   .download-btn .dl-emoji{font-size:12px;line-height:1;display:inline-block;}
   .download-btn .dl-label{display:inline-block;}
   @media (max-width: 860px) {
-    #toolbar .brand-sub, #toolbar .badge:nth-of-type(2), .brand-url{display:none;}
-    #legend{max-width:250px}
-    #detail{width:min(96vw,400px);max-width:96vw;right:-100vw;padding:52px 18px 20px;}
-    #dcl{top:10px;right:10px;padding:5px 10px;font-size:10px;background:rgba(7,19,37,.92);backdrop-filter:blur(8px);}
+  #toolbar .brand-sub,
+  #toolbar .badge:nth-of-type(2),
+  .brand-url{
+    display:none;
   }
-  @media (max-width: 640px) {
-    #toolbar{padding:8px 10px;gap:8px;}
-    .brand{flex-basis:100%;}
-    .brand span{max-width:100%;font-size:10px;letter-spacing:.05em;line-height:1.2;}
-    .ctrl-btn{font-size:9px;padding:6px 9px;}
-    #si{width:min(42vw,220px);padding:9px 12px;font-size:10px;}
-    .download-btn{padding-left:9px;padding-right:9px;}
-    .download-btn .dl-label{display:none;}
-    .download-btn .dl-emoji{font-size:14px;}
+
+  #detail{
+    width:min(96vw,400px);
+    max-width:96vw;
+    right:-100vw;
+    padding:52px 18px 20px;
   }
-  @media (max-width: 520px) {
-    #toolbar{padding:8px 8px;gap:6px;}
-    .brand span{font-size:9px;letter-spacing:.04em;}
-    #detail{width:100vw;max-width:100vw;right:-100vw;top:92px;padding:54px 16px 18px;border-left:none;}
-    #dcl{top:10px;right:10px;font-size:10px;padding:6px 10px;border-radius:999px;}
-    .ctrl-btn{font-size:8px;padding:5px 8px;}
-    #si{width:110px;padding:8px 10px;font-size:9px;}
+
+  #dcl{
+    top:10px;
+    right:10px;
+    padding:5px 10px;
+    font-size:10px;
+    background:rgba(7,19,37,.92);
+    backdrop-filter:blur(8px);
   }
+
+  #legend{
+    max-width:min(78vw,260px);
+    left:14px;
+    bottom:14px;
+    font-size:8px;
+    line-height:1.9;
+    padding:10px 12px;
+  }
+}
+
+@media (max-width: 640px) {
+  #toolbar{
+    padding:8px 10px;
+    gap:8px;
+    align-items:flex-start;
+  }
+
+  .brand{
+    flex:1 1 100%;
+    min-width:0;
+    align-items:flex-start;
+  }
+
+  .brand-logo{
+    width:30px;
+    height:30px;
+    border-radius:8px;
+    flex:0 0 auto;
+  }
+
+  .brand-copy{
+    min-width:0;
+    flex:1 1 auto;
+  }
+
+  .brand h1{
+    font-size:9px;
+    letter-spacing:.035em;
+    line-height:1.18;
+    white-space:normal;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+    max-width:calc(100vw - 70px);
+  }
+
+  .brand span{
+    max-width:100%;
+    font-size:9px;
+    letter-spacing:.04em;
+    line-height:1.2;
+  }
+
+  .ctrl-btn{
+    font-size:9px;
+    padding:6px 9px;
+  }
+
+  #si{
+    width:min(42vw,220px);
+    padding:9px 12px;
+    font-size:10px;
+  }
+
+  .download-btn{
+    padding-left:9px;
+    padding-right:9px;
+  }
+
+  .download-btn .dl-label{
+    display:none;
+  }
+
+  .download-btn .dl-emoji{
+    font-size:14px;
+  }
+
+  #legend{
+    max-width:min(68vw,220px);
+    left:10px;
+    bottom:10px;
+    padding:9px 10px;
+    font-size:7.5px;
+    line-height:1.75;
+  }
+
+  #legend .hint{
+    font-size:7px;
+    line-height:1.45;
+  }
+}
+
+@media (max-width: 520px) {
+  #toolbar{
+    padding:8px 8px;
+    gap:6px;
+    min-height:92px;
+  }
+
+  .brand{
+    flex:1 1 100%;
+    min-width:0;
+  }
+
+  .brand h1{
+    font-size:8px;
+    letter-spacing:.03em;
+    line-height:1.15;
+    max-width:calc(100vw - 62px);
+    white-space:normal;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+  }
+
+  .brand span{
+    font-size:8px;
+    letter-spacing:.03em;
+  }
+
+  #detail{
+    width:100vw;
+    max-width:100vw;
+    right:-100vw;
+    top:92px;
+    padding:54px 16px 18px;
+    border-left:none;
+    z-index:80;
+  }
+
+  #dcl{
+    top:10px;
+    right:10px;
+    font-size:10px;
+    padding:6px 10px;
+    border-radius:999px;
+  }
+
+  .ctrl-btn{
+    font-size:8px;
+    padding:5px 8px;
+  }
+
+  #si{
+    width:110px;
+    padding:8px 10px;
+    font-size:9px;
+  }
+
+  #legend{
+    max-width:170px;
+    left:8px;
+    bottom:8px;
+    padding:8px 9px;
+    font-size:7px;
+    line-height:1.6;
+  }
+
+  #legend .hint{
+    font-size:6.8px;
+    line-height:1.35;
+  }
+}
 
 </style>
 </head>
@@ -598,8 +778,11 @@ function openDetail(n) {
   if (n.info.ref) html += `<div class="ref">Fuente: ${n.info.ref}</div>`;
   body.innerHTML = html;
   document.getElementById('detail').classList.add('open');
+  document.body.classList.add('detail-open');
 }
-function closeDetail() { document.getElementById('detail').classList.remove('open'); }
+function closeDetail() { document.getElementById('detail').classList.remove('open');
+    document.body.classList.remove('detail-open');
+}
 
 // ═══════════════════════════════════════
 // SEARCH
