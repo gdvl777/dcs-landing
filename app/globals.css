@@ -21,9 +21,9 @@
   --btnBorder: rgba(232, 238, 252, 0.18);
   --shadow: 0 18px 60px rgba(0, 0, 0, 0.25);
 
-  --navOffsetDesktop: 104px;
-  --navOffsetTablet: 124px;
-  --navOffsetMobile: 112px;
+  --navOffsetDesktop: 118px;
+  --navOffsetTablet: 122px;
+  --navOffsetMobile: 108px;
 
   --dockH: 74px;
 }
@@ -107,24 +107,29 @@ button {
    ========================= */
 
 .nav-wrap {
-  position: fixed;
-  top: 14px;
-  left: 0;
-  right: 0;
+  position: sticky;
+  top: 0;
   z-index: 9999;
   display: flex;
   justify-content: center;
-  padding: 0 14px;
-  pointer-events: none;
+  padding: 12px 16px 0;
+  background: linear-gradient(
+    180deg,
+    rgba(5, 13, 28, 0.96),
+    rgba(5, 13, 28, 0.76),
+    rgba(5, 13, 28, 0.22),
+    transparent
+  );
+  isolation: isolate;
 }
 
 .nav-shell {
   width: min(1180px, 100%);
-  pointer-events: none;
+  position: relative;
+  z-index: 10000;
 }
 
 .nav-pro {
-  pointer-events: auto;
   width: 100%;
   min-width: 0;
   display: flex;
@@ -137,17 +142,19 @@ button {
 
   background:
     radial-gradient(900px 120px at 15% 0%, rgba(6, 182, 212, 0.12), transparent 55%),
-    radial-gradient(900px 120px at 85% 0%, rgba(245, 158, 11, 0.1), transparent 55%),
-    rgba(15, 23, 42, 0.8);
+    radial-gradient(900px 120px at 85% 0%, rgba(245, 158, 11, 0.10), transparent 55%),
+    rgba(10, 18, 34, 0.92);
 
   border: 1px solid rgba(255, 255, 255, 0.08);
 
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
 
   box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.28),
     0 0 0 1px rgba(255, 255, 255, 0.03);
+
+  overflow: hidden;
 }
 
 .nav-brand {
@@ -156,7 +163,7 @@ button {
   gap: 10px;
   min-width: 0;
   flex: 1 1 auto;
-  max-width: 100%;
+  max-width: calc(100% - 64px);
 }
 
 .nav-brand-logo {
@@ -173,6 +180,7 @@ button {
   min-width: 0;
   flex: 1 1 auto;
   max-width: 100%;
+  overflow: hidden;
 }
 
 .nav-brand-title {
@@ -262,7 +270,7 @@ button {
   cursor: pointer;
   transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
   flex: 0 0 auto;
-  margin-left: 8px;
+  margin-left: 6px;
   position: relative;
   z-index: 10001;
 }
@@ -283,7 +291,6 @@ button {
 .nav-mobile-panel {
   position: relative;
   z-index: 10000;
-  pointer-events: auto;
   margin-top: 10px;
   width: 100%;
   border-radius: 18px;
@@ -298,7 +305,6 @@ button {
 .nav-mobile-link {
   position: relative;
   z-index: 10001;
-  pointer-events: auto;
   display: block;
   width: 100%;
   padding: 14px 16px;
@@ -333,8 +339,7 @@ button {
 
 @media (max-width: 900px) {
   .nav-wrap {
-    top: 12px;
-    padding: 0 12px;
+    padding: 10px 12px 0;
   }
 
   .nav-shell {
@@ -395,8 +400,7 @@ button {
 
 @media (max-width: 640px) {
   .nav-wrap {
-    top: 10px;
-    padding: 0 10px;
+    padding: 8px 10px 0;
   }
 
   .nav-pro {
@@ -460,7 +464,6 @@ button {
    ========================= */
 
 .nav {
-  pointer-events: auto;
   width: min(1180px, 100%);
   display: flex;
   align-items: center;
@@ -575,7 +578,6 @@ button {
 }
 
 .navMobile {
-  pointer-events: auto;
   width: min(1180px, 100%);
   margin-top: 10px;
 
