@@ -16,7 +16,7 @@ export default function GestionRiesgosPage() {
       }}
     >
       <iframe
-        src="/gestion-riesgos/index.html"
+        src="/mindmaps/gestion-riesgos.html"
         title="Gestión de Riesgos"
         style={{
           width: "100%",
