@@ -1,4 +1,4 @@
-import ArquitecturaPdpClient from "../components/ArquitecturaPdpClient";
+import ArquitecturaPdpClient from "../../components/ArquitecturaPdpClient";
 
 export const metadata = {
   title: "Arquitectura Profesional de Protección de Datos Personales | DataConSentido",
