@@ -5,7 +5,7 @@ import HotmartModal from "./HotmartModal";
 
 const modules = [
   {
-    day: "Día 1",
+    day: "Día 1 y Día 2",
     title: "🛡️ PANSI",
     topics: [
       "🔹 Estado de la técnica y medidas de seguridad.",
@@ -15,7 +15,7 @@ const modules = [
     ],
   },
   {
-    day: "Día 2",
+    day: "Día 3",
     title: "🗂️ RAT Ampliado",
     topics: [
       "🔹 Construcción práctica del RAT.",
@@ -25,7 +25,7 @@ const modules = [
     ],
   },
   {
-    day: "Día 3",
+    day: "Día 4",
     title: "🎯 MTGE",
     topics: [
       "🔹 Evaluación del nivel de gestión.",
@@ -35,7 +35,7 @@ const modules = [
     ],
   },
   {
-    day: "Día 4",
+    day: "Día 5 y Día 6",
     title: "⚖️ EIPD",
     topics: [
       "🔹 Cuándo corresponde una EIPD.",
@@ -56,7 +56,7 @@ const benefits = [
 ];
 
 const includes = [
-  "📚 4 sesiones intensivas de 2.5 horas.",
+  "📚 6 sesiones intensivas de 2.5 horas.",
   "🧩 Temario especializado sobre PANSI, RAT, MTGE y EIPD.",
   "💬 Preguntas y respuestas por jornada.",
   "📝 Evaluación de cierre por sesión.",
@@ -121,17 +121,17 @@ export default function ArquitecturaPdpClient() {
                     🛡️ PANSI · 🗂️ RAT · 🎯 MTGE · ⚖️ EIPD
                   </span>
                   <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1 text-sm text-emerald-200">
-                    📅 7, 8, 14 y 15 de abril
+                    📅 5, 6, 7, 12, 13 y 14 de mayo
                   </span>
                   <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1 text-sm text-slate-300">
-                    ⏱️ 4 sesiones · 10 horas
+                    ⏱️ 6 sesiones · 15 horas
                   </span>
                 </div>
 
                 <div className="mt-10 grid gap-4 sm:grid-cols-3">
                   <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
                     <p className="text-sm text-slate-400">⏳ Duración</p>
-                    <p className="mt-2 text-xl font-semibold">4 sesiones</p>
+                    <p className="mt-2 text-xl font-semibold">6 sesiones</p>
                   </div>
                   <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
                     <p className="text-sm text-slate-400">💻 Formato</p>
