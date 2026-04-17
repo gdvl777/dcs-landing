@@ -1,7 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import HotmartModal from "./HotmartModal";
+
+const PROGRAM_DATES = "5, 6, 7, 12, 13 y 14 de mayo de 2026";
+const PROGRAM_TIME = "19h00";
+const TOTAL_HOURS = "15 horas";
+const TOTAL_SESSIONS = "6 sesiones";
+
+const WHATSAPP_URL =
+  "https://wa.me/593992801005?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20del%20programa%20Arquitectura%20Profesional%20de%20Protecci%C3%B3n%20de%20Datos";
+
+const pricingConfig = {
+  earlyBirdActive: true,
+  earlyBirdPrice: 110,
+  regularPrice: 129,
+  currency: "USD",
+  earlyBirdDeadlineLabel: "24 de abril de 2026 · 23:59",
+  earlyBirdSeatLimitLabel: "o hasta completar 8 cupos",
+  trustNote: "Precio visible y final. Sin códigos ocultos.",
+  earlyBirdCheckoutUrl: "https://pay.hotmart.com/Q104933430P",
+  regularCheckoutUrl: "https://pay.hotmart.com/Q104933430P",
+  corporateWhatsappText:
+    "Hola, quiero información del paquete corporativo del programa Arquitectura Profesional de Protección de Datos Personales",
+};
 
 const modules = [
   {
@@ -76,9 +98,37 @@ const faqs = [
     q: "¿Incluye evaluación?",
     a: "Sí. Cada sesión contempla preguntas, respuestas y evaluación de cierre.",
   },
+  {
+    q: "¿Cuál es el valor vigente?",
+    a: `Mientras esté activa la etapa de lanzamiento, el valor es de $${pricingConfig.earlyBirdPrice} ${pricingConfig.currency}. Luego pasa a $${pricingConfig.regularPrice} ${pricingConfig.currency}.`,
+  },
+  {
+    q: "¿Tienen opción para equipos?",
+    a: "Sí. Si van 3 o más personas de la misma organización, puedes solicitar una opción corporativa por WhatsApp.",
+  },
 ];
 
-function SectionHeader({ eyebrow, title, text, centered = false }) {
+const corporatePlans = [
+  {
+    name: "Equipo 3",
+    price: "$300",
+    detail: "3 cupos para la misma organización",
+  },
+  {
+    name: "Equipo 5",
+    price: "$475",
+    detail: "5 cupos para la misma organización",
+  },
+  {
+    name: "Equipo 10",
+    price: "$900",
+    detail: "10 cupos para la misma organización",
+  },
+];
+
+function SectionHeader(props) {
+  const { eyebrow, title, text, centered = false } = props;
+
   return (
     <div className={centered ? "mx-auto mb-10 max-w-3xl text-center" : "mb-10 max-w-3xl"}>
       <span className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1 text-sm text-cyan-200">
@@ -92,20 +142,71 @@ function SectionHeader({ eyebrow, title, text, centered = false }) {
   );
 }
 
+function PriceBadge(props) {
+  const { earlyBirdActive, earlyBirdPrice, regularPrice, currency } = props;
+
+  if (earlyBirdActive) {
+    return (
+      <div className="flex flex-wrap items-end gap-x-3 gap-y-2">
+        <span className="text-base text-slate-400 line-through">
+          ${regularPrice} {currency}
+        </span>
+        <span className="text-4xl font-bold tracking-tight text-white md:text-5xl">
+          ${earlyBirdPrice}
+        </span>
+        <span className="pb-1 text-slate-300">{currency}</span>
+        <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-3 py-1 text-sm font-medium text-emerald-200">
+          Ahorra ${regularPrice - earlyBirdPrice}
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="flex items-end gap-2">
+      <span className="text-4xl font-bold tracking-tight text-white md:text-5xl">
+        ${regularPrice}
+      </span>
+      <span className="pb-1 text-slate-300">{currency}</span>
+    </div>
+  );
+}
+
 export default function ArquitecturaPdpClient() {
   const [openModal, setOpenModal] = useState(false);
-  const checkoutUrl = "https://pay.hotmart.com/Q104933430P";
+
+  const activePrice = pricingConfig.earlyBirdActive
+    ? pricingConfig.earlyBirdPrice
+    : pricingConfig.regularPrice;
+
+  const activeCheckoutUrl = useMemo(() => {
+    return pricingConfig.earlyBirdActive
+      ? pricingConfig.earlyBirdCheckoutUrl
+      : pricingConfig.regularCheckoutUrl;
+  }, []);
+
+  const primaryCtaText = pricingConfig.earlyBirdActive
+    ? `🚀 Reservar por $${pricingConfig.earlyBirdPrice}`
+    : `🚀 Inscribirme por $${pricingConfig.regularPrice}`;
+
+  const stickyCtaText = pricingConfig.earlyBirdActive
+    ? `Reservar por $${pricingConfig.earlyBirdPrice}`
+    : `Inscribirme por $${pricingConfig.regularPrice}`;
+
+  const corporateWhatsappUrl = `https://wa.me/593992801005?text=${encodeURIComponent(
+    pricingConfig.corporateWhatsappText
+  )}`;
 
   return (
     <>
-      <main className="min-h-screen bg-slate-950 text-white">
+      <main className="min-h-screen bg-slate-950 pb-24 text-white md:pb-0">
         <section className="relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(6,182,212,0.18),transparent_30%),radial-gradient(circle_at_top_right,rgba(245,158,11,0.16),transparent_28%)]" />
           <div className="relative mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
             <div className="grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
               <div>
                 <span className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1 text-sm text-cyan-200">
-                  🎓 Formación avanzada DataConSentido
+                  🎓 Segunda edición ampliada por feedback
                 </span>
 
                 <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-tight md:text-6xl">
@@ -113,7 +214,8 @@ export default function ArquitecturaPdpClient() {
                 </h1>
 
                 <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300 md:text-xl">
-                  Cómo estructurar PANSI, RAT, MTGE y EIPD bajo el nuevo enfoque operativo de la LOPDP.
+                  Cómo estructurar PANSI, RAT, MTGE y EIPD bajo el nuevo enfoque operativo
+                  de la LOPDP.
                 </p>
 
                 <div className="mt-6 flex flex-wrap gap-3">
@@ -121,25 +223,65 @@ export default function ArquitecturaPdpClient() {
                     🛡️ PANSI · 🗂️ RAT · 🎯 MTGE · ⚖️ EIPD
                   </span>
                   <span className="rounded-full border border-emerald-400/30 bg-emerald-400/10 px-4 py-1 text-sm text-emerald-200">
-                    📅 5, 6, 7, 12, 13 y 14 de mayo
+                    📅 {PROGRAM_DATES}
                   </span>
                   <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1 text-sm text-slate-300">
-                    ⏱️ 6 sesiones · 15 horas
+                    🕖 {PROGRAM_TIME}
                   </span>
+                  <span className="rounded-full border border-white/10 bg-white/5 px-4 py-1 text-sm text-slate-300">
+                    ⏱️ {TOTAL_SESSIONS} · {TOTAL_HOURS}
+                  </span>
+                </div>
+
+                <div className="mt-8 rounded-[2rem] border border-amber-400/20 bg-amber-400/10 p-6">
+                  <p className="text-sm font-medium uppercase tracking-[0.2em] text-amber-200">
+                    {pricingConfig.earlyBirdActive
+                      ? "💰 Precio de lanzamiento"
+                      : "💰 Inversión vigente"}
+                  </p>
+
+                  <div className="mt-4">
+                    <PriceBadge
+                      earlyBirdActive={pricingConfig.earlyBirdActive}
+                      earlyBirdPrice={pricingConfig.earlyBirdPrice}
+                      regularPrice={pricingConfig.regularPrice}
+                      currency={pricingConfig.currency}
+                    />
+                  </div>
+
+                  {pricingConfig.earlyBirdActive ? (
+                    <>
+                      <p className="mt-4 text-slate-200">
+                        Válido hasta <strong>{pricingConfig.earlyBirdDeadlineLabel}</strong>{" "}
+                        {pricingConfig.earlyBirdSeatLimitLabel}.
+                      </p>
+                      <p className="mt-2 text-sm text-slate-300">
+                        Sumamos 2 sesiones adicionales por feedback de la primera edición.
+                      </p>
+                    </>
+                  ) : (
+                    <p className="mt-4 text-slate-200">
+                      Inscripción abierta al valor vigente del programa completo.
+                    </p>
+                  )}
+
+                  <p className="mt-3 text-sm text-slate-400">{pricingConfig.trustNote}</p>
                 </div>
 
                 <div className="mt-10 grid gap-4 sm:grid-cols-3">
                   <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
                     <p className="text-sm text-slate-400">⏳ Duración</p>
-                    <p className="mt-2 text-xl font-semibold">6 sesiones</p>
+                    <p className="mt-2 text-xl font-semibold">{TOTAL_SESSIONS}</p>
                   </div>
                   <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
                     <p className="text-sm text-slate-400">💻 Formato</p>
                     <p className="mt-2 text-xl font-semibold">2.5h por sesión</p>
                   </div>
                   <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
-                    <p className="text-sm text-slate-400">💵 Inversión</p>
-                    <p className="mt-2 text-xl font-semibold text-cyan-300">$120 USD</p>
+                    <p className="text-sm text-slate-400">💵 Valor vigente</p>
+                    <p className="mt-2 text-xl font-semibold text-cyan-300">
+                      ${activePrice} {pricingConfig.currency}
+                    </p>
                   </div>
                 </div>
 
@@ -149,11 +291,11 @@ export default function ArquitecturaPdpClient() {
                     onClick={() => setOpenModal(true)}
                     className="inline-flex items-center justify-center rounded-2xl bg-cyan-400 px-7 py-4 text-base font-semibold text-slate-950 transition hover:bg-cyan-300"
                   >
-                    🚀 Inscribirme ahora
+                    {primaryCtaText}
                   </button>
 
                   <a
-                    href="https://wa.me/593992801005?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20del%20programa%20Arquitectura%20Profesional%20de%20Protecci%C3%B3n%20de%20Datos"
+                    href={WHATSAPP_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center justify-center rounded-2xl border border-white/15 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/5"
@@ -163,27 +305,62 @@ export default function ArquitecturaPdpClient() {
                 </div>
               </div>
 
-              <div className="rounded-3xl border border-amber-400/20 bg-amber-400/10 p-6">
-                <p className="text-sm font-medium uppercase tracking-[0.2em] text-amber-200">
-                  💰 Inversión especial
-                </p>
+              <div className="space-y-6">
+                <div className="rounded-[2rem] border border-cyan-400/20 bg-white/5 p-6 shadow-xl">
+                  <p className="text-sm font-medium uppercase tracking-[0.2em] text-cyan-200">
+                    ✅ Esta edición es para ti si...
+                  </p>
 
-                <div className="mt-3 flex items-end gap-2">
-                  <span className="text-5xl font-bold text-white">$120</span>
-                  <span className="pb-1 text-slate-300">USD</span>
+                  <div className="mt-4 space-y-3">
+                    {[
+                      "Trabajas en privacidad, cumplimiento, riesgo, legal o auditoría.",
+                      "Necesitas aterrizar PANSI, RAT, MTGE o EIPD con criterio aplicable.",
+                      "Quieres conectar norma, evidencia y trazabilidad con lógica operativa.",
+                    ].map((item) => (
+                      <div
+                        key={item}
+                        className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                      >
+                        <p className="text-slate-200">{item}</p>
+                      </div>
+                    ))}
+                  </div>
                 </div>
 
-                <p className="mt-3 text-slate-200">
-                  Acceso al programa completo de 6 sesiones intensivas.
-                </p>
+                <div className="rounded-[2rem] border border-emerald-400/20 bg-gradient-to-br from-emerald-400/10 via-slate-900 to-slate-900 p-6 shadow-xl">
+                  <p className="text-sm font-medium uppercase tracking-[0.2em] text-emerald-200">
+                    🏢 Opción corporativa
+                  </p>
+                  <h3 className="mt-3 text-2xl font-semibold text-white">
+                    ¿Van varias personas de tu equipo?
+                  </h3>
+                  <p className="mt-3 leading-7 text-slate-300">
+                    Si van 3 o más participantes de la misma organización, te conviene una
+                    opción corporativa.
+                  </p>
 
-                <button
-                  type="button"
-                  onClick={() => setOpenModal(true)}
-                  className="mt-5 inline-flex w-full items-center justify-center rounded-2xl bg-cyan-400 px-6 py-4 text-base font-semibold text-slate-950 transition hover:bg-cyan-300"
-                >
-                  🛒 Comprar ahora
-                </button>
+                  <div className="mt-5 grid gap-3 sm:grid-cols-3">
+                    {corporatePlans.map((plan) => (
+                      <div
+                        key={plan.name}
+                        className="rounded-2xl border border-white/10 bg-slate-950/40 p-4"
+                      >
+                        <p className="text-sm text-slate-400">{plan.name}</p>
+                        <p className="mt-2 text-2xl font-bold text-white">{plan.price}</p>
+                        <p className="mt-1 text-sm text-slate-300">{plan.detail}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <a
+                    href={corporateWhatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-5 inline-flex w-full items-center justify-center rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-6 py-4 text-base font-semibold text-emerald-100 transition hover:bg-emerald-400/20"
+                  >
+                    💬 Solicitar opción corporativa
+                  </a>
+                </div>
               </div>
             </div>
           </div>
@@ -254,18 +431,30 @@ export default function ArquitecturaPdpClient() {
                 💵 Inversión
               </span>
 
-              <div className="mt-6 flex items-end gap-2">
-                <span className="text-6xl font-bold tracking-tight text-white">$120</span>
-                <span className="pb-2 text-slate-300">USD</span>
+              <div className="mt-6">
+                <PriceBadge
+                  earlyBirdActive={pricingConfig.earlyBirdActive}
+                  earlyBirdPrice={pricingConfig.earlyBirdPrice}
+                  regularPrice={pricingConfig.regularPrice}
+                  currency={pricingConfig.currency}
+                />
               </div>
 
-              <p className="mt-4 text-lg leading-8 text-slate-300">
-                Un valor accesible para un programa diseñado para darte estructura, criterio técnico y capacidad de ejecución.
-              </p>
+              {pricingConfig.earlyBirdActive ? (
+                <p className="mt-4 text-lg leading-8 text-slate-300">
+                  Precio de lanzamiento vigente hasta{" "}
+                  <strong>{pricingConfig.earlyBirdDeadlineLabel}</strong>{" "}
+                  {pricingConfig.earlyBirdSeatLimitLabel}.
+                </p>
+              ) : (
+                <p className="mt-4 text-lg leading-8 text-slate-300">
+                  Valor vigente del programa completo.
+                </p>
+              )}
 
               <div className="mt-6 flex flex-wrap gap-3">
                 <span className="rounded-full border border-white/10 px-3 py-1 text-sm text-slate-300">
-                  ⏱️ 15 horas totales
+                  ⏱️ {TOTAL_HOURS} totales
                 </span>
                 <span className="rounded-full border border-white/10 px-3 py-1 text-sm text-slate-300">
                   📝 Evaluación por sesión
@@ -274,6 +463,14 @@ export default function ArquitecturaPdpClient() {
                   🎯 Cupo limitado
                 </span>
               </div>
+
+              <button
+                type="button"
+                onClick={() => setOpenModal(true)}
+                className="mt-6 inline-flex w-full items-center justify-center rounded-2xl bg-cyan-400 px-6 py-4 text-base font-semibold text-slate-950 transition hover:bg-cyan-300"
+              >
+                {primaryCtaText}
+              </button>
             </div>
 
             <div className="rounded-[2rem] border border-white/10 bg-white/5 p-8">
@@ -308,7 +505,8 @@ export default function ArquitecturaPdpClient() {
             </h2>
 
             <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-200">
-              Este programa te ayuda a conectar norma, evidencia, trazabilidad y criterio operativo para que tu gestión PDP tenga sustancia real.
+              Este programa te ayuda a conectar norma, evidencia, trazabilidad y criterio
+              operativo para que tu gestión PDP tenga sustancia real.
             </p>
 
             <div className="mt-8 flex flex-col gap-4 sm:flex-row">
@@ -317,11 +515,11 @@ export default function ArquitecturaPdpClient() {
                 onClick={() => setOpenModal(true)}
                 className="inline-flex items-center justify-center rounded-2xl bg-cyan-400 px-7 py-4 text-base font-semibold text-slate-950 transition hover:bg-cyan-300"
               >
-                🚀 Quiero inscribirme
+                {primaryCtaText}
               </button>
 
               <a
-                href="https://wa.me/593992801005?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20del%20programa%20Arquitectura%20Profesional%20de%20Protecci%C3%B3n%20de%20Datos"
+                href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center rounded-2xl border border-white/15 px-7 py-4 text-base font-semibold text-white transition hover:bg-white/5"
@@ -351,10 +549,31 @@ export default function ArquitecturaPdpClient() {
         </section>
       </main>
 
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-white/10 bg-slate-950/95 backdrop-blur md:hidden">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3">
+          <div className="min-w-0">
+            <p className="text-xs text-slate-400">
+              {pricingConfig.earlyBirdActive ? "Precio de lanzamiento" : "Valor vigente"}
+            </p>
+            <p className="truncate text-base font-semibold text-white">
+              ${activePrice} {pricingConfig.currency}
+            </p>
+          </div>
+
+          <button
+            type="button"
+            onClick={() => setOpenModal(true)}
+            className="inline-flex shrink-0 items-center justify-center rounded-xl bg-cyan-400 px-4 py-3 text-sm font-semibold text-slate-950"
+          >
+            {stickyCtaText}
+          </button>
+        </div>
+      </div>
+
       <HotmartModal
         open={openModal}
         onClose={() => setOpenModal(false)}
-        checkoutUrl={checkoutUrl}
+        checkoutUrl={activeCheckoutUrl}
       />
     </>
   );
