@@ -114,7 +114,7 @@ const faqs = [
   },
   {
     q: "¿Tienen opción para equipos?",
-    a: "Sí. Si van 3 o más personas de la misma organización, puedes solicitar una opción corporativa por WhatsApp.",
+    a: "Sí. Si van 3 o más personas de un mismo grupo, puedes solicitar el Acceso grupal por WhatsApp.",
   },
 ];
 
