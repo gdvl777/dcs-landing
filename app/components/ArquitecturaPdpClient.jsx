@@ -57,23 +57,13 @@ const modules = [
     ],
   },
   {
-    day: "Día 3",
-    title: "🗂️ RAT Ampliado",
+    day: "Día 3 y Día 4",
+    title: "🗂️ RAT Ampliado + MTGE",
     topics: [
       "🔹 Construcción práctica del RAT.",
-      "🔹 Finalidad y bases de licitud.",
-      "🔹 Trazabilidad de tratamientos.",
-      "🔹 Gran escala y escenarios complejos.",
-    ],
-  },
-  {
-    day: "Día 4",
-    title: "🎯 MTGE",
-    topics: [
-      "🔹 Evaluación del nivel de gestión.",
-      "🔹 Priorización de riesgos y controles.",
-      "🔹 Rationales o argumentos de acción.",
-      "🔹 Documentación defendible.",
+      "🔹 Finalidad, bases de licitud y trazabilidad de tratamientos.",
+      "🔹 Evaluación del nivel de gestión y priorización de riesgos.",
+      "🔹 Rationales o argumentos de acción y documentación defendible.",
     ],
   },
   {
@@ -525,8 +515,8 @@ export default function ArquitecturaPdpClient() {
         <section id="programa" className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
           <SectionHeader
             eyebrow="📚 Contenido del programa"
-            title="Cuatro bloques para una gestión PDP madura y defendible"
-            text="Cada jornada aterriza conceptos, criterios regulatorios y decisiones operativas para que puedas aplicarlos en contextos reales."
+            title="Tres bloques para una gestión PDP madura y defendible"
+            text="Cada bloque aterriza conceptos, criterios regulatorios y decisiones operativas para que puedas aplicarlos en contextos reales."
           />
 
           <div className="grid gap-6 lg:grid-cols-2">
