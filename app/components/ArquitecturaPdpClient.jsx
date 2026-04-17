@@ -17,7 +17,7 @@ const pricingConfig = {
   trustNote: "Precio visible y final. Sin códigos ocultos.",
   checkoutUrl: "https://pay.hotmart.com/Q104933430P",
   corporateWhatsappText:
-    "Hola, quiero información del paquete corporativo del programa Arquitectura Profesional de Protección de Datos Personales",
+    "Hola, quiero información del paquete grupal del programa Arquitectura Profesional de Protección de Datos Personales",
   stages: [
     {
       id: "launch",
@@ -488,7 +488,7 @@ export default function ArquitecturaPdpClient() {
                     rel="noopener noreferrer"
                     className="mt-5 inline-flex w-full items-center justify-center rounded-2xl border border-emerald-400/30 bg-emerald-400/10 px-6 py-4 text-base font-semibold text-emerald-100 transition hover:bg-emerald-400/20"
                   >
-                    💬 Solicitar opción corporativa
+                    💬 Solicitar opción grupal
                   </a>
                 </div>
               </div>
