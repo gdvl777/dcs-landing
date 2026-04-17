@@ -174,7 +174,7 @@ export default function ArquitecturaPdpClient() {
                 </div>
 
                 <p className="mt-3 text-slate-200">
-                  Acceso al programa completo de 4 sesiones intensivas.
+                  Acceso al programa completo de 6 sesiones intensivas.
                 </p>
 
                 <button
@@ -265,7 +265,7 @@ export default function ArquitecturaPdpClient() {
 
               <div className="mt-6 flex flex-wrap gap-3">
                 <span className="rounded-full border border-white/10 px-3 py-1 text-sm text-slate-300">
-                  ⏱️ 10 horas totales
+                  ⏱️ 15 horas totales
                 </span>
                 <span className="rounded-full border border-white/10 px-3 py-1 text-sm text-slate-300">
                   📝 Evaluación por sesión
