@@ -460,13 +460,13 @@ export default function ArquitecturaPdpClient() {
 
                 <div className="rounded-[2rem] border border-emerald-400/20 bg-gradient-to-br from-emerald-400/10 via-slate-900 to-slate-900 p-6 shadow-xl">
                   <p className="text-sm font-medium uppercase tracking-[0.2em] text-emerald-200">
-                    🏢 Opción corporativa
+                    🏢 Modalidad grupal
                   </p>
                   <h3 className="mt-3 text-2xl font-semibold text-white">
-                    ¿Van varias personas de tu equipo?
+                    ¿Van varias personas?
                   </h3>
                   <p className="mt-3 leading-7 text-slate-300">
-                    Si van 3 o más participantes de la misma organización, te conviene una opción corporativa.
+                    Si desean participar varias personas, pueden acceder a una modalidad grupal con condiciones preferenciales para 3, 5 o 10 participantes.
                   </p>
 
                   <div className="mt-5 grid gap-3 sm:grid-cols-3">
