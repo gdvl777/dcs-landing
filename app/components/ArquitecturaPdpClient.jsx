@@ -120,19 +120,19 @@ const faqs = [
 
 const corporatePlans = [
   {
-    name: "Equipo 3",
+    name: "Acceso grupal 3",
     price: "$300",
-    detail: "3 cupos para la misma organización",
+    detail: "3 participantes",
   },
   {
-    name: "Equipo 5",
+    name: "Acceso grupal 5",
     price: "$475",
-    detail: "5 cupos para la misma organización",
+    detail: "5 participantes",
   },
   {
-    name: "Equipo 10",
+    name: "Acceso grupal 10",
     price: "$900",
-    detail: "10 cupos para la misma organización",
+    detail: "10 participantes",
   },
 ];
 
