@@ -9,8 +9,8 @@ const links = [
   { href: "/dpo", label: "Servicios DPO" },
   { href: "/formacion-dpo", label: "Formación DPO" },
   { href: "/calcular-mtge", label: "Calculadora MTGE" },
-  { href: "/gestion-riesgos", label: "Gestión de Riesgos" }
-  
+  { href: "/gestion-riesgos", label: "Gestión de Riesgos" },
+  { href: "/reuniones", label: "Agenda una reunión" }
 ];
 
 export default function Navbar() {
