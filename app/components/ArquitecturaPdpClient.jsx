@@ -15,7 +15,7 @@ const pricingConfig = {
   activeStage: "launch", // "launch" | "current" | "regular"
   currency: "USD",
   trustNote: "Precio visible y final. Sin códigos ocultos.",
-  checkoutUrl: "https://pay.hotmart.com/Q104933430P",
+  checkoutUrl: "https://pay.hotmart.com/D105507164A",
   corporateWhatsappText:
     "Hola, quiero información del paquete grupal del programa Arquitectura Profesional de Protección de Datos Personales",
   stages: [
