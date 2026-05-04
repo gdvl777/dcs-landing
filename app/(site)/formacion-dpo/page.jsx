@@ -24,8 +24,8 @@ const cursos = [
       "Cómo estructurar PANSI, RAT, MTGE y EIPD bajo el nuevo enfoque operativo de la LOPDP, con criterio técnico y visión ejecutiva.",
     detalles: [
       "PANSI · RAT · MTGE · EIPD",
-      "4 sesiones intensivas",
-      "10 horas de formación",
+      "6 sesiones intensivas",
+      "15 horas de formación",
       "Aplicación inmediata",
     ],
     cta: "Ver detalles",
