@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import HotmartModal from "./HotmartModal";
 
-const PROGRAM_DATES = "5, 6, 7, 12, 13 y 14 de mayo de 2026";
+const PROGRAM_DATES = "9, 10, 11, 16, 17 y 18 de junio de 2026";
 const PROGRAM_TIME = "19h00";
 const TOTAL_HOURS = "15 horas";
 const TOTAL_SESSIONS = "6 sesiones";
@@ -15,7 +15,7 @@ const pricingConfig = {
   activeStage: "launch", // "launch" | "current" | "regular"
   currency: "USD",
   trustNote: "Precio visible y final. Sin códigos ocultos.",
-  checkoutUrl: "https://pay.hotmart.com/D105507164A",
+  checkoutUrl: "https://pay.hotmart.com/Y105782937C",
   corporateWhatsappText:
     "Hola, quiero información del paquete grupal del programa Arquitectura Profesional de Protección de Datos Personales",
   stages: [
@@ -23,23 +23,23 @@ const pricingConfig = {
       id: "launch",
       label: "Lanzamiento",
       price: 110,
-      window: "Hasta el 04 de mayo de 2026",
+      window: "Hasta el 01 de junio de 2026",
       badge: "Mejor momento para reservar",
-      deadlineISO: "2026-05-04T23:59:59-05:00",
+      deadlineISO: "2026-06-01T23:59:59-05:00",
     },
     {
       id: "current",
       label: "Precio vigente",
       price: 120,
-      window: "Del 05 al 07 de mayo de 2026",
+      window: "Del 02 al 08 de junio de 2026",
       badge: "Segunda etapa",
-      deadlineISO: "2026-05-08T23:59:59-05:00",
+      deadlineISO: "2026-06-08T23:59:59-05:00",
     },
     {
       id: "regular",
       label: "Precio regular",
       price: 129,
-      window: "Desde el 08 de mayo de 2026",
+      window: "Desde el 09 de junio de 2026",
       badge: "Etapa final",
     },
   ],
