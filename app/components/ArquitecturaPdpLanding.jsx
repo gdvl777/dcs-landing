@@ -23,7 +23,7 @@ export default function ArquitecturaPdpLanding() {
             </div>
 
             <p className="mt-3 text-slate-200">
-              Acceso al programa completo de 4 sesiones intensivas.
+              Acceso al programa completo de 6 sesiones intensivas.
             </p>
 
             <button
