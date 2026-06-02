@@ -18,7 +18,7 @@ export default function ArquitecturaPdpLanding() {
             </p>
 
             <div className="mt-3 flex items-end gap-2">
-              <span className="text-5xl font-bold text-white">$110</span>
+              <span className="text-5xl font-bold text-white">$120</span>
               <span className="pb-1 text-slate-300">USD</span>
             </div>
 

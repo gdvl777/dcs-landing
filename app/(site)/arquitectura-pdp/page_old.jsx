@@ -141,7 +141,7 @@ export default function Page() {
                                 </div>
                                 <div className="rounded-3xl border border-white/10 bg-white/5 p-5">
                                     <p className="text-sm text-slate-400">💵 Inversión</p>
-                                    <p className="mt-2 text-xl font-semibold text-cyan-300">$110 USD</p>
+                                    <p className="mt-2 text-xl font-semibold text-cyan-300">$120 USD</p>
                                 </div>
                             </div>
 
@@ -259,7 +259,7 @@ export default function Page() {
                         </span>
 
                         <div className="mt-6 flex items-end gap-2">
-                            <span className="text-6xl font-bold tracking-tight text-white">$110</span>
+                            <span className="text-6xl font-bold tracking-tight text-white">$120</span>
                             <span className="pb-2 text-slate-300">USD</span>
                         </div>
 
