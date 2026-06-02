@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TikTokViewContent from "@/app/components/TikTokViewContent";
 
 const cursos = [
   {
@@ -41,6 +42,8 @@ export const metadata = {
 
 export default function FormacionDpoPage() {
   return (
+     <>
+      <TikTokViewContent />
     <main className="min-h-screen bg-slate-950 text-white">
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(6,182,212,0.18),transparent_30%),radial-gradient(circle_at_top_right,rgba(245,158,11,0.12),transparent_28%)]" />
@@ -119,5 +122,6 @@ export default function FormacionDpoPage() {
         </div>
       </section>
     </main>
+    </>
   );
 }
