@@ -12,7 +12,7 @@ const WHATSAPP_URL =
   "https://wa.me/593992801005?text=Hola,%20quiero%20m%C3%A1s%20informaci%C3%B3n%20del%20programa%20Arquitectura%20Profesional%20de%20Protecci%C3%B3n%20de%20Datos";
 
 const pricingConfig = {
-  activeStage: "current", // "launch" | "current" | "regular"
+  activeStage: "regular", // "launch" | "current" | "regular"
   currency: "USD",
   trustNote: "Precio visible y final. Sin códigos ocultos.",
   checkoutUrl: "https://pay.hotmart.com/Y105782937C",
