@@ -368,7 +368,7 @@ export default function ArquitecturaPdpClient() {
 
   return (
     <>
-      <main className="min-h-screen bg-[#f6f8fb] pb-24 text-slate-950 md:pb-0">
+      <main className="min-h-screen bg-[#f6f8fb] pb-32 text-slate-950 sm:pb-28">
         <section className="border-b border-slate-200 bg-white">
           <div className="mx-auto max-w-7xl px-4 py-3 text-sm text-slate-700 sm:px-6 lg:px-8">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
@@ -495,7 +495,7 @@ export default function ArquitecturaPdpClient() {
           </div>
         </section>
 
-        <section id="programa" ref={curriculumRef} className="border-y border-slate-200 bg-[#eef7f5]">
+        <section id="programa" ref={curriculumRef} className="scroll-mt-28 border-y border-slate-200 bg-[#eef7f5]">
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
             <SectionHeader
               eyebrow="Programa académico"
@@ -544,7 +544,7 @@ export default function ArquitecturaPdpClient() {
           </div>
         </section>
 
-        <section id="inscripcion" className="bg-[#eef7f5]">
+        <section id="inscripcion" className="scroll-mt-28 bg-[#eef7f5]">
           <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
             <div className="rounded-lg border border-teal-200 bg-white p-6 shadow-sm">
               <div className="flex items-start gap-4">
@@ -683,21 +683,33 @@ export default function ArquitecturaPdpClient() {
         </section>
       </main>
 
-      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 shadow-[0_-16px_40px_rgba(15,23,42,0.14)] backdrop-blur md:hidden">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3">
-          <div className="min-w-0">
+      <div className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 shadow-[0_-16px_40px_rgba(15,23,42,0.14)] backdrop-blur">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+          <div className="hidden min-w-0 sm:block">
             <p className="text-xs text-slate-500">{program.editionLabel}</p>
             <p className="truncate text-sm font-semibold text-slate-950">{program.enrollment.priceLabel}</p>
           </div>
 
-          <button
-            type="button"
-            onClick={handleEnroll}
-            className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-lg bg-teal-500 px-4 py-2 text-sm font-bold text-white"
-          >
-            {checkoutReady ? "Inscribirme" : "Lista de espera"}
-            <ArrowRight className="h-4 w-4" aria-hidden="true" />
-          </button>
+          <div className="grid grid-cols-2 gap-3 sm:flex sm:items-center sm:justify-end">
+            <a
+              href="#programa"
+              onClick={handleCurriculumClick}
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-bold text-slate-900 transition hover:border-teal-300 hover:bg-teal-50 focus:outline-none focus:ring-4 focus:ring-teal-200"
+            >
+              <BookOpenCheck className="h-4 w-4 shrink-0 text-teal-700" aria-hidden="true" />
+              Ver programa
+            </a>
+
+            <button
+              type="button"
+              onClick={handleEnroll}
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-teal-500 px-4 py-2 text-sm font-bold text-white transition hover:bg-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-200"
+            >
+              <span className="hidden sm:inline">{primaryCtaLabel}</span>
+              <span className="sm:hidden">{checkoutReady ? "Inscribirme" : "Lista de espera"}</span>
+              <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
+            </button>
+          </div>
         </div>
       </div>
 

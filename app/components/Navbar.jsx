@@ -4,10 +4,6 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  arquitecturaPdpProgram as arquitecturaProgram,
-  getPrimaryCtaLabel,
-} from "@/app/data/arquitecturaPdpProgram";
 
 const links = [
   { href: "/dpo", label: "Servicios DPO" },
@@ -20,13 +16,6 @@ const links = [
 export default function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const isArquitecturaLanding = pathname?.startsWith(arquitecturaProgram.slug);
-  const visibleLinks = isArquitecturaLanding
-    ? [
-        { href: `${arquitecturaProgram.slug}#programa`, label: "Ver programa" },
-        { href: `${arquitecturaProgram.slug}#inscripcion`, label: getPrimaryCtaLabel(arquitecturaProgram) },
-      ]
-    : links;
 
   useEffect(() => {
     setOpen(false);
@@ -62,7 +51,7 @@ export default function Navbar() {
           </Link>
 
           <nav className="nav-pro-links-desktop">
-            {visibleLinks.map((link) => {
+            {links.map((link) => {
               const active =
                 !link.href.includes("#") &&
                 (pathname === link.href || pathname.startsWith(`${link.href}/`));
@@ -94,7 +83,7 @@ export default function Navbar() {
 
         {open && (
           <div className="nav-mobile-panel" onClick={(e) => e.stopPropagation()}>
-            {visibleLinks.map((link) => {
+            {links.map((link) => {
               const active =
                 !link.href.includes("#") &&
                 (pathname === link.href || pathname.startsWith(`${link.href}/`));
