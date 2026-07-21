@@ -253,26 +253,21 @@ export const arquitecturaPdpProgram = {
   faqs: [
     {
       question: "¿Las clases quedan grabadas?",
-      answer: "La disponibilidad de grabaciones para la cuarta edición está por confirmar.",
+      answer: "La disponibilidad de grabaciones para la cuarta edición queda de manera indefinida en la plataforma.",
     },
     {
       question: "¿Durante cuánto tiempo habrá acceso?",
-      answer: "El plazo de acceso a grabaciones, materiales y repositorio está por confirmar.",
+      answer: "El plazo de acceso a grabaciones, materiales y repositorio queda de manera indefinida en la plataforma.",
     },
     {
       question: "¿Qué materiales se entregan?",
       answer:
-        "El programa trabajará PANSI, RAT ampliado, MTGE y EIPD. El listado final de materiales y plantillas está por confirmar.",
+        "El programa trabajará PANSI, RAT ampliado, MTGE y EIPD. Este material será editable y entregado en cada sesión.",
     },
     {
-      question: "¿Qué requisitos tiene el certificado?",
+      question: "¿Emiten certificado?",
       answer:
-        "Los requisitos de asistencia, evaluación y emisión del certificado están por confirmar.",
-    },
-    {
-      question: "¿Se emite factura?",
-      answer:
-        "La información de facturación debe confirmarse antes de abrir inscripciones.",
+        "Al finalizar el curso se emite el certificado validado en la blockchain.",
     },
     {
       question: "¿Qué ocurre después del pago?",
@@ -282,23 +277,14 @@ export const arquitecturaPdpProgram = {
     {
       question: "¿Qué pasa si alguien no puede asistir?",
       answer:
-        "La política de recuperación, cambios o acceso a grabaciones está por confirmar.",
+        "No te preocupes. Las sesiones quedan grabadas y el material es editable, así que puedes ponerte al día en cualquier momento.",
     },
     {
       question: "¿Se necesita experiencia previa?",
       answer:
         "Está dirigido a profesionales de privacidad, legal, cumplimiento, seguridad, auditoría, riesgos y responsables de tratamiento.",
     },
-    {
-      question: "¿Cuál es la política de devolución o cambio?",
-      answer:
-        "La política de devolución, cambio o reembolso debe confirmarse antes de habilitar compra.",
-    },
-    {
-      question: "¿Qué diferencia esta edición de las anteriores?",
-      answer:
-        "La cuarta edición ya tiene calendario definido: 4, 5, 6, 11, 12 y 13 de agosto de 2026, de 19h00 a 21h30. Otras mejoras deben publicarse solo cuando estén confirmadas.",
-    },
+    
   ],
 };
 
