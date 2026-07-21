@@ -34,14 +34,14 @@ export const arquitecturaPdpProgram = {
   schedule: {
     sessionsLabel: "6 sesiones",
     hoursLabel: "15 horas",
-    sessionDurationLabel: "2,5 horas por sesión",
+    sessionDurationLabel: "2,5 horas por sesión con espacio de preguntas de 30 minutos adicionales",
     formatLabel: "Online en vivo",
     timezoneLabel: "Ecuador, GMT-5",
     datesLabel: "4, 5, 6, 11, 12 y 13 de agosto de 2026",
     timeLabel: "19h00 a 21h30",
-    recordingsLabel: "Grabaciones por confirmar",
-    materialsLabel: "Material editable por confirmar",
-    certificateLabel: "Certificado por confirmar",
+    recordingsLabel: "Grabaciones de por vida",
+    materialsLabel: "Material editable en cada sesión",
+    certificateLabel: "Certificado validado en la blockchain",
     questionsLabel: "Espacio de preguntas por sesión",
   },
   checkout: {
@@ -53,9 +53,9 @@ export const arquitecturaPdpProgram = {
     currency: "USD",
     returnPath: "/arquitectura-pdp/gracias",
     note:
-      "Antes de enviar pauta, confirmar que Hotmart muestre producto, edicion, pais, moneda y precio correctos.",
+      "Estás a un paso de tener ventaja competitiva en la protección de datos personales. Completa tu inscripción y asegura tu lugar en la 4.ª edición del programa.",
     displayNote:
-      "Antes de enviar pauta, confirmar que Hotmart muestre producto, edición, país, moneda y precio correctos.",
+      "Estás a un paso de tener ventaja competitiva en la protección de datos personales. Completa tu inscripción y asegura tu lugar en la 4.ª edición del programa.",
     securityNotice:
       "El pago es seguro a traves de Hotmart. DataConSentido no maneja ni trata los datos de tarjetas de credito o debito; esos datos se ingresan y procesan directamente en Hotmart.",
     displaySecurityNotice:
