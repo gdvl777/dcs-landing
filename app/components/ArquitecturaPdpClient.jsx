@@ -622,8 +622,8 @@ export default function ArquitecturaPdpClient() {
           <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
             <SectionHeader
               eyebrow="Preguntas frecuentes"
-              title="Respuestas publicables para esta etapa"
-              text="Las respuestas evitan prometer fechas, materiales, certificado o políticas que aún no están confirmadas."
+              title="Respuestas para esta edición"
+              text="Lo que necesitas saber de nuestro curso."
               centered
             />
 
