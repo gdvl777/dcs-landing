@@ -172,21 +172,32 @@ function DeliverablePreview({ deliverable }) {
         <FileText className="h-6 w-6 shrink-0 text-teal-700" aria-hidden="true" />
       </div>
 
-      <div className="mt-5 overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
-        <div className="border-b border-slate-200 bg-slate-100 px-4 py-3">
-          <div className="h-2 w-28 rounded bg-teal-300" />
+      {deliverable.previewImage ? (
+        <div className="mt-5 overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+          <img
+            src={deliverable.previewImage}
+            alt={deliverable.previewAlt}
+            loading="lazy"
+            className="aspect-[14/9] w-full object-cover"
+          />
         </div>
-        <div className="space-y-3 p-4">
-          <div className="grid grid-cols-3 gap-2">
-            <div className="h-8 rounded bg-slate-200" />
-            <div className="h-8 rounded bg-slate-200" />
-            <div className="h-8 rounded bg-slate-200" />
+      ) : (
+        <div className="mt-5 overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
+          <div className="border-b border-slate-200 bg-slate-100 px-4 py-3">
+            <div className="h-2 w-28 rounded bg-teal-300" />
           </div>
-          <div className="h-3 w-full rounded bg-slate-200" />
-          <div className="h-3 w-10/12 rounded bg-slate-200" />
-          <div className="h-3 w-8/12 rounded bg-slate-200" />
+          <div className="space-y-3 p-4">
+            <div className="grid grid-cols-3 gap-2">
+              <div className="h-8 rounded bg-slate-200" />
+              <div className="h-8 rounded bg-slate-200" />
+              <div className="h-8 rounded bg-slate-200" />
+            </div>
+            <div className="h-3 w-full rounded bg-slate-200" />
+            <div className="h-3 w-10/12 rounded bg-slate-200" />
+            <div className="h-3 w-8/12 rounded bg-slate-200" />
+          </div>
         </div>
-      </div>
+      )}
 
       <p className="mt-4 text-sm leading-6 text-slate-600">{deliverable.description}</p>
     </article>
@@ -201,7 +212,7 @@ function CurriculumRow({ item }) {
         <h3 className="mt-2 text-xl font-bold text-slate-950">{item.block}</h3>
       </div>
       <div>
-        <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">Qué se trabaja</p>
+        <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">¿Qué se trabaja?</p>
         <p className="mt-2 leading-7 text-slate-700">{item.work}</p>
       </div>
       <div>

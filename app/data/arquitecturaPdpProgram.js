@@ -83,22 +83,22 @@ export const arquitecturaPdpProgram = {
       "En LATAM, la protección de datos personales parte de una idea clara: cada persona debe poder saber, decidir y exigir protección sobre la información que la identifica o la hace identificable.",
     points: [
       {
-        title: "Qué son datos personales",
+        title: "¿Qué son datos personales?",
         text:
           "Son datos que permiten identificar a alguien de forma directa o indirecta: nombre, cédula, correo, teléfono, dirección, imagen, datos de salud, financieros, laborales o biométricos.",
       },
       {
-        title: "Qué implica para una organización",
+        title: "¿Qué implica para una organización?",
         text:
           "No basta con guardar información. Hay que saber para qué se usa, con qué base se trata, quién accede, cuánto tiempo se conserva y qué medidas la protegen.",
       },
       {
-        title: "Qué puede exigir una persona",
+        title: "¿Qué puede exigir una persona?",
         text:
           "La persona titular puede pedir acceso, rectificación, actualización, eliminación, oposición y otros derechos previstos en la normativa ecuatoriana.",
       },
       {
-        title: "Por qué importa la arquitectura",
+        title: " ¿Por qué importa la arquitectura?",
         text:
           "Porque cumplir no es tener una política aislada. Es ordenar tratamientos, riesgos, evidencias, decisiones y controles para poder explicar y defender lo que se hace.",
       },
@@ -108,24 +108,36 @@ export const arquitecturaPdpProgram = {
     {
       title: "Plantilla PANSI",
       status: "Incluida",
+      previewImage: "/materiales/entregables/preview-plantilla-pansi.png",
+      previewAlt:
+        "Vista previa anonimizada de la plantilla PANSI con estructura de Excel.",
       description:
         "Guía editable para estructurar el programa de seguridad, continuidad y gestión de riesgos.",
     },
     {
       title: "RAT ampliado",
       status: "Incluido",
+      previewImage: "/materiales/entregables/preview-rat-ampliado.png",
+      previewAlt:
+        "Vista previa anonimizada del RAT ampliado con estructura de Excel.",
       description:
         "Formato de trabajo para documentar finalidad, licitud, categorías de datos y decisiones operativas.",
     },
     {
       title: "Matriz o reporte MTGE",
       status: "Incluido",
+      previewImage: "/materiales/entregables/preview-mtge.png",
+      previewAlt:
+        "Vista previa anonimizada de matriz MTGE con criterios de gran escala en Excel.",
       description:
         "Herramienta para analizar tratamientos de gran escala con criterios defendibles y priorización clara.",
     },
     {
       title: "Índice de EIPD",
       status: "Incluido",
+      previewImage: "/materiales/entregables/preview-indice-eipd.png",
+      previewAlt:
+        "Vista previa anonimizada del índice de EIPD con estructura de Word.",
       description:
         "Estructura base para evaluar impacto, riesgos, controles y documentación de decisiones.",
     },
@@ -138,6 +150,9 @@ export const arquitecturaPdpProgram = {
     {
       title: "Certificado",
       status: "Incluido",
+      previewImage: "/materiales/entregables/preview-certificado-blockchain.png",
+      previewAlt:
+        "Vista previa anonimizada del certificado con verificación blockchain.",
       description:
         "Certificado validado en blockchain al finalizar el curso.",
     },
