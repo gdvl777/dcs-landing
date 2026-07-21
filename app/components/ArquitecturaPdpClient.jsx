@@ -374,7 +374,7 @@ export default function ArquitecturaPdpClient() {
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <span>{program.enrollment.banner}</span>
               <span className="font-semibold text-teal-800">
-                Checkout Hotmart configurado
+                Arquitectura Profesional de Protección de Datos Personales (4.ª edición)
               </span>
             </div>
           </div>
@@ -556,8 +556,7 @@ export default function ArquitecturaPdpClient() {
                   <h2 className="mt-3 text-3xl font-bold text-slate-950">{program.individualOffer.title}</h2>
                   <p className="mt-3 text-4xl font-bold text-slate-950">{program.individualOffer.priceLabel}</p>
                   <p className="mt-4 leading-7 text-slate-600">
-                    Se muestra una sola oferta vigente. El botón abre el checkout de Hotmart en un modal
-                    seguro dentro de esta página.
+                    Oferta vigente.
                   </p>
                 </div>
               </div>
