@@ -395,7 +395,7 @@ export default function ArquitecturaPdpClient() {
               </div>
 
               <h1 className="mt-6 max-w-4xl text-3xl font-bold leading-tight text-white sm:text-4xl md:text-6xl">
-                Construye una arquitectura de protección de datos que puedas aplicar, justificar y defender
+                Construye una arquitectura de protección de datos personales que puedas aplicar, justificar y defender
               </h1>
 
               <p className="mt-6 max-w-3xl text-base leading-7 text-slate-300 md:text-xl md:leading-8">
@@ -674,7 +674,7 @@ export default function ArquitecturaPdpClient() {
                     <a className="font-semibold text-teal-200 underline underline-offset-4" href="/politica-de-privacidad">
                       Política de privacidad
                     </a>{" "}
-                    · Soporte de compra, cambios o reembolsos por Hotmart y DataConSentido.
+                    · Soporte de compra, cambios por Hotmart y DataConSentido.
                   </p>
                 </div>
               </div>

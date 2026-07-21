@@ -17,7 +17,7 @@ export default function PrivacidadPage() {
       <section className="section" style={{ marginTop: 14 }}>
         <h2 className="sectionTitle">1. Responsable del tratamiento</h2>
         <p className="sub" style={{ color: "var(--text)" }}>
-          <b>Nombre comercial:</b> DataConSentido · <b>RUC</b> 0924906308001 · Quito, Ecuador ·
+          <b>Nombre comercial:</b> DataConSentido · <b>RUC</b> 0993404667001 · Guayaquil, Ecuador ·
           <b> Contacto:</b> <a href="mailto:contacto@dataconsentido.com">contacto@dataconsentido.com</a>
         </p>
 

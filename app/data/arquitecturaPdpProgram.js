@@ -36,7 +36,7 @@ export const arquitecturaPdpProgram = {
     hoursLabel: "15 horas",
     sessionDurationLabel: "2,5 horas por sesión con espacio de preguntas incluido",
     formatLabel: "Online en vivo",
-    timezoneLabel: "Ecuador, GMT-5",
+    timezoneLabel: "GMT-5",
     datesLabel: "4, 5, 6, 11, 12 y 13 de agosto de 2026",
     timeLabel: "19h00 a 21h30",
     recordingsLabel: "Grabaciones con acceso indefinido",
@@ -77,10 +77,10 @@ export const arquitecturaPdpProgram = {
     "Presentar decisiones ante dirección, auditoría o autoridad con una línea argumental verificable.",
   ],
   plainLanguage: {
-    eyebrow: "Protección de datos en Ecuador",
+    eyebrow: "Protección de datos en LATAM",
     title: "En sencillo: no se trata de papeles, se trata de decisiones responsables sobre personas",
     intro:
-      "En Ecuador, la protección de datos personales parte de una idea clara: cada persona debe poder saber, decidir y exigir protección sobre la información que la identifica o la hace identificable.",
+      "En LATAM, la protección de datos personales parte de una idea clara: cada persona debe poder saber, decidir y exigir protección sobre la información que la identifica o la hace identificable.",
     points: [
       {
         title: "Qué son datos personales",
@@ -199,7 +199,7 @@ export const arquitecturaPdpProgram = {
   ],
   includes: [
     "6 sesiones online en vivo, del 4 al 13 de agosto de 2026.",
-    "Horario de 19h00 a 21h30, Ecuador GMT-5.",
+    "Horario de 19h00 a 21h30, GMT-5.",
     "Espacio de preguntas en cada sesión.",
     "Trabajo aplicado sobre PANSI, RAT ampliado, MTGE y EIPD.",
     "Materiales y plantillas editables entregados durante las sesiones.",
@@ -222,7 +222,7 @@ export const arquitecturaPdpProgram = {
     items: [
       "6 sesiones en vivo.",
       "Del 4 al 13 de agosto de 2026.",
-      "19h00 a 21h30, Ecuador GMT-5.",
+      "19h00 a 21h30, GMT-5.",
       "Espacio de preguntas por sesión.",
       "Grabaciones con acceso indefinido en la plataforma.",
       "Plantillas y materiales editables entregados durante las sesiones.",
@@ -233,21 +233,21 @@ export const arquitecturaPdpProgram = {
   corporatePlans: [
     {
       participants: "3 personas",
-      total: "Cotización a medida",
+      total: "$300 USD",
       perPerson: "Según equipo",
-      savings: "Beneficio grupal",
+      savings: "$60 USD de ahorro",
     },
     {
       participants: "5 personas",
-      total: "Cotización a medida",
+      total: "$500 USD",
       perPerson: "Según equipo",
-      savings: "Beneficio grupal",
+      savings: "$100 USD de ahorro",
     },
     {
       participants: "10 personas",
-      total: "Cotización a medida",
+      total: "$950 USD",
       perPerson: "Según equipo",
-      savings: "Beneficio grupal",
+      savings: "$250 USD de ahorro",
     },
   ],
   faqs: [

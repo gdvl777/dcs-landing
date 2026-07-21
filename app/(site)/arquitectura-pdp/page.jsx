@@ -11,7 +11,7 @@ export const metadata = {
   openGraph: {
     title: `${program.editionLabel} · ${program.displayName}`,
     description:
-      `Sesiones online en vivo: ${program.schedule.datesLabel}, de ${program.schedule.timeLabel}, Ecuador GMT-5.`,
+      `Sesiones online en vivo: ${program.schedule.datesLabel}, de ${program.schedule.timeLabel}, GMT-5.`,
     url: program.canonicalUrl,
     siteName: program.brand.name,
     locale: "es_EC",

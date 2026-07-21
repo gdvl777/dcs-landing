@@ -16,7 +16,7 @@ export default function HomePage() {
             <div style={{ minWidth: 0 }}>
               <div style={styles.kicker}>
                 <span style={styles.kickerDot} />
-                En Ecuador • LOPDP • Evidencia verificable
+                En LATAM • LOPDP • Evidencia verificable
               </div>
 
               <h1 className="homeH1" style={styles.h1}>

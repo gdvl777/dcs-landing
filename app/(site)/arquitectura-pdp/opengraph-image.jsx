@@ -71,7 +71,7 @@ export default function Image() {
           }}
         >
           <span>{program.enrollment.statusLabel}</span>
-          <span>{program.schedule.timeLabel} · Ecuador GMT-5</span>
+          <span>{program.schedule.timeLabel} · GMT-5</span>
         </div>
       </div>
     ),
