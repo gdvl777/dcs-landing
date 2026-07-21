@@ -224,15 +224,41 @@ export const arquitecturaPdpProgram = {
     "Grabaciones con acceso indefinido en la plataforma.",
     "Certificado validado en blockchain al finalizar el curso.",
   ],
-  instructors: {
-    status: "Equipo especializado",
-    note:
-      "Las sesiones estarán a cargo de profesionales con experiencia en protección de datos, cumplimiento, riesgos y documentación aplicable.",
-  },
   socialProof: {
-    status: "Evidencia responsable",
-    note:
-      "Los testimonios y referencias de participantes se publican únicamente cuando existe autorización expresa.",
+    eyebrow: "Opiniones de participantes",
+    title: "Lo que valoran quienes ya pasaron por el programa",
+    text:
+      "Comentarios recopilados de participantes de ediciones anteriores sobre el curso, la metodología y los materiales.",
+    sourceLabel: "Comentario de participante",
+    testimonials: [
+      {
+        name: "Mabell L.",
+        editionLabel: "3.ª edición",
+        quote:
+          "Agradezco por el curso y material didáctico, sirvieron para poner en práctica los conocimientos.",
+      },
+      {
+        name: "Eduardo T.",
+        editionLabel: "2.ª edición",
+        quote: "Excelente todo, experiencia del tutor.",
+      },
+      {
+        name: "Gil",
+        editionLabel: "3.ª edición",
+        quote: "Excelente el trabajo que están haciendo.",
+      },
+      {
+        name: "Luigi M.",
+        editionLabel: "1.ª edición",
+        quote:
+          "Todas las sesiones de trabajo se las manejó con criterio y profesionalismo; la metodología de interacción con talleres sobre casos reales fue la más ideal desde mi punto de vista.",
+      },
+      {
+        name: "W. Velasco",
+        editionLabel: "1.ª edición",
+        quote: "Bastante práctica las clases, felicidades.",
+      },
+    ],
   },
   individualOffer: {
     title: "Acceso individual",

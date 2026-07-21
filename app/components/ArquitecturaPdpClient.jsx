@@ -7,16 +7,16 @@ import {
   Building2,
   CalendarClock,
   CheckCircle2,
-  ClipboardCheck,
   Database,
   ExternalLink,
   FileText,
   Landmark,
   LockKeyhole,
   MessageCircle,
+  Quote,
   Scale,
   ShieldCheck,
-  UserRoundCheck,
+  Star,
   UsersRound,
 } from "lucide-react";
 import HotmartModal from "./HotmartModal";
@@ -240,13 +240,82 @@ function SessionItem({ session }) {
   );
 }
 
-function StatusNotice({ icon: Icon, title, text }) {
+function SocialProofCarousel({ socialProof }) {
+  const testimonials = socialProof.testimonials || [];
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    if (testimonials.length <= 1) return undefined;
+
+    const intervalId = window.setInterval(() => {
+      setActiveIndex((index) => (index + 1) % testimonials.length);
+    }, 5200);
+
+    return () => window.clearInterval(intervalId);
+  }, [testimonials.length]);
+
+  if (!testimonials.length) return null;
+
+  const activeTestimonial = testimonials[activeIndex % testimonials.length];
+
   return (
-    <article className="rounded-lg border border-amber-200 bg-amber-50 p-5">
-      <Icon className="h-6 w-6 text-amber-700" aria-hidden="true" />
-      <h3 className="mt-4 text-xl font-semibold text-slate-950">{title}</h3>
-      <p className="mt-3 leading-7 text-slate-700">{text}</p>
-    </article>
+    <section id="opiniones" className="border-y border-slate-200 bg-[#f6f8fb]">
+      <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.78fr_1.22fr] lg:px-8">
+        <SectionHeader
+          eyebrow={socialProof.eyebrow}
+          title={socialProof.title}
+          text={socialProof.text}
+        />
+
+        <div>
+          <article
+            key={activeTestimonial.name}
+            aria-live="polite"
+            className="min-h-[310px] rounded-lg border border-teal-200 bg-white p-6 shadow-sm transition"
+          >
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
+                <Quote className="h-6 w-6" aria-hidden="true" />
+              </div>
+              <div className="flex gap-1 text-amber-500" aria-hidden="true">
+                {[1, 2, 3, 4, 5].map((item) => (
+                  <Star key={item} className="h-5 w-5 fill-current" />
+                ))}
+              </div>
+            </div>
+
+            <blockquote className="mt-6 text-xl font-semibold leading-9 text-slate-950 md:text-2xl md:leading-10">
+              “{activeTestimonial.quote}”
+            </blockquote>
+
+            <div className="mt-7 flex flex-col gap-3 border-t border-slate-200 pt-5 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <p className="text-base font-bold text-slate-950">{activeTestimonial.name}</p>
+                <p className="mt-1 text-sm text-slate-500">
+                  {activeTestimonial.editionLabel || program.editionLabel} · Participante
+                </p>
+              </div>
+              <p className="text-sm font-medium text-teal-700">{socialProof.sourceLabel}</p>
+            </div>
+          </article>
+
+          <div className="mt-4 flex items-center justify-center gap-2" aria-label="Opiniones">
+            {testimonials.map((testimonial, index) => (
+              <button
+                key={testimonial.name}
+                type="button"
+                aria-label={`Ver opinión de ${testimonial.name}`}
+                aria-current={index === activeIndex ? "true" : undefined}
+                onClick={() => setActiveIndex(index)}
+                className={`h-2.5 rounded-full transition ${
+                  index === activeIndex ? "w-9 bg-teal-600" : "w-2.5 bg-slate-300 hover:bg-slate-400"
+                }`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 
@@ -540,20 +609,7 @@ export default function ArquitecturaPdpClient() {
           </div>
         </section>
 
-        <section className="border-y border-slate-200 bg-[#f6f8fb]">
-          <div className="mx-auto grid max-w-7xl gap-5 px-4 py-14 sm:px-6 md:grid-cols-2 lg:px-8">
-            <StatusNotice
-              icon={UserRoundCheck}
-              title={`Instructores: ${program.instructors.status}`}
-              text={program.instructors.note}
-            />
-            <StatusNotice
-              icon={ClipboardCheck}
-              title={`Evidencia social: ${program.socialProof.status}`}
-              text={program.socialProof.note}
-            />
-          </div>
-        </section>
+        <SocialProofCarousel socialProof={program.socialProof} />
 
         <section id="inscripcion" className="scroll-mt-28 bg-[#eef7f5]">
           <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
@@ -705,9 +761,9 @@ export default function ArquitecturaPdpClient() {
             <a
               href="#programa"
               onClick={handleCurriculumClick}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-bold text-slate-900 transition hover:border-teal-300 hover:bg-teal-50 focus:outline-none focus:ring-4 focus:ring-teal-200"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-950 bg-slate-950 px-4 py-2 text-sm font-bold !text-white shadow-sm transition hover:border-slate-800 hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-teal-200"
             >
-              <BookOpenCheck className="h-4 w-4 shrink-0 text-teal-700" aria-hidden="true" />
+              <BookOpenCheck className="h-4 w-4 shrink-0 text-teal-200" aria-hidden="true" />
               Ver programa
             </a>
 
