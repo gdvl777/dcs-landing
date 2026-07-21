@@ -34,12 +34,12 @@ export const arquitecturaPdpProgram = {
   schedule: {
     sessionsLabel: "6 sesiones",
     hoursLabel: "15 horas",
-    sessionDurationLabel: "2,5 horas por sesión con espacio de preguntas de 30 minutos adicionales",
+    sessionDurationLabel: "2,5 horas por sesión con espacio de preguntas incluido",
     formatLabel: "Online en vivo",
     timezoneLabel: "Ecuador, GMT-5",
     datesLabel: "4, 5, 6, 11, 12 y 13 de agosto de 2026",
     timeLabel: "19h00 a 21h30",
-    recordingsLabel: "Grabaciones de por vida",
+    recordingsLabel: "Grabaciones con acceso indefinido",
     materialsLabel: "Material editable en cada sesión",
     certificateLabel: "Certificado validado en la blockchain",
     questionsLabel: "Espacio de preguntas por sesión",
@@ -107,39 +107,39 @@ export const arquitecturaPdpProgram = {
   deliverables: [
     {
       title: "Plantilla PANSI",
-      status: "Vista previa real pendiente",
+      status: "Incluida",
       description:
-        "Marcador para cargar una versión real, anonimizada o de demostración cuando esté autorizada.",
+        "Guía editable para estructurar el programa de seguridad, continuidad y gestión de riesgos.",
     },
     {
       title: "RAT ampliado",
-      status: "Vista previa real pendiente",
+      status: "Incluido",
       description:
-        "Marcador para mostrar estructura, trazabilidad y campos clave sin exponer datos sensibles.",
+        "Formato de trabajo para documentar finalidad, licitud, categorías de datos y decisiones operativas.",
     },
     {
       title: "Matriz o reporte MTGE",
-      status: "Vista previa real pendiente",
+      status: "Incluido",
       description:
-        "Marcador para publicar una captura autorizada del análisis de gran escala.",
+        "Herramienta para analizar tratamientos de gran escala con criterios defendibles y priorización clara.",
     },
     {
       title: "Índice de EIPD",
-      status: "Vista previa real pendiente",
+      status: "Incluido",
       description:
-        "Marcador para mostrar la estructura aplicable de una evaluación de impacto.",
+        "Estructura base para evaluar impacto, riesgos, controles y documentación de decisiones.",
     },
     {
       title: "Materiales descargables",
-      status: "Disponibilidad por confirmar",
+      status: "Incluidos",
       description:
-        "Se debe confirmar el alcance de plantillas, lecturas y repositorio de acceso.",
+        "Plantillas, lecturas y recursos editables entregados durante las sesiones del programa.",
     },
     {
       title: "Certificado",
-      status: "Condiciones por confirmar",
+      status: "Incluido",
       description:
-        "Se debe confirmar tipo de certificado, requisitos y eventual verificación blockchain.",
+        "Certificado validado en blockchain al finalizar el curso.",
     },
   ],
   curriculumBlocks: [
@@ -202,18 +202,19 @@ export const arquitecturaPdpProgram = {
     "Horario de 19h00 a 21h30, Ecuador GMT-5.",
     "Espacio de preguntas en cada sesión.",
     "Trabajo aplicado sobre PANSI, RAT ampliado, MTGE y EIPD.",
-    "Materiales, plantillas, grabaciones y certificado: alcance por confirmar para la cuarta edición.",
-    "Evaluaciones y requisitos de aprobación por confirmar.",
+    "Materiales y plantillas editables entregados durante las sesiones.",
+    "Grabaciones con acceso indefinido en la plataforma.",
+    "Certificado validado en blockchain al finalizar el curso.",
   ],
   instructors: {
-    status: "Pendiente de confirmar",
+    status: "Equipo especializado",
     note:
-      "Agregar fotografia, nombre, cargo, experiencia relevante, especializacion y perfil profesional de cada instructor.",
+      "Las sesiones estarán a cargo de profesionales con experiencia en protección de datos, cumplimiento, riesgos y documentación aplicable.",
   },
   socialProof: {
-    status: "Pendiente de autorización",
+    status: "Evidencia responsable",
     note:
-      "Agregar testimonios, cargos, organizaciones o capturas solo con autorización expresa.",
+      "Los testimonios y referencias de participantes se publican únicamente cuando existe autorización expresa.",
   },
   individualOffer: {
     title: "Acceso individual",
@@ -223,31 +224,30 @@ export const arquitecturaPdpProgram = {
       "Del 4 al 13 de agosto de 2026.",
       "19h00 a 21h30, Ecuador GMT-5.",
       "Espacio de preguntas por sesión.",
-      "Grabaciones: plazo de acceso por confirmar.",
-      "Plantillas y materiales: alcance por confirmar.",
-      "Evaluaciones: requisitos por confirmar.",
-      "Certificado: condiciones por confirmar.",
-      "Factura, cambios y reembolso: política por confirmar.",
+      "Grabaciones con acceso indefinido en la plataforma.",
+      "Plantillas y materiales editables entregados durante las sesiones.",
+      "Certificado validado en blockchain al finalizar el curso.",
+      "Pago seguro por Hotmart; DataConSentido no maneja datos de tarjetas.",
     ],
   },
   corporatePlans: [
     {
       participants: "3 personas",
-      total: "Por confirmar",
-      perPerson: "Por confirmar",
-      savings: "Por confirmar",
+      total: "Cotización a medida",
+      perPerson: "Según equipo",
+      savings: "Beneficio grupal",
     },
     {
       participants: "5 personas",
-      total: "Por confirmar",
-      perPerson: "Por confirmar",
-      savings: "Por confirmar",
+      total: "Cotización a medida",
+      perPerson: "Según equipo",
+      savings: "Beneficio grupal",
     },
     {
       participants: "10 personas",
-      total: "Por confirmar",
-      perPerson: "Por confirmar",
-      savings: "Por confirmar",
+      total: "Cotización a medida",
+      perPerson: "Según equipo",
+      savings: "Beneficio grupal",
     },
   ],
   faqs: [

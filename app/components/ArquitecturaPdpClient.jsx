@@ -433,7 +433,7 @@ export default function ArquitecturaPdpClient() {
                   ["Cierre de inscripciones", program.enrollment.enrollmentDeadlineLabel],
                   ["Inversión individual", program.enrollment.priceLabel],
                   ["Horario", `${program.schedule.timeLabel}, ${program.schedule.timezoneLabel}`],
-                  ["Checkout", checkoutReady ? "Hotmart configurado" : "Pendiente de Hotmart en español, Ecuador y USD"],
+                  ["Checkout", checkoutReady ? "Hotmart configurado" : "Disponible próximamente"],
                 ].map(([label, value]) => (
                   <div key={label} className="flex items-start justify-between gap-4 px-5 py-4">
                     <span className="text-sm text-slate-400">{label}</span>
@@ -483,8 +483,8 @@ export default function ArquitecturaPdpClient() {
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
             <SectionHeader
               eyebrow="Entregables"
-              title="Previsualizaciones pendientes, sin promesas no confirmadas"
-              text="Estos espacios están listos para cargar muestras reales, anonimizadas o autorizadas cuando el equipo comercial las valide."
+              title="Materiales para trabajar la arquitectura PDP durante el programa"
+              text="El curso combina sesiones en vivo con plantillas editables, grabaciones, recursos aplicados y certificado."
             />
 
             <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
@@ -586,8 +586,8 @@ export default function ArquitecturaPdpClient() {
                   </p>
                   <h2 className="mt-3 text-3xl font-bold text-slate-950">Equipos de 3, 5 y 10 personas</h2>
                   <p className="mt-4 leading-7 text-slate-600">
-                    La modalidad grupal queda después de la oferta individual y conserva los valores como
-                    marcadores hasta confirmar precio total, ahorro y valor por participante.
+                    Para equipos, preparamos una propuesta según el número de participantes, necesidades
+                    de la organización y datos de facturación.
                   </p>
                 </div>
               </div>
@@ -643,11 +643,12 @@ export default function ArquitecturaPdpClient() {
                   Cierre
                 </p>
                 <h2 className="mt-3 text-3xl font-bold leading-tight text-white md:text-4xl">
-                  Una sola ruta para la cuarta edición
+                  Inscríbete a la cuarta edición
                 </h2>
                 <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-300">
-                  Toda pauta, publicación y navegación interna debe conducir a esta landing vigente. Cuando
-                  se confirme la oferta, basta con actualizar la configuración del programa.
+                  El programa inicia el {program.enrollment.startDateLabel.toLowerCase()} y se desarrolla
+                  los días {program.schedule.datesLabel}, de {program.schedule.timeLabel}. Las inscripciones
+                  cierran el {program.enrollment.enrollmentDeadlineLabel}.
                 </p>
               </div>
 
@@ -658,7 +659,11 @@ export default function ArquitecturaPdpClient() {
 
                 <div className="mt-5 space-y-3 text-sm leading-6 text-slate-300">
                   <p>{program.brand.legalName}</p>
-                  <p>Pago procesado mediante {program.checkout.provider} dentro del modal de checkout seguro.</p>
+                  <p>{program.checkout.displaySecurityNotice}</p>
+                  <p>
+                    Incluye {program.schedule.sessionsLabel.toLowerCase()} online en vivo, espacio de preguntas,
+                    materiales editables, grabaciones con acceso indefinido y certificado validado en blockchain.
+                  </p>
                   <p>
                     Contacto:{" "}
                     <a className="font-semibold text-teal-200 underline underline-offset-4" href={`mailto:${program.brand.supportEmail}`}>
@@ -669,7 +674,7 @@ export default function ArquitecturaPdpClient() {
                     <a className="font-semibold text-teal-200 underline underline-offset-4" href="/politica-de-privacidad">
                       Política de privacidad
                     </a>{" "}
-                    · Términos del programa y política de reembolso por confirmar.
+                    · Soporte de compra, cambios o reembolsos por Hotmart y DataConSentido.
                   </p>
                 </div>
               </div>
