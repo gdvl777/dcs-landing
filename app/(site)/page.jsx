@@ -131,8 +131,8 @@ export default function HomePage() {
               points={["Aplicación práctica (no solo teoría)", "Plantillas, recursos y casos", "Para profesionales y organizaciones"]}
               primaryHref="/formacion-dpo"
               primaryLabel="Ver programa"
-              secondaryHref="/masterclass"
-              secondaryLabel="Reservar cupo"
+              secondaryHref="/arquitectura-pdp"
+              secondaryLabel="Arquitectura PDP"
               tag="Aprende y ejecuta"
             />
 

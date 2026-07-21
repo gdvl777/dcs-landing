@@ -2,6 +2,7 @@ import "./globals.css";
 import Script from "next/script";
 
 export const metadata = {
+  metadataBase: new URL("https://www.dataconsentido.com"),
   title: "DataConSentido",
   description: "Privacidad · Cumplimiento · Tecnología",
 };

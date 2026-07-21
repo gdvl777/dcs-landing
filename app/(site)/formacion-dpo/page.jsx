@@ -1,127 +1,148 @@
 import Link from "next/link";
+import { ArrowRight, BookOpenCheck, CheckCircle2, Clock3 } from "lucide-react";
 import TikTokViewContent from "@/app/components/TikTokViewContent";
+import {
+  arquitecturaPdpProgram as program,
+  getPrimaryCtaLabel,
+} from "@/app/data/arquitecturaPdpProgram";
 
-const cursos = [
+const ofertas = [
   {
-    slug: "/formacion-avanzada",
-    badge: "Programa activo",
-    titulo: "Formación Avanzada para el DPO",
+    slug: program.slug,
+    badge: `${program.editionLabel} · ${program.enrollment.statusLabel}`,
+    categoria: "Programa con inscripciones abiertas",
+    titulo: program.displayName,
     descripcion:
-      "Programa práctico para fortalecer capacidades en cumplimiento, documentación, operación real del rol DPO/DPD y evidencia verificable.",
-    detalles: [
-      "Enfoque aplicado",
-      "Plantillas y recursos",
-      "Casos prácticos",
-      "Orientado a ejecución",
-    ],
-    cta: "Ver programa",
-    destacado: false,
-  },
-  {
-    slug: "/arquitectura-pdp",
-    badge: "Nuevo programa",
-    titulo: "Arquitectura Profesional de Protección de Datos",
-    descripcion:
-      "Cómo estructurar PANSI, RAT, MTGE y EIPD bajo el nuevo enfoque operativo de la LOPDP, con criterio técnico y visión ejecutiva.",
+      "Formación online en vivo para integrar PANSI, RAT ampliado, MTGE y EIPD en una arquitectura operativa con evidencia y trazabilidad.",
     detalles: [
       "PANSI · RAT · MTGE · EIPD",
-      "6 sesiones intensivas",
-      "15 horas de formación",
-      "Aplicación inmediata",
+      `${program.schedule.sessionsLabel} · ${program.schedule.hoursLabel}`,
+      program.schedule.datesLabel,
+      program.enrollment.priceLabel,
     ],
-    cta: "Ver detalles",
+    cta: getPrimaryCtaLabel(program),
     destacado: true,
+  },
+  {
+    slug: "/formacion-avanzada",
+    badge: "Edición finalizada",
+    categoria: "Referencia histórica",
+    titulo: "Formación Avanzada para el DPO",
+    descripcion:
+      "Programa previo de formación práctica para fortalecer capacidades de cumplimiento y documentación del rol DPO/DPD.",
+    detalles: [
+      "No recibe pauta activa",
+      "Oferta y fechas no vigentes",
+      "Derivar nuevas consultas al programa vigente",
+    ],
+    cta: "Ver referencia",
+    destacado: false,
   },
 ];
 
 export const metadata = {
   title: "Formación DPO | DataConSentido",
   description:
-    "Conoce los programas y cursos de DataConSentido para DPO, DPD y equipos de cumplimiento.",
+    "Hub de formación de DataConSentido para DPO, DPD y equipos de cumplimiento, con la oferta vigente de Arquitectura PDP.",
 };
 
 export default function FormacionDpoPage() {
   return (
-     <>
+    <>
       <TikTokViewContent />
-    <main className="min-h-screen bg-slate-950 text-white">
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(6,182,212,0.18),transparent_30%),radial-gradient(circle_at_top_right,rgba(245,158,11,0.12),transparent_28%)]" />
-        <div className="relative mx-auto max-w-7xl px-6 py-16 lg:px-8 lg:py-24">
-          <div className="max-w-3xl">
-            <span className="inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-1 text-sm text-cyan-200">
-              Formación DPO
-            </span>
+      <main className="min-h-screen bg-[#0b1220] text-white">
+        <section className="border-b border-white/10 bg-[#101827]">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <div className="max-w-3xl">
+              <p className="text-sm font-semibold uppercase tracking-wide text-cyan-200">
+                Formación DPO
+              </p>
+              <h1 className="mt-4 text-4xl font-bold leading-tight md:text-6xl">
+                Una ruta clara para desarrollar capacidades reales en protección de datos
+              </h1>
+              <p className="mt-6 text-lg leading-8 text-slate-300 md:text-xl">
+                Este hub distingue la próxima oferta comercial, referencias históricas y programas que
+                no deben recibir tráfico de pauta.
+              </p>
 
-            <h1 className="mt-6 text-4xl font-bold leading-tight md:text-6xl">
-              Elige el programa que mejor se adapta a tu nivel y necesidad
-            </h1>
-
-            <p className="mt-6 text-lg leading-8 text-slate-300 md:text-xl">
-              Programas diseñados para fortalecer capacidades reales en protección
-              de datos, cumplimiento, documentación y ejecución operativa.
-            </p>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <Link
+                  href={program.slug}
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-cyan-300 px-5 py-3 font-bold text-slate-950 hover:bg-cyan-200"
+                >
+                  Ir al programa vigente
+                  <ArrowRight className="h-5 w-5" aria-hidden="true" />
+                </Link>
+                <Link
+                  href={`${program.slug}#programa`}
+                  className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/15 px-5 py-3 font-bold text-white hover:bg-white/5"
+                >
+                  Ver temario
+                </Link>
+              </div>
+            </div>
           </div>
+        </section>
 
-          <div className="mt-12 grid gap-6 lg:grid-cols-2">
-            {cursos.map((curso) => (
+        <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+          <div className="grid gap-5 lg:grid-cols-2">
+            {ofertas.map((oferta) => (
               <article
-                key={curso.slug}
-                className={`rounded-[2rem] border p-7 shadow-xl transition duration-200 hover:-translate-y-1 ${
-                  curso.destacado
-                    ? "border-cyan-400/25 bg-gradient-to-br from-cyan-400/10 via-slate-900 to-slate-900"
-                    : "border-white/10 bg-white/5"
+                key={oferta.slug}
+                className={`rounded-lg border p-6 ${
+                  oferta.destacado
+                    ? "border-cyan-300/25 bg-cyan-300/10"
+                    : "border-white/10 bg-white/[0.04]"
                 }`}
               >
-                <div className="flex items-start justify-between gap-4">
-                  <span
-                    className={`inline-flex rounded-full px-3 py-1 text-sm ${
-                      curso.destacado
-                        ? "border border-cyan-400/30 bg-cyan-400/10 text-cyan-200"
-                        : "border border-white/10 bg-white/5 text-slate-300"
-                    }`}
-                  >
-                    {curso.badge}
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="rounded-lg border border-white/15 bg-white/5 px-3 py-2 text-sm text-slate-200">
+                    {oferta.badge}
+                  </span>
+                  <span className="rounded-lg border border-amber-200/25 bg-amber-200/10 px-3 py-2 text-sm text-amber-100">
+                    {oferta.categoria}
                   </span>
                 </div>
 
                 <h2 className="mt-5 text-2xl font-bold text-white md:text-3xl">
-                  {curso.titulo}
+                  {oferta.titulo}
                 </h2>
 
                 <p className="mt-4 text-base leading-7 text-slate-300 md:text-lg">
-                  {curso.descripcion}
+                  {oferta.descripcion}
                 </p>
 
-                <div className="mt-6 flex flex-wrap gap-3">
-                  {curso.detalles.map((detalle) => (
-                    <span
-                      key={detalle}
-                      className="rounded-full border border-white/10 bg-slate-950/40 px-3 py-1 text-sm text-slate-300"
-                    >
-                      {detalle}
-                    </span>
+                <ul className="mt-6 grid gap-3">
+                  {oferta.detalles.map((detalle) => (
+                    <li key={detalle} className="flex gap-3 text-slate-200">
+                      {oferta.destacado ? (
+                        <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-emerald-200" aria-hidden="true" />
+                      ) : (
+                        <Clock3 className="mt-1 h-5 w-5 shrink-0 text-slate-400" aria-hidden="true" />
+                      )}
+                      <span>{detalle}</span>
+                    </li>
                   ))}
-                </div>
+                </ul>
 
                 <div className="mt-8">
                   <Link
-                    href={curso.slug}
-                    className={`inline-flex items-center justify-center rounded-2xl px-6 py-3 text-base font-semibold transition ${
-                      curso.destacado
-                        ? "bg-cyan-400 text-slate-950 hover:bg-cyan-300"
+                    href={oferta.destacado ? oferta.slug : program.slug}
+                    className={`inline-flex min-h-12 items-center justify-center gap-2 rounded-lg px-5 py-3 font-bold ${
+                      oferta.destacado
+                        ? "bg-cyan-300 text-slate-950 hover:bg-cyan-200"
                         : "border border-white/15 text-white hover:bg-white/5"
                     }`}
                   >
-                    {curso.cta}
+                    {oferta.destacado ? oferta.cta : "Ir al programa vigente"}
+                    <BookOpenCheck className="h-5 w-5" aria-hidden="true" />
                   </Link>
                 </div>
               </article>
             ))}
           </div>
-        </div>
-      </section>
-    </main>
+        </section>
+      </main>
     </>
   );
 }

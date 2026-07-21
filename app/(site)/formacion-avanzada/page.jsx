@@ -36,8 +36,8 @@ export default function FormacionDPOPage() {
         </div>
 
         <div className="ctaRow" style={{ marginTop: 14 }}>
-          <Link className="uiBtn uiBtnPrimary" href="https://masterclass.dataconsentido.com/">
-            Reservar cupo <span className="uiIcon">→</span>
+          <Link className="uiBtn uiBtnPrimary" href="/arquitectura-pdp">
+            Ver programa vigente <span className="uiIcon">→</span>
           </Link>
 
           <a
