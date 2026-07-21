@@ -421,7 +421,7 @@ export default function ArquitecturaPdpClient() {
             <aside className="rounded-lg border border-white/15 bg-white/[0.06]">
               <div className="border-b border-white/10 p-5">
                 <p className="text-sm font-semibold uppercase tracking-wide text-teal-200">
-                  Estado de la edición
+                  Arquitectura Profesional de Protección de Datos Personales
                 </p>
                 <h2 className="mt-3 text-2xl font-bold text-white">{program.enrollment.statusLabel}</h2>
                 <p className="mt-3 leading-7 text-slate-300">{program.enrollment.displayTrustNote}</p>
