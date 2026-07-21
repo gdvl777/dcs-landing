@@ -144,6 +144,9 @@ export const arquitecturaPdpProgram = {
     {
       title: "Materiales descargables",
       status: "Incluidos",
+      previewImage: "/materiales/entregables/preview-materiales-descargables.png",
+      previewAlt:
+        "Vista previa anonimizada de un paquete ZIP con plantillas, lecturas y recursos editables.",
       description:
         "Plantillas, lecturas y recursos editables entregados durante las sesiones del programa.",
     },
