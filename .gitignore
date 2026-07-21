@@ -27,3 +27,6 @@ pnpm-debug.log*
 
 # vercel
 .vercel/
+
+# local source materials; public previews live in public/materiales/
+/materiales/
