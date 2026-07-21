@@ -1,6 +1,12 @@
 import ArquitecturaPdpClient from "../../components/ArquitecturaPdpClient";
 import { arquitecturaPdpProgram as program } from "@/app/data/arquitecturaPdpProgram";
 
+const socialImageUrl = new URL(
+  "/og/arquitectura-pdp-thumbnail.png",
+  program.canonicalUrl
+).toString();
+const socialImageAlt = `${program.editionLabel} de ${program.displayName}`;
+
 export const metadata = {
   title: `${program.editionLabel} · ${program.displayName} | ${program.brand.name}`,
   description:
@@ -18,10 +24,11 @@ export const metadata = {
     type: "website",
     images: [
       {
-        url: `${program.canonicalUrl}/opengraph-image`,
+        url: socialImageUrl,
         width: 1200,
         height: 630,
-        alt: `${program.editionLabel} de ${program.displayName}`,
+        alt: socialImageAlt,
+        type: "image/png",
       },
     ],
   },
@@ -30,7 +37,12 @@ export const metadata = {
     title: `${program.editionLabel} · ${program.displayName}`,
     description:
       `PANSI, RAT ampliado, MTGE y EIPD. ${program.schedule.datesLabel}, ${program.schedule.timeLabel}.`,
-    images: [`${program.canonicalUrl}/opengraph-image`],
+    images: [
+      {
+        url: socialImageUrl,
+        alt: socialImageAlt,
+      },
+    ],
   },
 };
 
