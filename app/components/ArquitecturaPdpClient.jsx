@@ -444,7 +444,7 @@ export default function ArquitecturaPdpClient() {
                   ["Cierre de inscripciones", program.enrollment.enrollmentDeadlineLabel],
                   ["Inversión individual", program.enrollment.priceLabel],
                   ["Horario", `${program.schedule.timeLabel}, ${program.schedule.timezoneLabel}`],
-                  ["Checkout", checkoutReady ? "Hotmart configurado" : "Disponible próximamente"],
+                 
                 ].map(([label, value]) => (
                   <div key={label} className="flex items-start justify-between gap-4 px-5 py-4">
                     <span className="text-sm text-slate-400">{label}</span>
