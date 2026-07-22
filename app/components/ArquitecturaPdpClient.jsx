@@ -26,8 +26,12 @@ import {
   getPrimaryCtaLabel,
   isCheckoutReady,
 } from "@/app/data/arquitecturaPdpProgram";
-
-const TRACKING_KEYS = ["utm_", "gclid", "fbclid", "ttclid", "msclkid"];
+import {
+  appendTrackingParams,
+  getTrackingEventContext,
+  persistTrackingParams,
+} from "@/app/lib/tracking";
+import { track as trackVercelEvent } from "@vercel/analytics";
 
 const eventDefaults = {
   program_slug: program.slug,
@@ -49,11 +53,14 @@ function trackEvent(eventName, params = {}, options = {}) {
 
   const payload = {
     ...eventDefaults,
+    ...getTrackingEventContext(),
     ...params,
   };
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event: eventName, ...payload });
+
+  trackVercelEvent(eventName, payload);
 
   if (typeof window.gtag === "function") {
     window.gtag("event", eventName, payload);
@@ -62,27 +69,6 @@ function trackEvent(eventName, params = {}, options = {}) {
   if (window.ttq && typeof window.ttq.track === "function") {
     const tikTokEvent = eventName === "view_program" ? "ViewContent" : "ClickButton";
     window.ttq.track(tikTokEvent, payload);
-  }
-}
-
-function appendTrackingParams(checkoutUrl) {
-  if (!checkoutUrl || typeof window === "undefined") return checkoutUrl;
-
-  try {
-    const target = new URL(checkoutUrl);
-    const current = new URL(window.location.href);
-
-    current.searchParams.forEach((value, key) => {
-      const shouldKeep = TRACKING_KEYS.some((trackingKey) =>
-        trackingKey.endsWith("_") ? key.startsWith(trackingKey) : key === trackingKey
-      );
-
-      if (shouldKeep) target.searchParams.set(key, value);
-    });
-
-    return target.toString();
-  } catch {
-    return checkoutUrl;
   }
 }
 
@@ -384,6 +370,7 @@ export default function ArquitecturaPdpClient() {
   const corporateUrl = buildWhatsAppUrl(program.whatsapp.corporateText, program);
 
   useEffect(() => {
+    persistTrackingParams();
     trackEvent("view_program", { section: "landing" }, { once: true });
   }, []);
 
@@ -405,8 +392,9 @@ export default function ArquitecturaPdpClient() {
     return () => observer.disconnect();
   }, []);
 
-  const handleEnroll = () => {
+  const handleEnroll = (source = "unknown") => {
     trackEvent("click_enroll", {
+      source,
       checkout_ready: checkoutReady,
       price_label: program.enrollment.priceLabel,
     });
@@ -416,10 +404,12 @@ export default function ArquitecturaPdpClient() {
       setModalCheckoutUrl(checkoutUrl);
 
       trackEvent("open_checkout", {
+        source,
         checkout_provider: program.checkout.provider,
         checkout_url_configured: true,
       });
       trackEvent("begin_checkout", {
+        source,
         checkout_provider: program.checkout.provider,
         currency: program.checkout.currency,
         value: program.enrollment.priceAmount || undefined,
@@ -429,21 +419,25 @@ export default function ArquitecturaPdpClient() {
       return;
     }
 
-    trackEvent("click_whatsapp", { intent: "waitlist" });
+    trackEvent("click_whatsapp", { intent: "waitlist", source });
     window.open(waitlistUrl, "_blank", "noopener,noreferrer");
   };
 
   const handleInfoClick = () => {
-    trackEvent("click_whatsapp", { intent: "program_info" });
+    trackEvent("click_whatsapp", { intent: "program_info", source: "hero_card" });
   };
 
   const handleCorporateClick = () => {
-    trackEvent("group_inquiry", { participants: "pending" });
-    trackEvent("click_whatsapp", { intent: "corporate" });
+    trackEvent("group_inquiry", { participants: "pending", source: "corporate_section" });
+    trackEvent("click_whatsapp", { intent: "corporate", source: "corporate_section" });
   };
 
-  const handleCurriculumClick = () => {
-    trackEvent("view_curriculum", { section: "hero_link" }, { once: true });
+  const handleDeliverablesClick = () => {
+    trackEvent("click_deliverables", { source: "hero" });
+  };
+
+  const handleProgramClick = () => {
+    trackEvent("click_program", { source: "sticky_bar" });
   };
 
   return (
@@ -484,8 +478,8 @@ export default function ArquitecturaPdpClient() {
               </p>
 
               <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row">
-                <PrimaryButton onClick={handleEnroll}>{primaryCtaLabel}</PrimaryButton>
-                <SecondaryLink href="#entregables" onClick={handleCurriculumClick}>
+                <PrimaryButton onClick={() => handleEnroll("hero")}>{primaryCtaLabel}</PrimaryButton>
+                <SecondaryLink href="#entregables" onClick={handleDeliverablesClick}>
                   Ver qué voy a construir
                 </SecondaryLink>
               </div>
@@ -637,7 +631,7 @@ export default function ArquitecturaPdpClient() {
                 ))}
               </ul>
 
-              <PrimaryButton onClick={handleEnroll} className="mt-7 w-full">
+              <PrimaryButton onClick={() => handleEnroll("pricing_section")} className="mt-7 w-full">
                 {primaryCtaLabel}
               </PrimaryButton>
 
@@ -720,7 +714,7 @@ export default function ArquitecturaPdpClient() {
               </div>
 
               <div className="rounded-lg border border-white/15 bg-white/[0.06] p-5">
-                <PrimaryButton onClick={handleEnroll} className="w-full">
+                <PrimaryButton onClick={() => handleEnroll("closing_section")} className="w-full">
                   {primaryCtaLabel}
                 </PrimaryButton>
 
@@ -760,7 +754,7 @@ export default function ArquitecturaPdpClient() {
           <div className="grid grid-cols-2 gap-3 sm:flex sm:items-center sm:justify-end">
             <a
               href="#programa"
-              onClick={handleCurriculumClick}
+              onClick={handleProgramClick}
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-950 bg-slate-950 px-4 py-2 text-sm font-bold !text-white shadow-sm transition hover:border-slate-800 hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-teal-200"
             >
               <BookOpenCheck className="h-4 w-4 shrink-0 text-teal-200" aria-hidden="true" />
@@ -769,7 +763,7 @@ export default function ArquitecturaPdpClient() {
 
             <button
               type="button"
-              onClick={handleEnroll}
+              onClick={() => handleEnroll("sticky_bar")}
               className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-teal-500 px-4 py-2 text-sm font-bold text-white transition hover:bg-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-200"
             >
               <span className="hidden sm:inline">{primaryCtaLabel}</span>

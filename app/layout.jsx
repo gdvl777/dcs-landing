@@ -1,5 +1,6 @@
 import "./globals.css";
 import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 
 export const metadata = {
   metadataBase: new URL("https://www.dataconsentido.com"),
@@ -11,6 +12,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <body>{children}
+        <Analytics />
 
         <Script id="tiktok-pixel" strategy="afterInteractive">
           {`
