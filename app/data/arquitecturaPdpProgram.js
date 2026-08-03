@@ -19,10 +19,10 @@ export const arquitecturaPdpProgram = {
     status: "open",
     statusLabel: "Inscripciones abiertas",
     banner:
-      "4.ª edición · Inscripciones abiertas hasta el 4 de agosto de 2026 · Inicio martes 11 de agosto de 2026",
+      "4.ª edición · Inscripciones abiertas hasta el 11 de agosto de 2026 · Inicio martes 11 de agosto de 2026",
     startDateLabel: "Martes 11 de agosto de 2026",
-    enrollmentDeadlineLabel: "4 de agosto de 2026",
-    enrollmentDeadlineISO: "2026-08-04T23:59:59-05:00",
+    enrollmentDeadlineLabel: "11 de agosto de 2026",
+    enrollmentDeadlineISO: "2026-08-11T18:59:59-05:00",
     priceLabel: "$120 USD",
     priceAmount: 120,
     currency: "USD",
