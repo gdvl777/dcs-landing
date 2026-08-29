@@ -10,7 +10,7 @@ export default function PrivacidadPage() {
       <section className="hero" style={{ background: "rgba(255,255,255,.06)" }}>
         <h1 className="h1">Política de Privacidad <span style={{ opacity: 0.9 }}>DataConSentido</span></h1>
         <p className="sub">
-          Última actualización: 2025 · Sitio: <a href="https://dataconsentido.com">dataconsentido.com</a>
+          Última actualización: 2026 · Sitio: <a href="https://dataconsentido.com">dataconsentido.com</a>
         </p>
       </section>
 
@@ -39,8 +39,7 @@ export default function PrivacidadPage() {
 
         <h2 className="sectionTitle" style={{ marginTop: 16 }}>4. Datos tratados</h2>
         <p className="sub">
-          Nombre, correo institucional, institución/empresa, cargo, preferencias de asistencia (días),
-          y metadatos técnicos de navegación. No solicitamos datos sensibles en formularios generales.
+          Nombre, correo electrónico, institución/empresa, cargo y metadatos técnicos de navegación. No solicitamos datos sensibles en formularios generales.
         </p>
 
         <h2 className="sectionTitle" style={{ marginTop: 16 }}>5. Destinatarios</h2>
@@ -51,7 +50,7 @@ export default function PrivacidadPage() {
 
         <h2 className="sectionTitle" style={{ marginTop: 16 }}>6. Conservación</h2>
         <p className="sub">
-          Mientras dure la relación y/o hasta que solicite supresión u oposición, respetando plazos legales aplicables.
+          Ciclo del vida del dato: 3 años y/o hasta que solicite supresión u oposición, respetando plazos legales aplicables.
         </p>
 
         <h2 className="sectionTitle" style={{ marginTop: 16 }}>7. Derechos ARCO+</h2>
