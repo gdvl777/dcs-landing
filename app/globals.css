@@ -954,3 +954,119 @@ button {
   pointer-events: none;
   z-index: -1;
 }
+
+/* =========================
+   Homepage masterclass popup
+   ========================= */
+
+.masterclass-popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 20000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  background: rgba(2, 6, 23, 0.48);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.masterclass-popup-dialog {
+  position: relative;
+  width: min(980px, 100%);
+  max-height: calc(100vh - 36px);
+  overflow: hidden;
+  border: 1px solid rgba(34, 211, 238, 0.2);
+  border-radius: 18px;
+  background: rgba(6, 19, 38, 0.56);
+  box-shadow:
+    0 24px 90px rgba(0, 0, 0, 0.42),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.masterclass-popup-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  display: inline-flex;
+  width: 42px;
+  height: 42px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 999px;
+  background: rgba(2, 6, 23, 0.5);
+  color: #f8fafc;
+  cursor: pointer;
+  font-size: 30px;
+  font-weight: 500;
+  line-height: 1;
+  transition: background 0.16s ease, border-color 0.16s ease, transform 0.16s ease;
+}
+
+.masterclass-popup-close:hover {
+  border-color: rgba(255, 255, 255, 0.34);
+  background: rgba(15, 23, 42, 0.92);
+  transform: translateY(-1px);
+}
+
+.masterclass-popup-close:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(34, 211, 238, 0.24);
+}
+
+.masterclass-popup-link {
+  display: block;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+.masterclass-popup-image {
+  display: block;
+  width: 100%;
+  max-height: calc(100vh - 128px);
+  object-fit: contain;
+  background: rgba(6, 19, 38, 0.34);
+  transition: filter 0.16s ease;
+}
+
+.masterclass-popup-link:hover .masterclass-popup-image {
+  filter: brightness(1.04);
+}
+
+.masterclass-popup-link:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 4px rgba(34, 211, 238, 0.42);
+}
+
+@media (max-width: 700px) {
+  .masterclass-popup-overlay {
+    align-items: flex-start;
+    padding: 14px;
+    overflow-y: auto;
+  }
+
+  .masterclass-popup-dialog {
+    width: 100%;
+    max-height: none;
+    margin: 18px 0;
+    border-radius: 14px;
+  }
+
+  .masterclass-popup-close {
+    top: 8px;
+    right: 8px;
+    width: 38px;
+    height: 38px;
+    font-size: 27px;
+  }
+
+  .masterclass-popup-image {
+    max-height: none;
+  }
+
+}

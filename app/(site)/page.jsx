@@ -1,11 +1,14 @@
 // app/page.jsx
 import Link from "next/link";
+import MasterclassPopup from "../components/MasterclassPopup";
 
 export default function HomePage() {
   const year = new Date().getFullYear();
 
   return (
     <div style={styles.page}>
+      <MasterclassPopup />
+
       {/* HERO */}
       <section style={styles.heroWrap}>
         <div style={styles.heroGlowA} />
