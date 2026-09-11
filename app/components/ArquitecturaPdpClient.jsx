@@ -448,7 +448,7 @@ export default function ArquitecturaPdpClient() {
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <span>{program.enrollment.banner}</span>
               <span className="font-semibold text-teal-800">
-                Arquitectura Profesional de Protección de Datos Personales (4.ª edición)
+                Arquitectura Profesional de Protección de Datos Personales ({program.editionLabel})
               </span>
             </div>
           </div>
@@ -464,7 +464,7 @@ export default function ArquitecturaPdpClient() {
                 </Pill>
                 <Pill tone="warm">
                   <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-                  PANSI · RAT · MTGE · EIPD
+                  PANSI · RAT ampliado · MTGE
                 </Pill>
               </div>
 
@@ -473,8 +473,9 @@ export default function ArquitecturaPdpClient() {
               </h1>
 
               <p className="mt-6 max-w-3xl text-base leading-7 text-slate-300 md:text-xl md:leading-8">
-                Aprende a integrar PANSI, RAT ampliado, MTGE y EIPD en un modelo operativo con evidencia,
-                trazabilidad y criterio profesional.
+                Aprende a integrar el Plan de Adecuación de Nivel de Seguridad Inicial (PANSI), RAT ampliado
+                y MTGE en un modelo operativo con evidencia, trazabilidad y criterio profesional, con énfasis
+                en el artículo 47.6 de la LOPDP.
               </p>
 
               <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row">
@@ -573,8 +574,8 @@ export default function ArquitecturaPdpClient() {
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
             <SectionHeader
               eyebrow="Programa académico"
-              title="Tres bloques para una gestión PDP madura y defendible"
-              text="El contenido se organiza alrededor de PANSI, RAT ampliado, MTGE y EIPD, con resultados esperados visibles por bloque."
+              title="Dos bloques reforzados para una gestión PDP madura y defendible"
+              text="El contenido se organiza alrededor del PANSI, RAT ampliado y MTGE, con resultados esperados visibles por bloque."
             />
 
             <div className="mt-8 grid gap-4">
@@ -590,7 +591,7 @@ export default function ArquitecturaPdpClient() {
             <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr]">
               <SectionHeader
                 eyebrow="Metodología y calendario"
-                title="Calendario de la cuarta edición"
+                title={`Calendario de la ${program.editionLabel}`}
                 text={`${program.schedule.sessionsLabel}, ${program.schedule.hoursLabel}, ${program.schedule.formatLabel}. Las sesiones serán de ${program.schedule.timeLabel}, ${program.schedule.timezoneLabel}, con espacio de preguntas.`}
               />
 
@@ -704,7 +705,7 @@ export default function ArquitecturaPdpClient() {
                   Cierre
                 </p>
                 <h2 className="mt-3 text-3xl font-bold leading-tight text-white md:text-4xl">
-                  Inscríbete a la cuarta edición
+                  Inscríbete a la {program.editionLabel}
                 </h2>
                 <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-300">
                   El programa inicia el {program.enrollment.startDateLabel.toLowerCase()} y se desarrolla

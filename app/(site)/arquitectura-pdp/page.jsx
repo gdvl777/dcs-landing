@@ -10,7 +10,7 @@ const socialImageAlt = `${program.editionLabel} de ${program.displayName}`;
 export const metadata = {
   title: `${program.editionLabel} · ${program.displayName} | ${program.brand.name}`,
   description:
-    `Programa online en vivo del ${program.schedule.datesLabel}, de ${program.schedule.timeLabel}, para integrar PANSI, RAT ampliado, MTGE y EIPD.`,
+    `Programa online en vivo del ${program.schedule.datesLabel}, de ${program.schedule.timeLabel}, para trabajar PANSI, RAT ampliado y MTGE con enfoque en el artículo 47.6 de la LOPDP.`,
   alternates: {
     canonical: program.canonicalUrl,
   },
@@ -36,7 +36,7 @@ export const metadata = {
     card: "summary_large_image",
     title: `${program.editionLabel} · ${program.displayName}`,
     description:
-      `PANSI, RAT ampliado, MTGE y EIPD. ${program.schedule.datesLabel}, ${program.schedule.timeLabel}.`,
+      `PANSI, RAT ampliado y MTGE. ${program.schedule.datesLabel}, ${program.schedule.timeLabel}.`,
     images: [
       {
         url: socialImageUrl,

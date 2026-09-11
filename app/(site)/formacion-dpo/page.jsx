@@ -13,9 +13,9 @@ const ofertas = [
     categoria: "Programa con inscripciones abiertas",
     titulo: program.displayName,
     descripcion:
-      "Formación online en vivo para integrar PANSI, RAT ampliado, MTGE y EIPD en una arquitectura operativa con evidencia y trazabilidad.",
+      "Formación online en vivo para trabajar PANSI, RAT ampliado y MTGE en una arquitectura operativa con evidencia, trazabilidad y enfoque en el artículo 47.6 de la LOPDP.",
     detalles: [
-      "PANSI · RAT · MTGE · EIPD",
+      "PANSI · RAT ampliado · MTGE",
       `${program.schedule.sessionsLabel} · ${program.schedule.hoursLabel}`,
       program.schedule.datesLabel,
       program.enrollment.priceLabel,

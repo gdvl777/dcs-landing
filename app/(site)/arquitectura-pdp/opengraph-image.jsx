@@ -44,7 +44,7 @@ export default function Image() {
 
         <div>
           <div style={{ color: "#fcd34d", fontSize: 28, fontWeight: 700 }}>
-            PANSI · RAT ampliado · MTGE · EIPD
+            PANSI · RAT ampliado · MTGE
           </div>
           <div
             style={{
