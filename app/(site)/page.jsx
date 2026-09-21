@@ -39,6 +39,10 @@ export default function HomePage() {
               </div>
 
               <div style={styles.ctaRow}>
+                <Link href="/catalogo-lopdp" style={{ ...styles.btn, ...styles.btnPrimary }}>
+                  Ver catálogo LOPDP <span style={styles.btnArrow}>→</span>
+                </Link>
+
                 <Link href="/dpo" style={{ ...styles.btn, ...styles.btnPrimary }}>
                   Quiero DPO/DPD para mi organización <span style={styles.btnArrow}>→</span>
                 </Link>

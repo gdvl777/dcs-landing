@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 
 const links = [
   { href: "/dpo", label: "Servicios DPO" },
+  { href: "/catalogo-lopdp", label: "Catálogo LOPDP" },
   { href: "/formacion-dpo", label: "Formación DPO" },
   { href: "/calcular-mtge", label: "Calculadora MTGE" },
   { href: "/gestion-riesgos", label: "Gestión de Riesgos" },

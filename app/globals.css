@@ -210,7 +210,7 @@ button {
 .nav-pro-links-desktop {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   flex: 0 0 auto;
   min-width: 0;
 }
@@ -220,10 +220,10 @@ button {
   align-items: center;
   justify-content: center;
   min-height: 42px;
-  padding: 0 16px;
+  padding: 0 12px;
   border-radius: 999px;
 
-  font-size: 0.96rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: rgba(241, 245, 249, 0.92);
 
