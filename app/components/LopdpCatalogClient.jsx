@@ -136,6 +136,12 @@ function ProductCard({ product }) {
           ))}
         </ul>
 
+        {product.footnote ? (
+          <p className="mt-4 border-t border-slate-200 pt-4 text-xs leading-5 text-slate-500">
+            {product.footnote}
+          </p>
+        ) : null}
+
         {expanded ? (
           <div className="mt-4 rounded-lg bg-slate-50 p-4 text-sm leading-6 text-slate-700">
             <strong className="text-slate-950">Ideal para:</strong> {product.audience}
@@ -476,6 +482,11 @@ export default function LopdpCatalogClient() {
                 {pack.optionalNote ? (
                   <p className="mt-4 border-t border-slate-200 pt-4 text-xs leading-5 text-slate-500">
                     {pack.optionalNote}
+                  </p>
+                ) : null}
+                {pack.maturityNote ? (
+                  <p className="mt-3 text-xs leading-5 text-slate-500">
+                    {pack.maturityNote}
                   </p>
                 ) : null}
                 <a

@@ -164,13 +164,14 @@ export const catalogProducts = [
     summary: "Integra gobierno, riesgos, documentos, contratos, procedimientos y evidencia.",
     price: "Desde $2.400 USD",
     priceKind: "Propuesta cerrada",
-    turnaround: "8 a 12 semanas",
+    turnaround: "4 a 6 meses*",
     audience: "Organizaciones con varios procesos, proveedores o categorías de datos.",
     deliverables: [
       "RAT + MTGE y análisis de riesgos",
       "Políticas, contratos y procedimientos",
       "Capacitación, evidencias y seguimiento",
     ],
+    footnote: "* Madurez PDP se contrata por un valor adicional para acompañar los 6 meses posteriores a la implementación. El ciclo completo permite trabajar hacia un grado de madurez a los 12 meses.",
     cta: "Solicitar propuesta",
     featured: true,
   },
@@ -279,10 +280,11 @@ export const commercialPackages = [
   {
     name: "Integral",
     price: "Desde $3.200 USD",
-    duration: "10 a 14 semanas",
+    duration: "4 a 6 meses*",
     description: "Para una implementación completa con tecnología y seguimiento.",
     includes: ["Implementación completa", "DATIVA", "Auditoría inicial"],
     optionalNote: "La EIPD se cotiza como servicio adicional cuando el diagnóstico determine que corresponde.",
+    maturityNote: "* Madurez PDP se contrata por un valor adicional para acompañar los 6 meses posteriores a la implementación. El ciclo completo permite trabajar hacia un grado de madurez a los 12 meses.",
   },
   {
     name: "Continuidad",

@@ -30,7 +30,7 @@ DATIVA es el **Sistema de Cumplimiento PDP** de DataConSentido. Se plantea en tr
 | EIPD | Desde $650 | Un tratamiento de alto riesgo | Evaluación, riesgos, medidas y seguimiento | 10 a 15 días | Evaluar mi caso |
 | Paquete de Políticas LOPDP | Desde $390 | Base documental para una pyme | Política, avisos, procedimientos y cláusulas | 7 a 10 días | Solicitar paquete |
 | Implementación LOPDP Básica | Desde $1.200 | Operación pequeña y acotada | Diagnóstico, RAT, documentos y capacitación | 4 a 6 semanas | Solicitar propuesta |
-| Implementación LOPDP Integral | Desde $2.400 | Operación con varios procesos | RAT + MTGE, riesgos, políticas, contratos y seguimiento | 8 a 12 semanas | Solicitar propuesta |
+| Implementación LOPDP Integral | Desde $2.400 | Operación con varios procesos | RAT + MTGE, riesgos, políticas, contratos y seguimiento | 4 a 6 meses* | Solicitar propuesta |
 | Implementación + Capacitación | Desde $1.600 | Ejecución y transferencia interna | Base documental, taller y hoja de ruta | 6 a 8 semanas | Solicitar propuesta |
 | DATIVA | Desde $99/mes | Sistema de seguimiento | Configuración, carga inicial y soporte | Desde 5 días | Solicitar demo |
 | DPD externo mensual | Desde $450/mes | Supervisión independiente | Plan anual, consultas, informes y enlace institucional | 5 a 10 días | Solicitar propuesta |
@@ -41,8 +41,10 @@ DATIVA es el **Sistema de Cumplimiento PDP** de DataConSentido. Se plantea en tr
 | --- | ---: | --- | --- |
 | Esencial | Desde $890 | 3 a 5 semanas | Diagnóstico, RAT, políticas esenciales y capacitación básica |
 | Profesional | Desde $1.850 | 6 a 8 semanas | Diagnóstico, RAT + MTGE, riesgos, políticas, contratos y capacitación |
-| Integral | Desde $3.200 | 10 a 14 semanas | Implementación completa, DATIVA y auditoría inicial. La EIPD se cotiza como servicio adicional cuando el diagnóstico determine que corresponde |
+| Integral | Desde $3.200 | 4 a 6 meses* | Implementación completa, DATIVA y auditoría inicial. La EIPD se cotiza como servicio adicional cuando el diagnóstico determine que corresponde |
 | Continuidad | Desde $590/mes | Mensual | DATIVA, monitoreo, mesa de consultas, actualización normativa y DPD externo |
+
+\* **Madurez PDP** se contrata por un valor adicional para acompañar los 6 meses posteriores a la implementación. El ciclo completo permite trabajar hacia un grado de madurez en protección de datos personales a los 12 meses.
 
 ## Reglas comerciales
 
