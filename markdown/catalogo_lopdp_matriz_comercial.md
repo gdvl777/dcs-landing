@@ -41,7 +41,7 @@ DATIVA es el **Sistema de Cumplimiento PDP** de DataConSentido. Se plantea en tr
 | --- | ---: | --- | --- |
 | Esencial | Desde $890 | 3 a 5 semanas | Diagnóstico, RAT, políticas esenciales y capacitación básica |
 | Profesional | Desde $1.850 | 6 a 8 semanas | Diagnóstico, RAT + MTGE, riesgos, políticas, contratos y capacitación |
-| Integral | Desde $3.200 | 10 a 14 semanas | Implementación completa, EIPD cuando corresponda, DATIVA y auditoría inicial |
+| Integral | Desde $3.200 | 10 a 14 semanas | Implementación completa, DATIVA y auditoría inicial. La EIPD se cotiza como servicio adicional cuando el diagnóstico determine que corresponde |
 | Continuidad | Desde $590/mes | Mensual | DATIVA, monitoreo, mesa de consultas, actualización normativa y DPD externo |
 
 ## Reglas comerciales

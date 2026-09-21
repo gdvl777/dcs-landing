@@ -281,7 +281,8 @@ export const commercialPackages = [
     price: "Desde $3.200 USD",
     duration: "10 a 14 semanas",
     description: "Para una implementación completa con tecnología y seguimiento.",
-    includes: ["Implementación completa", "EIPD cuando corresponda", "DATIVA", "Auditoría inicial"],
+    includes: ["Implementación completa", "DATIVA", "Auditoría inicial"],
+    optionalNote: "La EIPD se cotiza como servicio adicional cuando el diagnóstico determine que corresponde.",
   },
   {
     name: "Continuidad",

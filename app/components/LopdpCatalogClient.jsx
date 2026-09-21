@@ -473,6 +473,11 @@ export default function LopdpCatalogClient() {
                     </li>
                   ))}
                 </ul>
+                {pack.optionalNote ? (
+                  <p className="mt-4 border-t border-slate-200 pt-4 text-xs leading-5 text-slate-500">
+                    {pack.optionalNote}
+                  </p>
+                ) : null}
                 <a
                   href={buildCatalogWhatsappUrl(`el Paquete ${pack.name}`, `paquete:${pack.name.toLocaleLowerCase("es")}`)}
                   target="_blank"
