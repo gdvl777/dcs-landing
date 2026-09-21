@@ -77,7 +77,7 @@ export const catalogProducts = [
     deliverables: [
       "Plantilla editable del RAT",
       "Módulo MTGE por tratamiento",
-      "Guía de uso y sesión de activación",
+      "Incluye sesión de implementación guiada",
     ],
     cta: "Comprar",
   },

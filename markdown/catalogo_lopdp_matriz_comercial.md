@@ -25,7 +25,7 @@ DATIVA es el **Sistema de Cumplimiento PDP** de DataConSentido. Se plantea en tr
 | Consultoría LOPDP de 30 minutos | $50 fijo | Una consulta concreta | Revisión previa, videollamada y resumen | Agenda de 30 min | Agendar consultoría |
 | Consultoría LOPDP de 60 minutos | $90 fijo | Un caso con contexto y alternativas | Revisión previa, videollamada y minuta | Agenda de 60 min | Agendar consultoría |
 | Diagnóstico de brechas LOPDP | Desde $290 | Línea base organizacional | Matriz de brechas y hoja de ruta | 5 a 7 días | Solicitar diagnóstico |
-| RAT + MTGE automatizado | $149 fijo | Herramienta por tratamiento | RAT, módulo MTGE, guía y activación | 2 días | Comprar |
+| RAT + MTGE automatizado | $149 fijo | Herramienta por tratamiento | RAT, módulo MTGE y sesión de implementación guiada | 2 días | Comprar |
 | PANSI | $249 fijo | Nivel inicial de seguridad | Diagnóstico, medidas y plan priorizado | 3 a 5 días | Comprar |
 | EIPD | Desde $650 | Un tratamiento de alto riesgo | Evaluación, riesgos, medidas y seguimiento | 10 a 15 días | Evaluar mi caso |
 | Paquete de Políticas LOPDP | Desde $390 | Base documental para una pyme | Política, avisos, procedimientos y cláusulas | 7 a 10 días | Solicitar paquete |
