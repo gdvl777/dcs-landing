@@ -98,7 +98,7 @@ export const arquitecturaPdpProgram = {
     "Establecer seguimiento y revisión periódica.",
   ],
   outcomeClarification:
-    "El avance del caso propio dependerá de la información disponible y del trabajo del participante. La implementación de las medidas continúa en cada organización.",
+    "En el taller trabajarás sobre tu propio caso. Para aprovecharlo mejor, ten a mano la información y los documentos de tu organización. Después del curso podrás continuar la aplicación de las medidas con las áreas responsables.",
   demonstration: {
     title: "Así se conecta una brecha con su evidencia",
     label: "Ejemplo didáctico",
