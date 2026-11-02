@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Info, Mail, MessageCircle } from "lucide-react";
+import { CheckCircle2, Mail, MessageCircle } from "lucide-react";
 import ArquitecturaPdpThanksClient from "@/app/components/ArquitecturaPdpThanksClient";
 import {
   arquitecturaPdpProgram as program,
@@ -7,8 +7,8 @@ import {
 } from "@/app/data/arquitecturaPdpProgram";
 
 export const metadata = {
-  title: `Retorno del checkout PANSI | ${program.brand.name}`,
-  description: "Información posterior al checkout del curso PANSI.",
+  title: `Gracias por tu compra | Curso PANSI | ${program.brand.name}`,
+  description: "Confirmación y próximos pasos de la compra del curso PANSI.",
   robots: {
     index: false,
     follow: false,
@@ -24,18 +24,21 @@ export default function GraciasArquitecturaPdpPage() {
 
       <section className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
         <div className="rounded-lg border border-cyan-200/20 bg-white/[0.05] p-6 md:p-8">
-          <Info className="h-9 w-9 text-cyan-200" aria-hidden="true" />
+          <CheckCircle2 className="h-9 w-9 text-teal-300" aria-hidden="true" />
           <p className="mt-5 text-sm font-semibold uppercase tracking-wide text-cyan-200">
-            Retorno del checkout
+            Compra procesada por Hotmart
           </p>
           <h1 className="mt-3 text-4xl font-bold leading-tight text-white md:text-5xl">
-            Revisa la confirmación emitida por Hotmart
+            ¡Gracias por tu compra!
           </h1>
           <p className="mt-5 text-lg leading-8 text-slate-300">
-            Esta página no confirma por sí sola el pago. Tu inscripción queda confirmada cuando Hotmart aprueba la transacción y emite el comprobante correspondiente.
+            Hotmart procesó tu transacción y enviará el comprobante al correo registrado. Revisa tu bandeja de entrada para consultar los detalles de la compra y los próximos pasos de tu inscripción.
           </p>
           <p className="mt-4 leading-7 text-slate-300">
             Curso intensivo PANSI · Inicio 20 de noviembre de 2026 · Inversión individual de $120 USD.
+          </p>
+          <p className="mt-4 rounded-lg border border-teal-300/20 bg-teal-300/10 px-4 py-3 text-sm leading-6 text-teal-50">
+            La inscripción se registra con la notificación de compra aprobada emitida por Hotmart.
           </p>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-2">
