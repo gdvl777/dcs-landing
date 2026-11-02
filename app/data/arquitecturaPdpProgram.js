@@ -115,34 +115,37 @@ export const arquitecturaPdpProgram = {
   },
   sessions: [
     {
-      label: "Sesión 1",
-      topic: "Artículo 47, contexto, alcance y diagnóstico inicial",
-      result: "Alcance del PANSI y situación de partida.",
+      label: "Día 1",
+      topic:
+        "PANSI y las obligaciones inherentes: qué impone la tríada PDP ecuatoriana",
+      result: "Perspectiva jurídica.",
     },
     {
-      label: "Sesión 2",
-      topic: "Dimensiones administrativas y organizativas",
-      result: "Responsables, coordinación y brechas.",
+      label: "Día 2",
+      topic: "PANSI y los rationales técnicos: vulnerabilidades y controles",
+      result: "Perspectiva técnica.",
     },
     {
-      label: "Sesión 3",
-      topic: "Dimensiones físicas y técnicas",
-      result: "Evaluación de medidas y evidencias.",
+      label: "Día 3",
+      topic:
+        "PANSI y administración de empresas: continuidad del negocio, documentación del GRC y el SG-PDP",
+      result: "Perspectiva operativa.",
     },
     {
-      label: "Sesión 4",
-      topic: "Dimensión jurídica y conexión entre áreas",
-      result: "Requisitos, documentación y brechas jurídicas.",
+      label: "Día 4",
+      topic:
+        "Propuesta Skillman-PDP del PANSI como estrategia: control del impacto sobre el costo operativo del proyecto y cumplimiento de la tríada PDP + seguridad de los datos",
+      result: "Perspectiva integral.",
     },
     {
-      label: "Sesión 5",
-      topic: "Priorización y plan de adecuación",
-      result: "Acciones, responsables, recursos, plazos y evidencias.",
+      label: "Día 5",
+      topic: "Taller PANSI: estructuras de aplicación I",
+      result: "Construcción guiada de las estructuras de aplicación.",
     },
     {
-      label: "Sesión 6",
-      topic: "Revisión documental, auditoría y continuidad",
-      result: "Estructura del expediente y seguimiento periódico.",
+      label: "Día 6",
+      topic: "Taller PANSI: estructuras de aplicación II",
+      result: "Integración y revisión de las estructuras de aplicación.",
     },
   ],
   audiences: [

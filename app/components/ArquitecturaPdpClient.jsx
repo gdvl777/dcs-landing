@@ -440,8 +440,8 @@ export default function ArquitecturaPdpClient() {
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
             <SectionHeader
               eyebrow="Programa de seis sesiones"
-              title="Del diagnóstico inicial a la revisión periódica"
-              text="Cada sesión tiene un objetivo concreto y un resultado de ejercicio. Las fechas restantes se comunicarán cuando el calendario esté confirmado."
+              title="Cuatro perspectivas y un taller aplicado de PANSI"
+              text="El programa conecta las perspectivas jurídica, técnica, operativa e integral antes de dedicar los dos últimos días a las estructuras de aplicación del PANSI."
             />
             <div className="mt-8 border-y border-slate-200">
               {program.sessions.map((session) => (
