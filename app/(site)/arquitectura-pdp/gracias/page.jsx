@@ -35,7 +35,7 @@ export default function GraciasArquitecturaPdpPage() {
             Hotmart procesó tu transacción y enviará el comprobante al correo registrado. Revisa tu bandeja de entrada para consultar los detalles de la compra y los próximos pasos de tu inscripción.
           </p>
           <p className="mt-4 leading-7 text-slate-300">
-            Curso intensivo PANSI · Inicio 20 de noviembre de 2026 · Inversión individual de $120 USD.
+            Curso intensivo PANSI · Inicio 20 de noviembre de 2026 · Inversión individual de $137 USD.
           </p>
           <p className="mt-4 rounded-lg border border-teal-300/20 bg-teal-300/10 px-4 py-3 text-sm leading-6 text-teal-50">
             La inscripción se registra con la notificación de compra aprobada emitida por Hotmart.

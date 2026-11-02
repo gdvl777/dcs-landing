@@ -3,10 +3,12 @@
 import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
+  BadgeCheck,
   BookOpenCheck,
   CheckCircle2,
   ExternalLink,
   FileCheck2,
+  FileSpreadsheet,
   Quote,
   Scale,
   ShieldCheck,
@@ -235,8 +237,6 @@ export default function ArquitecturaPdpClient() {
   const checkoutReady = isCheckoutReady(program);
   const primaryCtaLabel = getPrimaryCtaLabel(program);
   const contactUrl = buildWhatsAppUrl(program.whatsapp.infoText, program);
-  const confirmedMaterials = program.proposedMaterials.filter((material) => material.confirmed);
-
   const heroDetails = [
     ["Inicio", program.enrollment.startDateLabel],
     ["Sesiones", program.schedule.sessionsLabel],
@@ -494,21 +494,30 @@ export default function ArquitecturaPdpClient() {
             </div>
           </div>
 
-          {confirmedMaterials.length ? (
-            <div className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
-              <div className="border-t border-teal-900/10 pt-8">
-                <h3 className="text-xl font-bold text-slate-950">Materiales confirmados</h3>
-                <ul className="mt-5 grid gap-3 md:grid-cols-2">
-                  {confirmedMaterials.map((material) => (
-                    <li key={material.title} className="flex gap-3 text-slate-700">
-                      <FileCheck2 className="mt-1 h-5 w-5 shrink-0 text-teal-700" aria-hidden="true" />
-                      {material.title}
-                    </li>
-                  ))}
-                </ul>
-              </div>
+        </section>
+
+        <section id="incluye" className="border-y border-slate-200 bg-white">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <SectionHeader
+              eyebrow="Incluido con tu inscripción"
+              title="Recursos y acompañamiento para continuar después del curso"
+              text="Además de las seis sesiones, recibirás materiales editables, herramientas de aplicación, certificación y un espacio individual para revisar tu avance."
+            />
+            <div className="mt-9 grid gap-x-7 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+              {program.includedBenefits.map((benefit, index) => {
+                const icons = [BookOpenCheck, FileSpreadsheet, BadgeCheck, UserRoundCog];
+                const Icon = icons[index] || FileCheck2;
+
+                return (
+                  <article key={benefit.title} className="border-t-2 border-teal-600 pt-5">
+                    <Icon className="h-7 w-7 text-teal-700" aria-hidden="true" />
+                    <h3 className="mt-4 text-xl font-bold leading-7 text-slate-950">{benefit.title}</h3>
+                    <p className="mt-3 leading-7 text-slate-600">{benefit.text}</p>
+                  </article>
+                );
+              })}
             </div>
-          ) : null}
+          </div>
         </section>
 
         <SocialProofCarousel socialProof={program.socialProof} />
@@ -519,7 +528,7 @@ export default function ArquitecturaPdpClient() {
               eyebrow="Calendario e inversión"
               title={checkoutReady ? "Inscripciones abiertas para el curso PANSI" : "Consulta la información vigente de esta convocatoria"}
               text={checkoutReady
-                ? "El valor individual es de $120 USD y el pago se procesa de forma segura en Hotmart. El calendario completo, horario y modalidad pueden consultarse directamente con DataConSentido."
+                ? "El valor individual es de $137 USD y el pago se procesa de forma segura en Hotmart. El calendario completo, horario y modalidad pueden consultarse directamente con DataConSentido."
                 : "El inicio, la carga horaria y el número de sesiones ya están confirmados. El calendario completo, horario, modalidad, precio y condiciones se comunicarán cuando queden aprobados para noviembre."}
             />
             <div className="rounded-lg border border-slate-200 bg-[#f5f7fa] p-6">

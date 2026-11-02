@@ -22,8 +22,8 @@ export const arquitecturaPdpProgram = {
     startDateISO: "2026-11-20",
     enrollmentDeadlineLabel: null,
     enrollmentDeadlineISO: null,
-    priceLabel: "$120 USD",
-    priceAmount: 120,
+    priceLabel: "$137 USD",
+    priceAmount: 137,
     currency: "USD",
   },
   schedule: {
@@ -174,12 +174,23 @@ export const arquitecturaPdpProgram = {
       "Preparar una ruta de continuidad y seguimiento.",
     ],
   },
-  proposedMaterials: [
-    { title: "Plantilla editable del PANSI", confirmed: false },
-    { title: "Matriz de brechas y acciones", confirmed: false },
-    { title: "Índice de evidencias", confirmed: false },
-    { title: "Tablero de seguimiento", confirmed: false },
-    { title: "Lista de revisión documental", confirmed: false },
+  includedBenefits: [
+    {
+      title: "Material didáctico editable",
+      text: "Recursos de apoyo para revisar y adaptar lo trabajado durante las sesiones.",
+    },
+    {
+      title: "Herramientas y plantillas actualizadas",
+      text: "Archivos editables para organizar la aplicación del PANSI en tu propio caso.",
+    },
+    {
+      title: "Certificado validado en blockchain",
+      text: "Certificado emitido por DataConSentido y validado en blockchain.",
+    },
+    {
+      title: "Sesión individual de 60 minutos",
+      text: "Una sesión 1:1 al finalizar el curso para revisar dudas y próximos pasos.",
+    },
   ],
   socialProof: {
     enabled: true,
@@ -242,7 +253,7 @@ export const arquitecturaPdpProgram = {
     {
       question: "¿Cuál es el valor y cómo se realiza el pago?",
       answer:
-        "El valor individual es de $120 USD. El pago se procesa de forma segura en Hotmart; DataConSentido no maneja los datos de tarjetas de crédito o débito.",
+        "El valor individual es de $137 USD. El pago se procesa de forma segura en Hotmart; DataConSentido no maneja los datos de tarjetas de crédito o débito.",
     },
     {
       question: "¿Dónde consulto el calendario completo, modalidad y horario?",
