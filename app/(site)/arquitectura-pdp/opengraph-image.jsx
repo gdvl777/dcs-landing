@@ -38,7 +38,7 @@ export default function Image() {
               fontWeight: 700,
             }}
           >
-            Inicio 20 de noviembre de 2026
+            Inicio 17 de noviembre de 2026
           </div>
         </div>
 

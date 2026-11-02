@@ -17,9 +17,9 @@ export const arquitecturaPdpProgram = {
   enrollment: {
     status: "open",
     statusLabel: "Inscripciones abiertas",
-    banner: "Curso PANSI · Inicio 20 de noviembre de 2026",
-    startDateLabel: "20 de noviembre de 2026",
-    startDateISO: "2026-11-20",
+    banner: "Curso PANSI · Inicio 17 de noviembre de 2026",
+    startDateLabel: "17 de noviembre de 2026",
+    startDateISO: "2026-11-17",
     enrollmentDeadlineLabel: null,
     enrollmentDeadlineISO: null,
     priceLabel: "$137 USD",
@@ -34,12 +34,12 @@ export const arquitecturaPdpProgram = {
     formatLabel: null,
     platformLabel: null,
     timezoneLabel: null,
-    datesLabel: null,
-    timeLabel: null,
+    datesLabel: "17, 18, 19, 24, 25 y 26 de noviembre de 2026",
+    timeLabel: "19h00 a 21h30",
     recordingsLabel: null,
     accessLabel: null,
     certificateLabel: null,
-    calendarCtaLabel: "Consulta el calendario completo",
+    calendarCtaLabel: "Calendario confirmado: 17, 18, 19, 24, 25 y 26 de noviembre",
   },
   checkout: {
     provider: "Hotmart",
@@ -50,13 +50,13 @@ export const arquitecturaPdpProgram = {
     currency: "USD",
     returnPath: "/arquitectura-pdp/gracias",
     displayNote:
-      "El checkout corresponde al Curso intensivo PANSI de DataConSentido, con inicio el 20 de noviembre de 2026.",
+      "El checkout corresponde al Curso intensivo PANSI de DataConSentido, con inicio el 17 de noviembre de 2026.",
     displaySecurityNotice:
       "El pago es seguro a través de Hotmart. DataConSentido no maneja ni trata los datos de tarjetas de crédito o débito; esos datos se ingresan y procesan directamente en Hotmart.",
   },
   whatsapp: {
     infoText:
-      "Hola, quiero información sobre el curso PANSI que inicia el 20 de noviembre de 2026.",
+      "Hola, quiero información sobre el curso PANSI que inicia el 17 de noviembre de 2026.",
   },
   hero: {
     eyebrow: "Taller aplicado de protección de datos personales",
@@ -256,15 +256,15 @@ export const arquitecturaPdpProgram = {
         "El valor individual es de $137 USD. El pago se procesa de forma segura en Hotmart; DataConSentido no maneja los datos de tarjetas de crédito o débito.",
     },
     {
-      question: "¿Dónde consulto el calendario completo, modalidad y horario?",
+      question: "¿Cuáles son las fechas y el horario?",
       answer:
-        "Puedes solicitar la información vigente directamente a DataConSentido por WhatsApp. La página no reutiliza condiciones de convocatorias anteriores.",
+        "Las seis sesiones serán los días 17, 18, 19, 24, 25 y 26 de noviembre de 2026, de 19h00 a 21h30.",
     },
   ],
   closing: {
     title: "Empieza a construir una ruta de adecuación que puedas seguir",
     text:
-      "Inicio 20 de noviembre de 2026. Seis sesiones para trabajar el PANSI y conectar medidas, responsables y evidencias.",
+      "Inicio 17 de noviembre de 2026. Seis sesiones los días 17, 18, 19, 24, 25 y 26 de noviembre, de 19h00 a 21h30.",
   },
 };
 

@@ -528,13 +528,15 @@ export default function ArquitecturaPdpClient() {
               eyebrow="Calendario e inversión"
               title={checkoutReady ? "Inscripciones abiertas para el curso PANSI" : "Consulta la información vigente de esta convocatoria"}
               text={checkoutReady
-                ? "El valor individual es de $137 USD y el pago se procesa de forma segura en Hotmart. El calendario completo, horario y modalidad pueden consultarse directamente con DataConSentido."
+                ? "El valor individual es de $137 USD y el pago se procesa de forma segura en Hotmart. Las seis sesiones se desarrollarán de 19h00 a 21h30."
                 : "El inicio, la carga horaria y el número de sesiones ya están confirmados. El calendario completo, horario, modalidad, precio y condiciones se comunicarán cuando queden aprobados para noviembre."}
             />
             <div className="rounded-lg border border-slate-200 bg-[#f5f7fa] p-6">
               <dl className="divide-y divide-slate-200">
                 {[
                   ["Inicio", program.enrollment.startDateLabel],
+                  ["Fechas", program.schedule.datesLabel],
+                  ["Horario", program.schedule.timeLabel],
                   ["Sesiones", program.schedule.sessionsLabel],
                   ["Carga total", program.schedule.hoursLabel],
                 ].map(([label, value]) => (
@@ -561,7 +563,7 @@ export default function ArquitecturaPdpClient() {
             <SectionHeader
               eyebrow="Preguntas frecuentes"
               title="Respuestas sobre el curso PANSI"
-              text="Información confirmada para la convocatoria que inicia el 20 de noviembre de 2026."
+              text="Información confirmada para la convocatoria que inicia el 17 de noviembre de 2026."
               centered
             />
             <div className="mt-8 border-y border-slate-200">
