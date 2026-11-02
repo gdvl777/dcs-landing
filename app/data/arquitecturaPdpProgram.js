@@ -89,6 +89,17 @@ export const arquitecturaPdpProgram = {
     referenceNote:
       "La referencia reproduce el artículo 47 y no constituye una aprobación oficial del curso ni de la metodología.",
   },
+  nistAlignment: {
+    label: "Alineación técnica",
+    title: "PANSI y NIST CSF 2.0",
+    text:
+      "El PANSI puede apoyarse en el NIST Cybersecurity Framework (CSF) 2.0 como una referencia para organizar la gestión del riesgo de ciberseguridad y relacionar las medidas con resultados esperados.",
+    profiles:
+      "En el NIST CSF 2.0, los Perfiles Organizacionales describen la postura actual y la postura objetivo de una organización. Al compararlos, es posible identificar brechas y priorizar un plan de acción.",
+    stateOfArt:
+      "Esta comparación aporta evidencia para analizar el estado de la técnica aplicable a cada organización. No sustituye el análisis jurídico ni implica, por sí sola, cumplimiento automático de la LOPDP o del NIST CSF 2.0.",
+    officialReference: "https://www.nist.gov/cyberframework/profiles",
+  },
   outcomes: [
     "Delimitar el alcance del PANSI según el contexto de una organización.",
     "Identificar brechas en las cinco dimensiones de trabajo.",

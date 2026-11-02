@@ -393,6 +393,32 @@ export default function ArquitecturaPdpClient() {
           </div>
         </section>
 
+        <section className="border-y border-slate-200 bg-[#f5f7fa]">
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.82fr_1.18fr] lg:px-8">
+            <SectionHeader
+              eyebrow={program.nistAlignment.label}
+              title={program.nistAlignment.title}
+              text={program.nistAlignment.text}
+            />
+            <div className="border-l-2 border-teal-600 pl-6">
+              <ShieldCheck className="h-7 w-7 text-teal-700" aria-hidden="true" />
+              <h3 className="mt-4 text-xl font-bold text-slate-950">Perfiles Organizacionales</h3>
+              <p className="mt-3 leading-7 text-slate-700">{program.nistAlignment.profiles}</p>
+              <p className="mt-4 leading-7 text-slate-700">{program.nistAlignment.stateOfArt}</p>
+              <a
+                href={program.nistAlignment.officialReference}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-bold underline decoration-teal-400 underline-offset-4"
+                style={{ color: "#115e59" }}
+              >
+                Consultar los Perfiles del NIST CSF 2.0
+                <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              </a>
+            </div>
+          </div>
+        </section>
+
         <section id="resultado" className="scroll-mt-28 bg-white">
           <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
             <SectionHeader
