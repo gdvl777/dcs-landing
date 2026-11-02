@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { arquitecturaPdpProgram as program } from "@/app/data/arquitecturaPdpProgram";
 
 export const runtime = "edge";
-export const alt = `${program.editionLabel} de ${program.displayName}`;
+export const alt = "Curso PANSI aplicado a la protección de datos personales de DataConSentido";
 export const size = {
   width: 1200,
   height: 630,
@@ -19,9 +19,9 @@ export default function Image() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          background: "#0b1220",
+          background: "#102033",
           color: "#f8fafc",
-          padding: 72,
+          padding: 68,
           fontFamily: "Arial, Helvetica, sans-serif",
         }}
       >
@@ -33,45 +33,35 @@ export default function Image() {
               background: "rgba(103, 232, 249, 0.12)",
               color: "#cffafe",
               padding: "12px 18px",
-              borderRadius: 12,
-              fontSize: 24,
+              borderRadius: 10,
+              fontSize: 23,
               fontWeight: 700,
             }}
           >
-            {program.editionLabel}
+            Inicio 20 de noviembre de 2026
           </div>
         </div>
 
-        <div>
+        <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ color: "#fcd34d", fontSize: 28, fontWeight: 700 }}>
-            PANSI · RAT ampliado · MTGE
+            Del diagnóstico a la evidencia
           </div>
           <div
             style={{
-              marginTop: 24,
-              maxWidth: 980,
-              fontSize: 68,
+              marginTop: 22,
+              maxWidth: 1010,
+              fontSize: 70,
               fontWeight: 800,
-              lineHeight: 1.05,
+              lineHeight: 1.04,
             }}
           >
-            Arquitectura Profesional de Protección de Datos Personales
-          </div>
-          <div style={{ marginTop: 28, maxWidth: 900, color: "#cbd5e1", fontSize: 30 }}>
-            Construye una arquitectura que puedas aplicar, justificar y defender.
+            Construye tu PANSI con medidas, responsables y evidencias
           </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            color: "#cbd5e1",
-            fontSize: 24,
-          }}
-        >
-          <span>{program.enrollment.statusLabel}</span>
-          <span>{program.schedule.timeLabel} · GMT-5</span>
+        <div style={{ display: "flex", justifyContent: "space-between", color: "#cbd5e1", fontSize: 24 }}>
+          <span>6 sesiones · Aproximadamente 15 horas</span>
+          <span>DataConSentido</span>
         </div>
       </div>
     ),

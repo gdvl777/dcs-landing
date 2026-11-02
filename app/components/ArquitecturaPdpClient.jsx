@@ -4,19 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import {
   ArrowRight,
   BookOpenCheck,
-  Building2,
-  CalendarClock,
   CheckCircle2,
-  Database,
   ExternalLink,
-  FileText,
-  Landmark,
-  LockKeyhole,
-  MessageCircle,
+  FileCheck2,
   Quote,
   Scale,
   ShieldCheck,
-  Star,
+  UserRoundCog,
   UsersRound,
 } from "lucide-react";
 import HotmartModal from "./HotmartModal";
@@ -36,7 +30,6 @@ import { track as trackVercelEvent } from "@vercel/analytics";
 const eventDefaults = {
   program_slug: program.slug,
   program_name: program.displayName,
-  program_edition: program.editionLabel,
   enrollment_status: program.enrollment.status,
 };
 
@@ -59,7 +52,6 @@ function trackEvent(eventName, params = {}, options = {}) {
 
   window.dataLayer = window.dataLayer || [];
   window.dataLayer.push({ event: eventName, ...payload });
-
   trackVercelEvent(eventName, payload);
 
   if (typeof window.gtag === "function") {
@@ -67,39 +59,24 @@ function trackEvent(eventName, params = {}, options = {}) {
   }
 
   if (window.ttq && typeof window.ttq.track === "function") {
-    const tikTokEvent = eventName === "view_program" ? "ViewContent" : "ClickButton";
+    const tikTokEvent = eventName === "pansi_view_program" ? "ViewContent" : "ClickButton";
     window.ttq.track(tikTokEvent, payload);
   }
 }
 
-function Pill({ children, tone = "default" }) {
-  const toneClass =
-    tone === "accent"
-      ? "border-teal-200/35 bg-teal-200/10 text-teal-50"
-      : tone === "warm"
-        ? "border-amber-200/35 bg-amber-200/10 text-amber-50"
-        : "border-white/15 bg-white/5 text-slate-100";
-
-  return (
-    <span className={`inline-flex max-w-full items-center gap-2 rounded-lg border px-3 py-2 text-sm ${toneClass}`}>
-      {children}
-    </span>
-  );
-}
-
 function SectionHeader({ eyebrow, title, text, centered = false, tone = "light" }) {
-  const isDark = tone === "dark";
+  const dark = tone === "dark";
 
   return (
     <div className={centered ? "mx-auto max-w-3xl text-center" : "max-w-3xl"}>
-      <p className={`text-sm font-semibold uppercase tracking-wide ${isDark ? "text-teal-200" : "text-teal-700"}`}>
+      <p className={`text-sm font-semibold uppercase tracking-wide ${dark ? "text-cyan-200" : "text-teal-700"}`}>
         {eyebrow}
       </p>
-      <h2 className={`mt-3 text-3xl font-bold leading-tight md:text-4xl ${isDark ? "text-white" : "text-slate-950"}`}>
+      <h2 className={`mt-3 text-3xl font-bold leading-tight md:text-4xl ${dark ? "text-white" : "text-slate-950"}`}>
         {title}
       </h2>
       {text ? (
-        <p className={`mt-4 text-base leading-7 md:text-lg ${isDark ? "text-slate-300" : "text-slate-600"}`}>
+        <p className={`mt-4 text-base leading-7 md:text-lg ${dark ? "text-slate-300" : "text-slate-600"}`}>
           {text}
         </p>
       ) : null}
@@ -107,26 +84,49 @@ function SectionHeader({ eyebrow, title, text, centered = false, tone = "light" 
   );
 }
 
-function PrimaryButton({ children, onClick, className = "" }) {
-  const classes = `inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-teal-500 px-5 py-3 text-sm font-bold text-white transition hover:bg-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-300/30 md:text-base ${className}`;
+function Pill({ children, tone = "default" }) {
+  const classes =
+    tone === "accent"
+      ? "border-cyan-200/30 bg-cyan-200/10 text-cyan-50"
+      : tone === "warm"
+        ? "border-amber-200/35 bg-amber-200/10 text-amber-50"
+        : "border-white/15 bg-white/5 text-slate-100";
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={classes}
-    >
+    <span className={`inline-flex max-w-full items-center gap-2 rounded-lg border px-3 py-2 text-sm ${classes}`}>
+      {children}
+    </span>
+  );
+}
+
+function PrimaryButton({ children, onClick, href, className = "" }) {
+  const classes = `inline-flex min-h-12 items-center justify-center gap-2 rounded-lg bg-teal-500 px-5 py-3 text-sm font-bold text-white transition hover:bg-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-300/30 md:text-base ${className}`;
+  const content = (
+    <>
       {children}
       <ArrowRight className="h-5 w-5" aria-hidden="true" />
+    </>
+  );
+
+  if (href) {
+    return (
+      <a href={href} target="_blank" rel="noopener noreferrer" onClick={onClick} className={classes}>
+        {content}
+      </a>
+    );
+  }
+
+  return (
+    <button type="button" onClick={onClick} className={classes}>
+      {content}
     </button>
   );
 }
 
-function SecondaryLink({ href, children, onClick }) {
+function SecondaryLink({ href, children }) {
   return (
     <a
       href={href}
-      onClick={onClick}
       className="inline-flex min-h-12 items-center justify-center gap-2 rounded-lg border border-white/20 px-5 py-3 text-sm font-bold text-white transition hover:bg-white/5 focus:outline-none focus:ring-4 focus:ring-teal-300/20 md:text-base"
     >
       {children}
@@ -134,100 +134,24 @@ function SecondaryLink({ href, children, onClick }) {
   );
 }
 
-function ResultCard({ children, index }) {
-  return (
-    <article className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex gap-4">
-        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-teal-200 bg-teal-50 font-bold text-teal-800">
-          {index}
-        </div>
-        <p className="leading-7 text-slate-700">{children}</p>
-      </div>
-    </article>
-  );
-}
-
-function DeliverablePreview({ deliverable }) {
-  return (
-    <article className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex items-start justify-between gap-4">
-        <div>
-          <h3 className="text-lg font-semibold text-slate-950">{deliverable.title}</h3>
-          <p className="mt-1 text-sm font-medium text-amber-700">{deliverable.status}</p>
-        </div>
-        <FileText className="h-6 w-6 shrink-0 text-teal-700" aria-hidden="true" />
-      </div>
-
-      {deliverable.previewImage ? (
-        <div className="mt-5 overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
-          <img
-            src={deliverable.previewImage}
-            alt={deliverable.previewAlt}
-            loading="lazy"
-            className="aspect-[14/9] w-full object-cover"
-          />
-        </div>
-      ) : (
-        <div className="mt-5 overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
-          <div className="border-b border-slate-200 bg-slate-100 px-4 py-3">
-            <div className="h-2 w-28 rounded bg-teal-300" />
-          </div>
-          <div className="space-y-3 p-4">
-            <div className="grid grid-cols-3 gap-2">
-              <div className="h-8 rounded bg-slate-200" />
-              <div className="h-8 rounded bg-slate-200" />
-              <div className="h-8 rounded bg-slate-200" />
-            </div>
-            <div className="h-3 w-full rounded bg-slate-200" />
-            <div className="h-3 w-10/12 rounded bg-slate-200" />
-            <div className="h-3 w-8/12 rounded bg-slate-200" />
-          </div>
-        </div>
-      )}
-
-      <p className="mt-4 text-sm leading-6 text-slate-600">{deliverable.description}</p>
-    </article>
-  );
-}
-
-function CurriculumRow({ item }) {
-  return (
-    <article className="grid gap-4 rounded-lg border border-slate-200 bg-white p-5 shadow-sm md:grid-cols-[0.6fr_1.1fr_1fr]">
-      <div>
-        <p className="text-sm font-semibold uppercase tracking-wide text-teal-700">Bloque</p>
-        <h3 className="mt-2 text-xl font-bold text-slate-950">{item.block}</h3>
-      </div>
-      <div>
-        <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">¿Qué se trabaja?</p>
-        <p className="mt-2 leading-7 text-slate-700">{item.work}</p>
-      </div>
-      <div>
-        <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">Resultado esperado</p>
-        <p className="mt-2 leading-7 text-slate-700">{item.result}</p>
-      </div>
-    </article>
-  );
-}
-
 function SessionItem({ session }) {
   return (
-    <article className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-      <div className="flex items-start gap-4">
-        <CalendarClock className="mt-1 h-5 w-5 shrink-0 text-teal-700" aria-hidden="true" />
-        <div className="min-w-0">
-          <p className="text-sm font-semibold uppercase tracking-wide text-slate-500">
-            {session.label} · {session.date}
-          </p>
-          <h3 className="mt-2 text-lg font-semibold text-slate-950">{session.topic}</h3>
-          <p className="mt-2 text-sm leading-6 text-slate-600">{session.practice}</p>
-        </div>
+    <article className="grid gap-4 border-b border-slate-200 py-5 last:border-b-0 md:grid-cols-[100px_1fr_0.9fr] md:items-start">
+      <p className="text-sm font-bold uppercase text-teal-700">{session.label}</p>
+      <div>
+        <p className="text-xs font-semibold uppercase text-slate-500">Contenido</p>
+        <h3 className="mt-2 text-lg font-semibold leading-7 text-slate-950">{session.topic}</h3>
+      </div>
+      <div>
+        <p className="text-xs font-semibold uppercase text-slate-500">Resultado del ejercicio</p>
+        <p className="mt-2 leading-7 text-slate-700">{session.result}</p>
       </div>
     </article>
   );
 }
 
 function SocialProofCarousel({ socialProof }) {
-  const testimonials = socialProof.testimonials || [];
+  const testimonials = socialProof.enabled ? socialProof.testimonials || [] : [];
   const [activeIndex, setActiveIndex] = useState(0);
 
   useEffect(() => {
@@ -245,7 +169,7 @@ function SocialProofCarousel({ socialProof }) {
   const activeTestimonial = testimonials[activeIndex % testimonials.length];
 
   return (
-    <section id="opiniones" className="border-y border-slate-200 bg-[#f6f8fb]">
+    <section id="opiniones" className="border-y border-slate-200 bg-[#f5f7fa]">
       <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.78fr_1.22fr] lg:px-8">
         <SectionHeader
           eyebrow={socialProof.eyebrow}
@@ -257,35 +181,22 @@ function SocialProofCarousel({ socialProof }) {
           <article
             key={activeTestimonial.name}
             aria-live="polite"
-            className="min-h-[310px] rounded-lg border border-teal-200 bg-white p-6 shadow-sm transition"
+            className="min-h-[280px] rounded-lg border border-teal-200 bg-white p-6 shadow-sm"
           >
-            <div className="flex items-start justify-between gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg bg-teal-50 text-teal-700">
-                <Quote className="h-6 w-6" aria-hidden="true" />
-              </div>
-              <div className="flex gap-1 text-amber-500" aria-hidden="true">
-                {[1, 2, 3, 4, 5].map((item) => (
-                  <Star key={item} className="h-5 w-5 fill-current" />
-                ))}
-              </div>
-            </div>
-
+            <Quote className="h-8 w-8 text-teal-700" aria-hidden="true" />
             <blockquote className="mt-6 text-xl font-semibold leading-9 text-slate-950 md:text-2xl md:leading-10">
               “{activeTestimonial.quote}”
             </blockquote>
-
-            <div className="mt-7 flex flex-col gap-3 border-t border-slate-200 pt-5 sm:flex-row sm:items-center sm:justify-between">
+            <div className="mt-7 flex flex-col gap-2 border-t border-slate-200 pt-5 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <p className="text-base font-bold text-slate-950">{activeTestimonial.name}</p>
-                <p className="mt-1 text-sm text-slate-500">
-                  {activeTestimonial.editionLabel || program.editionLabel} · Participante
-                </p>
+                <p className="font-bold text-slate-950">{activeTestimonial.name}</p>
+                <p className="mt-1 text-sm text-slate-500">{activeTestimonial.editionLabel} · Participante</p>
               </div>
               <p className="text-sm font-medium text-teal-700">{socialProof.sourceLabel}</p>
             </div>
           </article>
 
-          <div className="mt-4 flex items-center justify-center gap-2" aria-label="Opiniones">
+          <div className="mt-4 flex items-center justify-center gap-2" aria-label="Opiniones de programas anteriores">
             {testimonials.map((testimonial, index) => (
               <button
                 key={testimonial.name}
@@ -307,55 +218,13 @@ function SocialProofCarousel({ socialProof }) {
 
 function FaqItem({ faq }) {
   return (
-    <details className="group rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+    <details className="group border-b border-slate-200 py-5 last:border-b-0">
       <summary className="flex cursor-pointer list-none items-start justify-between gap-4 text-left text-lg font-semibold text-slate-950">
         {faq.question}
         <ArrowRight className="mt-1 h-5 w-5 shrink-0 text-teal-700 transition group-open:rotate-90" aria-hidden="true" />
       </summary>
-      <p className="mt-4 leading-7 text-slate-600">{faq.answer}</p>
+      <p className="mt-4 max-w-4xl leading-7 text-slate-600">{faq.answer}</p>
     </details>
-  );
-}
-
-const plainLanguageIcons = [Database, Building2, UsersRound, LockKeyhole];
-
-function PlainLanguageSection() {
-  return (
-    <section id="contexto-ecuador" className="bg-[#f6f8fb]">
-      <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[0.84fr_1.16fr]">
-          <div>
-            <SectionHeader
-              eyebrow={program.plainLanguage.eyebrow}
-              title={program.plainLanguage.title}
-              text={program.plainLanguage.intro}
-            />
-
-            <div className="mt-7 rounded-lg border border-teal-200 bg-teal-50 p-5">
-              <Scale className="h-6 w-6 text-teal-800" aria-hidden="true" />
-              <p className="mt-4 leading-7 text-slate-700">
-                En la práctica, la LOPDP convierte la privacidad en un sistema de trabajo:
-                inventario, finalidad, base de licitud, seguridad, derechos, riesgos y evidencia.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid gap-4 md:grid-cols-2">
-            {program.plainLanguage.points.map((point, index) => {
-              const Icon = plainLanguageIcons[index] || ShieldCheck;
-
-              return (
-                <article key={point.title} className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
-                  <Icon className="h-6 w-6 text-teal-700" aria-hidden="true" />
-                  <h3 className="mt-4 text-xl font-bold text-slate-950">{point.title}</h3>
-                  <p className="mt-3 leading-7 text-slate-600">{point.text}</p>
-                </article>
-              );
-            })}
-          </div>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -365,13 +234,21 @@ export default function ArquitecturaPdpClient() {
   const [modalCheckoutUrl, setModalCheckoutUrl] = useState(program.checkout.url);
   const checkoutReady = isCheckoutReady(program);
   const primaryCtaLabel = getPrimaryCtaLabel(program);
-  const waitlistUrl = buildWhatsAppUrl(program.whatsapp.waitlistText, program);
-  const infoUrl = buildWhatsAppUrl(program.whatsapp.infoText, program);
-  const corporateUrl = buildWhatsAppUrl(program.whatsapp.corporateText, program);
+  const contactUrl = buildWhatsAppUrl(program.whatsapp.infoText, program);
+  const confirmedMaterials = program.proposedMaterials.filter((material) => material.confirmed);
+
+  const heroDetails = [
+    ["Inicio", program.enrollment.startDateLabel],
+    ["Sesiones", program.schedule.sessionsLabel],
+    ["Duración", program.schedule.hoursLabel],
+    program.schedule.datesLabel ? ["Calendario", program.schedule.datesLabel] : null,
+    program.schedule.timeLabel ? ["Horario", program.schedule.timeLabel] : null,
+    program.schedule.formatLabel ? ["Modalidad", program.schedule.formatLabel] : null,
+    program.enrollment.priceLabel ? ["Inversión", program.enrollment.priceLabel] : null,
+  ].filter(Boolean);
 
   useEffect(() => {
     persistTrackingParams();
-    trackEvent("view_program", { section: "landing" }, { once: true });
   }, []);
 
   useEffect(() => {
@@ -381,315 +258,304 @@ export default function ArquitecturaPdpClient() {
     const observer = new IntersectionObserver(
       (entries) => {
         if (entries.some((entry) => entry.isIntersecting)) {
-          trackEvent("view_curriculum", { section: "programa" }, { once: true });
+          trackEvent("pansi_view_program", { section: "programa" }, { once: true });
           observer.disconnect();
         }
       },
-      { threshold: 0.35 }
+      { threshold: 0.3 }
     );
 
     observer.observe(node);
     return () => observer.disconnect();
   }, []);
 
-  const handleEnroll = (source = "unknown") => {
-    trackEvent("click_enroll", {
-      source,
-      checkout_ready: checkoutReady,
-      price_label: program.enrollment.priceLabel,
-    });
-
+  const handlePrimaryAction = (source) => {
     if (checkoutReady) {
       const checkoutUrl = appendTrackingParams(program.checkout.url);
       setModalCheckoutUrl(checkoutUrl);
-
-      trackEvent("open_checkout", {
+      trackEvent("pansi_click_checkout", {
         source,
         checkout_provider: program.checkout.provider,
-        checkout_url_configured: true,
       });
-      trackEvent("begin_checkout", {
-        source,
-        checkout_provider: program.checkout.provider,
-        currency: program.checkout.currency,
-        value: program.enrollment.priceAmount || undefined,
-      });
-
       setOpenCheckout(true);
       return;
     }
 
-    trackEvent("click_whatsapp", { intent: "waitlist", source });
-    window.open(waitlistUrl, "_blank", "noopener,noreferrer");
-  };
-
-  const handleInfoClick = () => {
-    trackEvent("click_whatsapp", { intent: "program_info", source: "hero_card" });
-  };
-
-  const handleCorporateClick = () => {
-    trackEvent("group_inquiry", { participants: "pending", source: "corporate_section" });
-    trackEvent("click_whatsapp", { intent: "corporate", source: "corporate_section" });
-  };
-
-  const handleDeliverablesClick = () => {
-    trackEvent("click_deliverables", { source: "hero" });
-  };
-
-  const handleProgramClick = () => {
-    trackEvent("click_program", { source: "sticky_bar" });
+    trackEvent("pansi_click_whatsapp", {
+      source,
+      intent: "course_enrollment_information",
+    });
   };
 
   return (
     <>
-      <main className="min-h-screen bg-[#f6f8fb] pb-32 text-slate-950 sm:pb-28">
+      <main className="min-h-screen bg-[#f5f7fa] pb-28 text-slate-950 sm:pb-24">
         <section className="border-b border-slate-200 bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-3 text-sm text-slate-700 sm:px-6 lg:px-8">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <span>{program.enrollment.banner}</span>
-              <span className="font-semibold text-teal-800">
-                Arquitectura Profesional de Protección de Datos Personales ({program.editionLabel})
-              </span>
-            </div>
+          <div className="mx-auto flex max-w-7xl flex-col gap-1 px-4 py-3 text-sm text-slate-700 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+            <span>{program.enrollment.banner}</span>
+            <span className="font-semibold text-teal-800">{program.campaignConcept}</span>
           </div>
         </section>
 
         <section className="bg-[#102033] text-white">
-          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:py-16 lg:grid-cols-[minmax(0,1.08fr)_minmax(320px,0.92fr)] lg:px-8">
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-12 sm:px-6 md:py-16 lg:grid-cols-[minmax(0,1.1fr)_minmax(320px,0.9fr)] lg:px-8">
             <div>
-              <div className="flex flex-wrap gap-3">
-                <Pill tone="accent">
-                  <BookOpenCheck className="h-4 w-4" aria-hidden="true" />
-                  {program.editionLabel} · Formación online en vivo
-                </Pill>
-                <Pill tone="warm">
-                  <ShieldCheck className="h-4 w-4" aria-hidden="true" />
-                  PANSI · RAT ampliado · MTGE
-                </Pill>
-              </div>
+              <Pill tone="accent">
+                <BookOpenCheck className="h-4 w-4" aria-hidden="true" />
+                {program.hero.eyebrow}
+              </Pill>
 
-              <h1 className="mt-6 max-w-4xl text-3xl font-bold leading-tight text-white sm:text-4xl md:text-6xl">
-                Construye una arquitectura de protección de datos personales que puedas aplicar, justificar y defender
+              <h1 className="mt-6 max-w-4xl text-4xl font-bold leading-tight text-white md:text-6xl">
+                {program.hero.title}
               </h1>
-
-              <p className="mt-6 max-w-3xl text-base leading-7 text-slate-300 md:text-xl md:leading-8">
-                Aprende a integrar el Plan de Adecuación de Nivel de Seguridad Inicial (PANSI), RAT ampliado
-                y MTGE en un modelo operativo con evidencia, trazabilidad y criterio profesional, con énfasis
-                en el artículo 47.6 de la LOPDP.
+              <p className="mt-6 max-w-3xl text-lg leading-8 text-slate-300 md:text-xl">
+                {program.hero.description}
+              </p>
+              <p className="mt-4 max-w-3xl border-l-2 border-amber-300 pl-4 leading-7 text-slate-200">
+                {program.hero.support}
               </p>
 
-              <div className="mt-6 flex flex-col gap-3 sm:mt-8 sm:flex-row">
-                <PrimaryButton onClick={() => handleEnroll("hero")}>{primaryCtaLabel}</PrimaryButton>
-                <SecondaryLink href="#entregables" onClick={handleDeliverablesClick}>
-                  Ver qué voy a construir
-                </SecondaryLink>
+              <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                <PrimaryButton href={!checkoutReady ? contactUrl : undefined} onClick={() => handlePrimaryAction("hero")}>{primaryCtaLabel}</PrimaryButton>
+                <SecondaryLink href="#resultado">Ver qué voy a construir</SecondaryLink>
               </div>
 
-              <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Pill>{`Inicio ${program.enrollment.startDateLabel}`}</Pill>
                 <Pill>{program.schedule.sessionsLabel}</Pill>
                 <Pill>{program.schedule.hoursLabel}</Pill>
-                <Pill>{program.schedule.datesLabel}</Pill>
-                <Pill>{program.schedule.timeLabel}</Pill>
               </div>
             </div>
 
-            <aside className="rounded-lg border border-white/15 bg-white/[0.06]">
+            <aside className="self-start rounded-lg border border-white/15 bg-white/[0.06]">
               <div className="border-b border-white/10 p-5">
-                <p className="text-sm font-semibold uppercase tracking-wide text-teal-200">
-                  Arquitectura Profesional de Protección de Datos Personales
-                </p>
+                <p className="text-sm font-semibold uppercase tracking-wide text-cyan-200">Curso PANSI</p>
                 <h2 className="mt-3 text-2xl font-bold text-white">{program.enrollment.statusLabel}</h2>
-                <p className="mt-3 leading-7 text-slate-300">{program.enrollment.displayTrustNote}</p>
+                <p className="mt-3 leading-7 text-slate-300">
+                  {checkoutReady
+                    ? "Completa tu inscripción en el checkout seguro correspondiente al curso PANSI de noviembre."
+                    : "Solicita la información vigente sin reutilizar condiciones de convocatorias anteriores."}
+                </p>
               </div>
-
-              <div className="divide-y divide-white/10">
-                {[
-                  ["Inicio", program.enrollment.startDateLabel],
-                  ["Cierre de inscripciones", program.enrollment.enrollmentDeadlineLabel],
-                  ["Inversión individual", program.enrollment.priceLabel],
-                  ["Horario", `${program.schedule.timeLabel}, ${program.schedule.timezoneLabel}`],
-                 
-                ].map(([label, value]) => (
+              <dl className="divide-y divide-white/10">
+                {heroDetails.map(([label, value]) => (
                   <div key={label} className="flex items-start justify-between gap-4 px-5 py-4">
-                    <span className="text-sm text-slate-400">{label}</span>
-                    <span className="max-w-[58%] text-right text-sm font-semibold text-white">{value}</span>
+                    <dt className="text-sm text-slate-400">{label}</dt>
+                    <dd className="max-w-[62%] text-right text-sm font-semibold text-white">{value}</dd>
                   </div>
                 ))}
-              </div>
-
-              <div className="p-5">
-                <a
-                  href={infoUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={handleInfoClick}
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-white/20 px-5 py-3 font-bold text-white transition hover:bg-white/5 focus:outline-none focus:ring-4 focus:ring-teal-300/20"
-                >
-                  <MessageCircle className="h-5 w-5" aria-hidden="true" />
-                  Consultar por WhatsApp
-                  <ExternalLink className="h-4 w-4" aria-hidden="true" />
-                </a>
-              </div>
+              </dl>
+              <p className="p-5 text-sm leading-6 text-slate-300">{program.schedule.calendarCtaLabel}.</p>
             </aside>
           </div>
         </section>
 
-        <PlainLanguageSection />
+        <section className="border-b border-slate-200 bg-white">
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:px-8">
+            <SectionHeader
+              eyebrow="El problema"
+              title={program.problem.title}
+              text={program.problem.text}
+            />
+            <div className="divide-y divide-slate-200 border-y border-slate-200">
+              {program.problem.questions.map((question, index) => (
+                <div key={question} className="flex gap-4 py-5">
+                  <span className="text-sm font-bold text-teal-700">0{index + 1}</span>
+                  <p className="text-lg font-semibold leading-7 text-slate-900">{question}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-[#eaf5f3]">
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.82fr_1.18fr] lg:px-8">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-teal-700">Contexto normativo</p>
+              <h2 className="mt-3 text-3xl font-bold leading-tight text-slate-950 md:text-4xl">{program.concept.title}</h2>
+              <p className="mt-5 leading-7 text-slate-700">{program.concept.text}</p>
+            </div>
+            <div className="border-l-2 border-teal-600 pl-6">
+              <Scale className="h-7 w-7 text-teal-700" aria-hidden="true" />
+              <p className="mt-4 leading-7 text-slate-700">{program.concept.clarification}</p>
+              <p className="mt-4 font-semibold leading-7 text-slate-900">{program.concept.scope}</p>
+              <a
+                href={program.concept.officialReference}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-teal-800 underline decoration-teal-400 underline-offset-4"
+              >
+                Consultar referencia oficial
+                <ExternalLink className="h-4 w-4" aria-hidden="true" />
+              </a>
+              <p className="mt-3 text-xs leading-5 text-slate-500">{program.concept.referenceNote}</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="resultado" className="scroll-mt-28 bg-white">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <SectionHeader
+              eyebrow="Resultado del taller"
+              title="Una estructura para pasar del diagnóstico al seguimiento"
+              text="El objetivo es que puedas ordenar decisiones, responsabilidades y evidencias en una ruta que tenga continuidad después de las sesiones."
+            />
+            <div className="mt-8 grid gap-x-8 gap-y-0 md:grid-cols-2">
+              {program.outcomes.map((outcome) => (
+                <div key={outcome} className="flex gap-3 border-b border-slate-200 py-4">
+                  <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-teal-700" aria-hidden="true" />
+                  <p className="leading-7 text-slate-700">{outcome}</p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-7 max-w-4xl rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm leading-6 text-amber-950">
+              {program.outcomeClarification}
+            </p>
+          </div>
+        </section>
+
+        <section className="bg-[#142033] text-white">
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.72fr_1.28fr] lg:px-8">
+            <SectionHeader
+              eyebrow={program.demonstration.label}
+              title={program.demonstration.title}
+              text="Una vista sencilla del razonamiento que practicarás durante el taller."
+              tone="dark"
+            />
+            <div>
+              <dl className="overflow-hidden rounded-lg border border-white/15 bg-white/[0.05]">
+                {program.demonstration.items.map(([label, value]) => (
+                  <div key={label} className="grid gap-2 border-b border-white/10 px-5 py-4 last:border-b-0 sm:grid-cols-[180px_1fr]">
+                    <dt className="text-sm font-semibold text-cyan-200">{label}</dt>
+                    <dd className="leading-7 text-slate-200">{value}</dd>
+                  </div>
+                ))}
+              </dl>
+              <p className="mt-4 text-sm leading-6 text-slate-400">{program.demonstration.note}</p>
+            </div>
+          </div>
+        </section>
+
+        <section id="programa" ref={curriculumRef} className="scroll-mt-28 bg-[#f5f7fa]">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <SectionHeader
+              eyebrow="Programa de seis sesiones"
+              title="Del diagnóstico inicial a la revisión periódica"
+              text="Cada sesión tiene un objetivo concreto y un resultado de ejercicio. Las fechas restantes se comunicarán cuando el calendario esté confirmado."
+            />
+            <div className="mt-8 border-y border-slate-200">
+              {program.sessions.map((session) => (
+                <SessionItem key={session.label} session={session} />
+              ))}
+            </div>
+          </div>
+        </section>
 
         <section className="border-y border-slate-200 bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
             <SectionHeader
-              eyebrow="Resultados del programa"
-              title="Al finalizar tendrás una estructura para operar y defender decisiones PDP"
-              text="La promesa se centra en producir criterio y trazabilidad, no en acumular conceptos aislados."
+              eyebrow="Público"
+              title="Para quienes necesitan llevar la protección de datos a la práctica"
+              text="El curso reúne perfiles que supervisan, coordinan o ejecutan partes distintas de una adecuación. No habilita profesionalmente como DPD."
             />
+            <div className="mt-9 grid gap-6 md:grid-cols-3">
+              {program.audiences.map((audience, index) => {
+                const icons = [ShieldCheck, UsersRound, UserRoundCog];
+                const Icon = icons[index] || UsersRound;
 
-            <div className="mt-8 grid gap-4 md:grid-cols-2 xl:grid-cols-3">
-              {program.outcomes.map((outcome, index) => (
-                <ResultCard key={outcome} index={index + 1}>
-                  {outcome}
-                </ResultCard>
-              ))}
+                return (
+                  <article key={audience.title} className="border-t-2 border-teal-600 pt-5">
+                    <Icon className="h-6 w-6 text-teal-700" aria-hidden="true" />
+                    <h3 className="mt-4 text-xl font-bold text-slate-950">{audience.title}</h3>
+                    <p className="mt-3 leading-7 text-slate-600">{audience.text}</p>
+                  </article>
+                );
+              })}
             </div>
           </div>
         </section>
 
-        <section id="entregables" className="bg-[#f6f8fb]">
-          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        <section className="bg-[#eaf5f3]">
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.82fr_1.18fr] lg:px-8">
             <SectionHeader
-              eyebrow="Entregables"
-              title="Materiales para trabajar la arquitectura PDP durante el programa"
-              text="El curso combina sesiones en vivo con plantillas editables, grabaciones, recursos aplicados y certificado."
+              eyebrow="Metodología aplicada"
+              title={program.methodology.title}
+              text={program.methodology.text}
             />
-
-            <div className="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-              {program.deliverables.map((deliverable) => (
-                <DeliverablePreview key={deliverable.title} deliverable={deliverable} />
+            <div className="space-y-3">
+              {program.methodology.steps.map((step, index) => (
+                <div key={step} className="flex items-center gap-4 border-b border-teal-900/10 py-3">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-teal-700 text-sm font-bold text-white">
+                    {index + 1}
+                  </span>
+                  <p className="font-semibold leading-7 text-slate-800">{step}</p>
+                </div>
               ))}
             </div>
           </div>
-        </section>
 
-        <section id="programa" ref={curriculumRef} className="scroll-mt-28 border-y border-slate-200 bg-[#eef7f5]">
-          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-            <SectionHeader
-              eyebrow="Programa académico"
-              title="Dos bloques reforzados para una gestión PDP madura y defendible"
-              text="El contenido se organiza alrededor del PANSI, RAT ampliado y MTGE, con resultados esperados visibles por bloque."
-            />
-
-            <div className="mt-8 grid gap-4">
-              {program.curriculumBlocks.map((item) => (
-                <CurriculumRow key={item.block} item={item} />
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="bg-white">
-          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-            <div className="grid gap-10 lg:grid-cols-[0.72fr_1.28fr]">
-              <SectionHeader
-                eyebrow="Metodología y calendario"
-                title={`Calendario de la ${program.editionLabel}`}
-                text={`${program.schedule.sessionsLabel}, ${program.schedule.hoursLabel}, ${program.schedule.formatLabel}. Las sesiones serán de ${program.schedule.timeLabel}, ${program.schedule.timezoneLabel}, con espacio de preguntas.`}
-              />
-
-              <div className="grid gap-4 md:grid-cols-2">
-                {program.sessions.map((session) => (
-                  <SessionItem key={session.label} session={session} />
-                ))}
+          {confirmedMaterials.length ? (
+            <div className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 lg:px-8">
+              <div className="border-t border-teal-900/10 pt-8">
+                <h3 className="text-xl font-bold text-slate-950">Materiales confirmados</h3>
+                <ul className="mt-5 grid gap-3 md:grid-cols-2">
+                  {confirmedMaterials.map((material) => (
+                    <li key={material.title} className="flex gap-3 text-slate-700">
+                      <FileCheck2 className="mt-1 h-5 w-5 shrink-0 text-teal-700" aria-hidden="true" />
+                      {material.title}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
-          </div>
+          ) : null}
         </section>
 
         <SocialProofCarousel socialProof={program.socialProof} />
 
-        <section id="inscripcion" className="scroll-mt-28 bg-[#eef7f5]">
-          <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
-            <div className="rounded-lg border border-teal-200 bg-white p-6 shadow-sm">
-              <div className="flex items-start gap-4">
-                <Landmark className="mt-1 h-6 w-6 shrink-0 text-teal-700" aria-hidden="true" />
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-wide text-teal-700">
-                    Inversión
-                  </p>
-                  <h2 className="mt-3 text-3xl font-bold text-slate-950">{program.individualOffer.title}</h2>
-                  <p className="mt-3 text-4xl font-bold text-slate-950">{program.individualOffer.priceLabel}</p>
-                  <p className="mt-4 leading-7 text-slate-600">
-                    Oferta vigente.
-                  </p>
-                </div>
-              </div>
-
-              <ul className="mt-6 grid gap-3">
-                {program.individualOffer.items.map((item) => (
-                  <li key={item} className="flex gap-3 text-slate-700">
-                    <CheckCircle2 className="mt-1 h-5 w-5 shrink-0 text-teal-700" aria-hidden="true" />
-                    <span className="leading-7">{item}</span>
-                  </li>
+        <section id="inscripcion" className="scroll-mt-28 bg-white">
+          <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 lg:grid-cols-[0.82fr_1.18fr] lg:px-8">
+            <SectionHeader
+              eyebrow="Calendario e inversión"
+              title={checkoutReady ? "Inscripciones abiertas para el curso PANSI" : "Consulta la información vigente de esta convocatoria"}
+              text={checkoutReady
+                ? "El valor individual es de $120 USD y el pago se procesa de forma segura en Hotmart. El calendario completo, horario y modalidad pueden consultarse directamente con DataConSentido."
+                : "El inicio, la carga horaria y el número de sesiones ya están confirmados. El calendario completo, horario, modalidad, precio y condiciones se comunicarán cuando queden aprobados para noviembre."}
+            />
+            <div className="rounded-lg border border-slate-200 bg-[#f5f7fa] p-6">
+              <dl className="divide-y divide-slate-200">
+                {[
+                  ["Inicio", program.enrollment.startDateLabel],
+                  ["Sesiones", program.schedule.sessionsLabel],
+                  ["Carga total", program.schedule.hoursLabel],
+                ].map(([label, value]) => (
+                  <div key={label} className="flex items-start justify-between gap-4 py-4 first:pt-0 last:pb-0">
+                    <dt className="text-sm text-slate-500">{label}</dt>
+                    <dd className="max-w-[64%] text-right font-semibold text-slate-950">{value}</dd>
+                  </div>
                 ))}
-              </ul>
-
-              <PrimaryButton onClick={() => handleEnroll("pricing_section")} className="mt-7 w-full">
+              </dl>
+              <PrimaryButton href={!checkoutReady ? contactUrl : undefined} onClick={() => handlePrimaryAction("information_section")} className="mt-7 w-full">
                 {primaryCtaLabel}
               </PrimaryButton>
-
-              <p className="mt-4 text-sm leading-6 text-slate-600">{program.checkout.displayNote}</p>
-            </div>
-
-            <div className="rounded-lg border border-slate-200 bg-white p-6 shadow-sm">
-              <div className="flex items-start gap-4">
-                <Building2 className="mt-1 h-6 w-6 shrink-0 text-amber-700" aria-hidden="true" />
-                <div>
-                  <p className="text-sm font-semibold uppercase tracking-wide text-amber-700">
-                    Modalidad corporativa
-                  </p>
-                  <h2 className="mt-3 text-3xl font-bold text-slate-950">Equipos de 3, 5 y 10 personas</h2>
-                  <p className="mt-4 leading-7 text-slate-600">
-                    Para equipos, preparamos una propuesta según el número de participantes, necesidades
-                    de la organización y datos de facturación.
-                  </p>
-                </div>
-              </div>
-
-              <div className="mt-6 grid gap-4 md:grid-cols-3">
-                {program.corporatePlans.map((plan) => (
-                  <article key={plan.participants} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-                    <p className="text-sm text-slate-500">{plan.participants}</p>
-                    <p className="mt-3 text-lg font-bold text-slate-950">{plan.total}</p>
-                    <p className="mt-2 text-sm text-slate-600">Por persona: {plan.perPerson}</p>
-                    <p className="mt-1 text-sm text-slate-600">Ahorro: {plan.savings}</p>
-                  </article>
-                ))}
-              </div>
-
-              <a
-                href={corporateUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={handleCorporateClick}
-                className="mt-7 inline-flex w-full items-center justify-center gap-2 rounded-lg border border-amber-300 bg-amber-50 px-5 py-3 font-bold text-amber-800 transition hover:bg-amber-100 focus:outline-none focus:ring-4 focus:ring-amber-200"
-              >
-                <MessageCircle className="h-5 w-5" aria-hidden="true" />
-                Consultar modalidad corporativa
-                <ExternalLink className="h-4 w-4" aria-hidden="true" />
-              </a>
+              <p className="mt-4 text-sm leading-6 text-slate-600">
+                {checkoutReady
+                  ? program.checkout.displaySecurityNotice
+                  : "La consulta no te suscribe automáticamente a campañas ni solicita datos sensibles o documentos de clientes."}
+              </p>
             </div>
           </div>
         </section>
 
-        <section id="faq" className="border-y border-slate-200 bg-white">
+        <section id="faq" className="border-y border-slate-200 bg-[#f5f7fa]">
           <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
             <SectionHeader
               eyebrow="Preguntas frecuentes"
-              title="Respuestas para esta edición"
-              text="Lo que necesitas saber de nuestro curso."
+              title="Respuestas sobre el curso PANSI"
+              text="Información confirmada para la convocatoria que inicia el 20 de noviembre de 2026."
               centered
             />
-
-            <div className="mt-8 grid gap-4">
+            <div className="mt-8 border-y border-slate-200">
               {program.faqs.map((faq) => (
                 <FaqItem key={faq.question} faq={faq} />
               ))}
@@ -698,47 +564,24 @@ export default function ArquitecturaPdpClient() {
         </section>
 
         <section className="bg-[#142033] text-white">
-          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-            <div className="grid gap-8 lg:grid-cols-[1fr_0.8fr]">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-wide text-teal-200">
-                  Cierre
+          <div className="mx-auto grid max-w-7xl gap-8 px-4 py-14 sm:px-6 lg:grid-cols-[1fr_0.72fr] lg:items-center lg:px-8">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-cyan-200">Cierre</p>
+              <h2 className="mt-3 text-3xl font-bold leading-tight md:text-4xl">{program.closing.title}</h2>
+              <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-300">{program.closing.text}</p>
+            </div>
+            <div>
+              <PrimaryButton href={!checkoutReady ? contactUrl : undefined} onClick={() => handlePrimaryAction("closing_section")} className="w-full">
+                {primaryCtaLabel}
+              </PrimaryButton>
+              <div className="mt-5 space-y-2 text-sm leading-6 text-slate-300">
+                <p>{program.brand.legalName}</p>
+                <p>
+                  Contacto: <a className="font-semibold text-cyan-200 underline underline-offset-4" href={`mailto:${program.brand.supportEmail}`}>{program.brand.supportEmail}</a>
                 </p>
-                <h2 className="mt-3 text-3xl font-bold leading-tight text-white md:text-4xl">
-                  Inscríbete a la {program.editionLabel}
-                </h2>
-                <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-300">
-                  El programa inicia el {program.enrollment.startDateLabel.toLowerCase()} y se desarrolla
-                  los días {program.schedule.datesLabel}, de {program.schedule.timeLabel}. Las inscripciones
-                  cierran el {program.enrollment.enrollmentDeadlineLabel}.
+                <p>
+                  <a className="font-semibold text-cyan-200 underline underline-offset-4" href="/politica-de-privacidad">Política de privacidad</a>
                 </p>
-              </div>
-
-              <div className="rounded-lg border border-white/15 bg-white/[0.06] p-5">
-                <PrimaryButton onClick={() => handleEnroll("closing_section")} className="w-full">
-                  {primaryCtaLabel}
-                </PrimaryButton>
-
-                <div className="mt-5 space-y-3 text-sm leading-6 text-slate-300">
-                  <p>{program.brand.legalName}</p>
-                  <p>{program.checkout.displaySecurityNotice}</p>
-                  <p>
-                    Incluye {program.schedule.sessionsLabel.toLowerCase()} online en vivo, espacio de preguntas,
-                    materiales editables, grabaciones con acceso indefinido y certificado validado en blockchain.
-                  </p>
-                  <p>
-                    Contacto:{" "}
-                    <a className="font-semibold text-teal-200 underline underline-offset-4" href={`mailto:${program.brand.supportEmail}`}>
-                      {program.brand.supportEmail}
-                    </a>
-                  </p>
-                  <p>
-                    <a className="font-semibold text-teal-200 underline underline-offset-4" href="/politica-de-privacidad">
-                      Política de privacidad
-                    </a>{" "}
-                    · Soporte de compra, cambios por Hotmart y DataConSentido.
-                  </p>
-                </div>
               </div>
             </div>
           </div>
@@ -746,41 +589,40 @@ export default function ArquitecturaPdpClient() {
       </main>
 
       <div className="fixed inset-x-0 bottom-0 z-50 border-t border-slate-200 bg-white/95 shadow-[0_-16px_40px_rgba(15,23,42,0.14)] backdrop-blur">
-        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:px-8">
           <div className="hidden min-w-0 sm:block">
-            <p className="text-xs text-slate-500">{program.editionLabel}</p>
-            <p className="truncate text-sm font-semibold text-slate-950">{program.enrollment.priceLabel}</p>
+            <p className="text-xs text-slate-500">Inicio</p>
+            <p className="truncate text-sm font-semibold text-slate-950">{program.enrollment.startDateLabel}</p>
           </div>
-
-          <div className="grid grid-cols-2 gap-3 sm:flex sm:items-center sm:justify-end">
+          <div className="grid flex-1 grid-cols-2 gap-3 sm:flex sm:flex-none sm:items-center">
             <a
               href="#programa"
-              onClick={handleProgramClick}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-950 bg-slate-950 px-4 py-2 text-sm font-bold !text-white shadow-sm transition hover:border-slate-800 hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-teal-200"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg border border-slate-950 bg-slate-950 px-4 py-2 text-sm font-bold !text-white transition hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-teal-200"
             >
-              <BookOpenCheck className="h-4 w-4 shrink-0 text-teal-200" aria-hidden="true" />
+              <BookOpenCheck className="h-4 w-4 shrink-0 text-cyan-200" aria-hidden="true" />
               Ver programa
             </a>
-
-            <button
-              type="button"
-              onClick={() => handleEnroll("sticky_bar")}
-              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-lg bg-teal-500 px-4 py-2 text-sm font-bold text-white transition hover:bg-teal-400 focus:outline-none focus:ring-4 focus:ring-teal-200"
+            <PrimaryButton
+              href={!checkoutReady ? contactUrl : undefined}
+              onClick={() => handlePrimaryAction("sticky_bar")}
+              className="min-h-11 px-3 py-2 text-sm sm:px-4"
             >
               <span className="hidden sm:inline">{primaryCtaLabel}</span>
-              <span className="sm:hidden">{checkoutReady ? "Inscribirme" : "Lista de espera"}</span>
-              <ArrowRight className="h-4 w-4 shrink-0" aria-hidden="true" />
-            </button>
+              <span className="sm:hidden">{checkoutReady ? "Inscribirme" : "Consultar inscripción"}</span>
+            </PrimaryButton>
           </div>
         </div>
       </div>
 
-      <HotmartModal
-        open={openCheckout}
-        onClose={() => setOpenCheckout(false)}
-        checkoutUrl={modalCheckoutUrl}
-        program={program}
-      />
+      {checkoutReady ? (
+        <HotmartModal
+          open={openCheckout}
+          onClose={() => setOpenCheckout(false)}
+          checkoutUrl={modalCheckoutUrl}
+          program={program}
+        />
+      ) : null}
+
     </>
   );
 }
