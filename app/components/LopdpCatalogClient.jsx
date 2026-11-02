@@ -548,7 +548,8 @@ export default function LopdpCatalogClient() {
             target="_blank"
             rel="noopener noreferrer"
             onClick={() => trackCatalogEvent("catalog_general_cta", { section: "closing" })}
-            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-lg bg-white px-5 py-3 font-bold text-teal-800 transition hover:bg-slate-100 focus:outline-none focus:ring-4 focus:ring-white/30"
+            className="inline-flex min-h-12 shrink-0 items-center justify-center gap-2 rounded-lg border border-slate-200 bg-white px-5 py-3 font-bold transition hover:bg-slate-100 focus:outline-none focus:ring-4 focus:ring-white/30"
+            style={{ color: "#0f172a" }}
           >
             <MessageCircle className="h-5 w-5" aria-hidden="true" />
             Hablar por WhatsApp
